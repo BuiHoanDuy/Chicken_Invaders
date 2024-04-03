@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import controller.keyHandler;
 import controller.mouseController;
+import gui.Sound;
 
 public class GamePanel extends JPanel implements Runnable {
 	// screen setting
