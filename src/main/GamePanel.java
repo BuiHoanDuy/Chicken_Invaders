@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import controller.keyHandler;
 import controller.mouseController;
 import entity.BulletList;
+import entity.GiftList;
 import entity.Player;
 import gui.Sound;
 
@@ -39,6 +40,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	Player player = new Player(this, 500, 570, 10);
 	BulletList bulletList = new BulletList(this);
+	GiftList giftList = new GiftList(this);
 	
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -94,6 +96,7 @@ public class GamePanel extends JPanel implements Runnable {
 		//Put Update function here
 		player.update();
 		bulletList.update();
+		giftList.update();
 	}
 
 	public void paintComponent(Graphics g) {
@@ -104,6 +107,7 @@ public class GamePanel extends JPanel implements Runnable {
 		drawBackground(g2);
 		player.draw(g2);
 		bulletList.draw(g2);
+		giftList.draw(g2);
 
 		g2.dispose();
 	}
