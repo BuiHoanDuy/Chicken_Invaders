@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import controller.keyHandler;
 import controller.mouseController;
+import entity.BulletList;
 import entity.Player;
 import gui.Sound;
 
@@ -34,8 +35,11 @@ public class GamePanel extends JPanel implements Runnable {
 	mouseController Mouse = new mouseController(this);
 	Sound sound = new Sound();
 	
+	boolean isShooting = false; // có đang nhấn chuột hay không ?
+	
 	Player player = new Player(this, 500, 570, 10);
-
+	BulletList bulletList = new BulletList(this);
+	
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.black);
@@ -89,6 +93,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public void update() {
 		//Put Update function here
 		player.update();
+		bulletList.update();
 	}
 
 	public void paintComponent(Graphics g) {
@@ -98,7 +103,7 @@ public class GamePanel extends JPanel implements Runnable {
 		Graphics2D g2 = (Graphics2D) g;
 		drawBackground(g2);
 		player.draw(g2);
-
+		bulletList.draw(g2);
 
 		g2.dispose();
 	}
@@ -131,5 +136,21 @@ public class GamePanel extends JPanel implements Runnable {
 
 	public void setPlayerLocation(float x, float y) { // cài đặt tọa độ máy bay
 		player.setLocation(x, y);
+	}
+	
+	public float getPlayerX() {
+		return player.getX();
+	}
+	
+	public float getPlayerY() {
+		return player.getY();
+	}
+	
+	public void setIsShooting(boolean status) {
+		isShooting = status;
+	}
+	
+	public boolean getIsShooting() {
+		return isShooting;
 	}
 }

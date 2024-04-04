@@ -8,25 +8,25 @@ import main.GamePanel;
 
 public class mouseController implements MouseMotionListener, MouseListener {
 	private GamePanel gp;
-	
+
 	public mouseController(GamePanel gp) {
 		this.gp = gp;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
+		gp.setIsShooting(true);
 
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-
+		gp.setIsShooting(true);
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		gp.setIsShooting(false); 
 
 	}
 
@@ -37,7 +37,7 @@ public class mouseController implements MouseMotionListener, MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		
+
 	}
 
 	@Override
@@ -47,8 +47,8 @@ public class mouseController implements MouseMotionListener, MouseListener {
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent e) { 
+	public void mouseMoved(MouseEvent e) {
 		gp.setPlayerLocation(e.getX(), e.getY());
 	}
-	
+
 }
