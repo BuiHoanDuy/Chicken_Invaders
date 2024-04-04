@@ -15,18 +15,18 @@ public class mouseController implements MouseMotionListener, MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
+		
 
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-
+		gp.setIsShooting(true);
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		gp.setIsShooting(false); 
 
 	}
 
@@ -42,12 +42,13 @@ public class mouseController implements MouseMotionListener, MouseListener {
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
+		gp.setPlayerLocation(e.getX(), e.getY());
 
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
+		gp.setPlayerLocation(e.getX(), e.getY());
 	}
 
 }
