@@ -15,7 +15,7 @@ public class mouseController implements MouseMotionListener, MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		gp.setIsShooting(true);
+		
 
 	}
 
