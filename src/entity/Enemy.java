@@ -1,6 +1,9 @@
 package entity;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+
+import main.GamePanel;
 
 public class Enemy extends Entity {
     private int type;
@@ -40,8 +43,8 @@ public class Enemy extends Entity {
         }
     }
 
-    public Enemy(float x, float y, float speed, int type, int hp) {
-        super(x, y, speed);
+    public Enemy(GamePanel gp, Float x, float y, float speed, int type, int hp) {
+        super(gp, x, y, speed);
         this.type = type;
         this.hp = hp;
         this.initVariable();
@@ -53,7 +56,7 @@ public class Enemy extends Entity {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics2D g2) {
         // TODO Auto-generated method stub
     }
 }

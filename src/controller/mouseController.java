@@ -8,7 +8,7 @@ import main.GamePanel;
 
 public class mouseController implements MouseMotionListener, MouseListener {
 	private GamePanel gp;
-
+	
 	public mouseController(GamePanel gp) {
 		this.gp = gp;
 	}
@@ -37,17 +37,18 @@ public class mouseController implements MouseMotionListener, MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-
+		
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
+		gp.setPlayerLocation(e.getX(), e.getY());
 
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent e) {
+	public void mouseMoved(MouseEvent e) { 
+		gp.setPlayerLocation(e.getX(), e.getY());
 	}
-
+	
 }

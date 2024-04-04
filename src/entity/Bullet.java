@@ -1,9 +1,12 @@
 package entity;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import main.GamePanel;
 
 public class Bullet extends Entity {
     private int type;
@@ -19,8 +22,8 @@ public class Bullet extends Entity {
         }
     }
 
-    public Bullet(float x, float y, float speed, int type, int damage) {
-        super(x, y, speed);
+    public Bullet(GamePanel gp ,float x, float y, float speed, int type, int damage) {
+        super(gp, x, y, speed);
         this.type = type;
         this.damage = damage;
         this.initVariable();
@@ -33,7 +36,7 @@ public class Bullet extends Entity {
     }
 
     @Override
-    public void draw() {
+    public void draw(Graphics2D g2) {
         // TODO Auto-generated method stub
         
     }

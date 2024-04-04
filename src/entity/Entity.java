@@ -1,13 +1,18 @@
 package entity;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public abstract class Entity {
-    private float x, y;         // tọa độ
-    protected BufferedImage image;
-    private float speed;
+import main.GamePanel;
 
-    public Entity(float x, float y, float speed) {
+public abstract class Entity {
+	protected GamePanel gp;
+    protected float x, y;         // tọa độ
+    protected BufferedImage image;
+    protected float speed;
+
+    public Entity(GamePanel gp ,float x, float y, float speed) {
+    	this.gp = gp;
         this.x = x;
         this.y = y;
         this.speed = speed;
@@ -15,5 +20,5 @@ public abstract class Entity {
     }
 
     public void update() {}
-    public void draw() {}
+    public void draw(Graphics2D g2) {}
 }
