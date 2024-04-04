@@ -14,7 +14,9 @@ public class BulletList {
 	private int damage = 1; // dame dùng để cài đặt cho đạn, thay đổi theo cấp độ / loại đạn. Mặc định là 1.
 
 	private int loadingTime = 0; // tốc độ ra đạn, sau mỗi vòng lặp thì tăng lên 1
-	private int loadingTimeMax = 10; // loadingTime == loadingTimeMax, loadingTime = 0;
+	private int loadingTimeMax = 15; // loadingTime == loadingTimeMax, loadingTime = 0;
+	
+	private int level = 1; //cấp đạn. 
 
 	public BulletList(GamePanel gp) {
 		this.gp = gp;
@@ -22,8 +24,34 @@ public class BulletList {
 	}
 
 	public void createBulletList() { // tạo danh sách đạn
-		if (gp.getIsShooting())
-			bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), speed, momentType, damage));
+		if (gp.getIsShooting()) {
+			if (momentType ==1 ) {
+				if (level == 1) {
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), speed, 1, damage));	
+				} else if (level == 2) {
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), speed, 1, damage));
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), speed, 1, damage));
+				}  else if (level == 3) {
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), speed, 1, damage));
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), speed, 1, damage));
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), speed, 1, damage));
+				} else if (level == 4) {
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), speed, 1, damage));
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), speed, 1, damage));
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), speed, 1, damage));
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), speed, 1, damage));
+				} else if (level == 5) {
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), speed, 1, damage));
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), speed, 1, damage));
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), speed, 1, damage));
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), speed, 1, damage));
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), speed, 1, damage));
+				}
+			}
+			else if (momentType == 2) {
+				bulletList.add(new Bullet(this.gp, gp.getPlayerX()+25, gp.getPlayerY(), speed, 2, damage));				
+			}
+		}
 	}
 
 	public void update() {
