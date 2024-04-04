@@ -49,7 +49,6 @@ public class Player extends Entity {
     }
     
     public void setLocation(float x, float y) { // cài đặt tọa độ x, y
-    	System.out.println("11");
     	this.x = x;
     	this.y = y;
     }

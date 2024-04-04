@@ -43,7 +43,7 @@ public class Enemy extends Entity {
         }
     }
 
-    public Enemy(GamePanel gp, Float x, float y, float speed, int type, int hp) {
+    public Enemy(GamePanel gp, float x, float y, float speed, int type, int hp) {
         super(gp, x, y, speed);
         this.type = type;
         this.hp = hp;

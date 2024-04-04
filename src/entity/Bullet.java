@@ -14,6 +14,7 @@ public class Bullet extends Entity {
 
     private void initVariable() {
         String path = "/resource/bullet/" + type + ".png";
+        
         try {
             image = ImageIO.read(getClass().getResourceAsStream(path));
         } catch (IOException e) {
