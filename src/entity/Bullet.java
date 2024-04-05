@@ -11,7 +11,7 @@ import main.GamePanel;
 public class Bullet extends Entity {
 	private int type;
 	private int damage;
-	
+	private int width, height; // cài đặt kích cỡ của viên đạn
 	private void initVariable() {
 		String path = "/image/bullet/" + type + ".png";
 
@@ -23,21 +23,34 @@ public class Bullet extends Entity {
 		}
 	}
 
-	public Bullet(GamePanel gp, float x, float y, float speed, int type, int damage) {
+	public Bullet(GamePanel gp, float x, float y, float speed, int type, int damage, int width, int height) {
 		super(gp, x, y, speed);
 		this.type = type;
 		this.damage = damage;
+		this.width = width; 
+		this.height = height;
 		this.initVariable();
 	}
 
 	@Override
 	public void update() {
-		y -= speed;
+		if (type != 3) {
+			y -= speed;			
+		}
+		else {
+			if (speed >= 0) {
+				x = (float) (x + Math.abs((y*Math.tan(speed)/x))) ;				
+			}
+			else if (speed < 0) {
+				x = (float) (x - Math.abs((y*Math.tan(speed)/x))) ;
+			}
+			y -= 6;
+		}
 	}
 
 	@Override
 	public void draw(Graphics2D g2) {
-		g2.drawImage(image, (int) x - gp.tileSize/2, (int) y, gp.tileSize / 3, gp.tileSize/2, null);
+		g2.drawImage(image, (int) x - gp.tileSize/2, (int) y, width, height, null);
 	}
 
 }

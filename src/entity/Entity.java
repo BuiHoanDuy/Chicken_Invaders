@@ -19,6 +19,7 @@ public abstract class Entity {
         image = null;
     }
 
-    public void update() {}
     public void draw(Graphics2D g2) {}
+    public void update() {}
+    public void update(float a, float b, float c, int steps) {}
 }

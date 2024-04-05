@@ -11,7 +11,7 @@ public class Gift extends Entity {
     private int type;
     
     private void initVariable() {
-        String path = "/resource/gitf/" + type + ".png";
+        String path = "/image/gift/" + type + ".png";
         try {
             image = ImageIO.read(getClass().getResourceAsStream(path));
         } catch (IOException e) {
@@ -29,11 +29,11 @@ public class Gift extends Entity {
     @Override
     public void update() {
         // TODO Auto-generated method stub
-        super.update();
+        y += speed;
     }    
     
     @Override
     public void draw(Graphics2D g2) {
-        // TODO Auto-generated method stub
+    	g2.drawImage(image, (int) x - gp.tileSize/2, (int) y, gp.tileSize/2, gp.tileSize/2, null);
     }
 }
