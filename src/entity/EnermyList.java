@@ -21,6 +21,7 @@ public class EnermyList {
 			enermyList.get(i).update();
 			if (enermyList.get(i).getHP() <= 0) {
 				enermyList.remove(i);
+				i--;
 			}
 		}
 	}

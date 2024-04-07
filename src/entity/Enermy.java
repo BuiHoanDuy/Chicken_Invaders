@@ -15,6 +15,7 @@ public class Enermy extends Entity {
 	private float xDes, yDes, x0, y0;
 	private int type;
 	private int hp;
+	private int width, height;
 	private float t; // biến t để bỏ vào phương trình đường cong
 	private boolean changePosition; // dùng dể dịch chuyển con gà cho nhìn đỡ đơ
 	private ArrayList<BufferedImage> animation; // animiation
@@ -24,6 +25,7 @@ public class Enermy extends Entity {
 	private boolean isIntersectBullet; // kiểm tra xem có bị dính đạn hay chưa
 
 	private void initVariable() {
+		width = (int) (gp.tileSize*1.5); height = (int) (gp.tileSize*1.5);
 		isIntersectBullet = false;
 		changePosition = false;
 		rand = new Random();
@@ -41,6 +43,7 @@ public class Enermy extends Entity {
 			hp = 15;
 			break;
 		case 1:
+			width = (int) (gp.tileSize*1.5); height = (int) (gp.tileSize);
 			try {
 				image = ImageIO.read(getClass().getResourceAsStream("/image/enermy/1.png"));
 			} catch (IOException e) {
@@ -107,6 +110,7 @@ public class Enermy extends Entity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			width = (int) (gp.tileSize*4); height = (int) (gp.tileSize*4);
 			hp = 25;
 			numOfFrame = 4;
 			break;
@@ -167,7 +171,7 @@ public class Enermy extends Entity {
 			indexToLoadAnimation = 0;
 		}
 		g2.drawImage(animation.get(indexToLoadAnimation / 10), (int) x - gp.tileSize, (int) y,
-				(int) (gp.tileSize * 1.5), (int) (gp.tileSize * 1.5), null);
+				width, height, null);
 		indexToLoadAnimation++;
 	}
 
@@ -178,7 +182,7 @@ public class Enermy extends Entity {
 	}
 
 	public Rectangle getEnermyBound() {
-		return new Rectangle((int) x, (int) y, (int) (gp.tileSize * 1.5), (int) (gp.tileSize * 1.5));
+		return new Rectangle((int) x, (int) y, width, height);
 	}
 
 	public void setIsIntersectBullet() {
