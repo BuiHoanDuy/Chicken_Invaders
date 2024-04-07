@@ -17,7 +17,7 @@ public class BulletList {
 	private int loadingTimeMax = 15; // loadingTime == loadingTimeMax, loadingTime = 0;
 	int bulletCountLoop = 0; // dùng để deley đạn sấm sét, type 5.
 
-	private int level = 2; // cấp đạn.
+	private int level = 5; // cấp đạn.
 
 	public BulletList(GamePanel gp) {
 		this.gp = gp;
@@ -200,7 +200,18 @@ public class BulletList {
 	public void draw(Graphics2D g2) {
 		for (int i = 0; i < bulletList.size(); i++) {
 			bulletList.get(i).draw(g2);
+			if (bulletList.get(i).getIsIntersectEnermy() == true) {
+				bulletList.remove(i);
+				i--;
+			}
 		}
 	}
 
+	public int getSize() {
+		return bulletList.size();
+	}
+	
+	public Bullet getBulletFromIndex(int index) { // lấy viên đạn vị trí thứ i
+		return bulletList.get(index);
+	}
 }

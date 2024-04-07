@@ -13,8 +13,8 @@ import javax.swing.JPanel;
 import controller.keyHandler;
 import controller.mouseController;
 import entity.BulletList;
-import entity.ChickenItemList;
-import entity.GiftList;
+import entity.Enermy;
+import entity.EnermyList;
 import entity.Player;
 import gui.Sound;
 
@@ -38,11 +38,11 @@ public class GamePanel extends JPanel implements Runnable {
 	Sound sound = new Sound();
 	
 	boolean isShooting = false; // có đang nhấn chuột hay không ?
+	int damage = 1;
 	
 	Player player = new Player(this, 500, 570, 10);
 	BulletList bulletList = new BulletList(this);
-	GiftList giftList = new GiftList(this);
-	//ChickenItemList items = new ChickenItemList(this);
+	EnermyList enermyList = new EnermyList(this);
 	
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -98,8 +98,9 @@ public class GamePanel extends JPanel implements Runnable {
 		//Put Update function here
 		player.update();
 		bulletList.update();
-		giftList.update();
-		//items.update();
+		enermyList.update();
+
+		checkBulletIntersectEnermy();
 	}
 
 	public void paintComponent(Graphics g) {
@@ -110,8 +111,7 @@ public class GamePanel extends JPanel implements Runnable {
 		drawBackground(g2);
 		player.draw(g2);
 		bulletList.draw(g2);
-		giftList.draw(g2);
-	//	items.draw(g2);
+		enermyList.draw(g2);
 		
 		g2.dispose();
 	}
@@ -160,5 +160,24 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public boolean getIsShooting() {
 		return isShooting;
+	}
+	
+	public void checkBulletIntersectEnermy() {
+		for (int i =0; i<bulletList.getSize(); i++) {
+			for (int j = 0 ; j < enermyList.getSize(); j++) {
+				if (bulletList.getBulletFromIndex(i).getBulletBound().intersects(enermyList.getEnermyFromIndex(j).getEnermyBound())) {
+					bulletList.getBulletFromIndex(i).setIsIntersectEnermy();
+					enermyList.getEnermyFromIndex(j).setIsIntersectBullet();
+				}
+			}
+		}
+	}
+	
+	public int getBulletDamge() {
+		return damage;
+	}
+	
+	public void setBulletDamge(int damage) {
+		this.damage = damage;
 	}
 }

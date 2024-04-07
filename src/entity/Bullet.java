@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -12,7 +13,9 @@ public class Bullet extends Entity {
 	private int type;
 	private int damage;
 	private int width, height; // cài đặt kích cỡ của viên đạn
+	private boolean isIntersectEnermy; // kiểm tra xem có chạm vào địch hay chưa
 	private void initVariable() {
+		isIntersectEnermy = false;
 		String path = "/image/bullet/" + type + ".png";
 
 		try {
@@ -52,5 +55,20 @@ public class Bullet extends Entity {
 	public void draw(Graphics2D g2) {
 		g2.drawImage(image, (int) x - gp.tileSize/2, (int) y, width, height, null);
 	}
-
+	
+	public Rectangle getBulletBound() {
+		return new Rectangle((int) x, (int) y, (int) width, (int) height);
+	}
+	
+	public void setIsIntersectEnermy () {
+		isIntersectEnermy = true;
+	}
+	
+	public boolean getIsIntersectEnermy () {
+		return isIntersectEnermy;
+	}
+	
+	public void setDamage() {
+		gp.setBulletDamge(damage);
+	}
 }
