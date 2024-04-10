@@ -36,14 +36,16 @@ public class GamePanel extends JPanel implements Runnable {
 	keyHandler keyH = new keyHandler();
 	mouseController Mouse = new mouseController(this);
 	Sound sound = new Sound();
-	
+
 	boolean isShooting = false; // có đang nhấn chuột hay không ?
+	boolean isRightClicked = false; // có nhấn  chuột phải hay không?
 	int damage = 1;
-	
+	int bulletType;
+
 	Player player = new Player(this, 500, 570, 10);
 	BulletList bulletList = new BulletList(this);
 	EnermyList enermyList = new EnermyList(this);
-	
+
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.black);
@@ -95,7 +97,7 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	public void update() {
-		//Put Update function here
+		// Put Update function here
 		player.update();
 		bulletList.update();
 		enermyList.update();
@@ -112,7 +114,7 @@ public class GamePanel extends JPanel implements Runnable {
 		player.draw(g2);
 		bulletList.draw(g2);
 		enermyList.draw(g2);
-		
+
 		g2.dispose();
 	}
 
@@ -145,39 +147,65 @@ public class GamePanel extends JPanel implements Runnable {
 	public void setPlayerLocation(float x, float y) { // cài đặt tọa độ máy bay
 		player.setLocation(x, y);
 	}
-	
+
 	public float getPlayerX() {
 		return player.getX();
 	}
-	
+
 	public float getPlayerY() {
 		return player.getY();
 	}
-	
+
 	public void setIsShooting(boolean status) {
 		isShooting = status;
 	}
-	
+
+	public boolean getIsRightClicked() {
+		return isRightClicked;
+	}
+
+	public void setIsRightClicked(boolean status) {
+		isRightClicked = status;
+	}
+
 	public boolean getIsShooting() {
 		return isShooting;
 	}
 	
-	public void checkBulletIntersectEnermy() {
-		for (int i =0; i<bulletList.getSize(); i++) {
-			for (int j = 0 ; j < enermyList.getSize(); j++) {
+	public void checkBulletIntersectEnermy() { // Kiểm tra xem đạn có chạm vào địch chưa
+		for (int i = 0; i < bulletList.getSize(); i++) {
+			for (int j = 0; j < enermyList.getSize(); j++) {
+				if (bulletList.getSize() == 0 || enermyList.getSize() == 0)
+					return;
 				if (bulletList.getBulletFromIndex(i).getBulletBound().intersects(enermyList.getEnermyFromIndex(j).getEnermyBound())) {
-					bulletList.getBulletFromIndex(i).setIsIntersectEnermy();
-					enermyList.getEnermyFromIndex(j).setIsIntersectBullet();
+					bulletList.getBulletFromIndex(i).setIsIntersectEnermy(); // đạn chạm địch
+					enermyList.getEnermyFromIndex(j).setIsIntersectBullet(); // địch chạm đạn
 				}
 			}
 		}
 	}
-	
+
 	public int getBulletDamge() {
 		return damage;
 	}
-	
-	public void setBulletDamge(int damage) {
+
+	public void setBulletDamge(int damage) { // dùng trong hàm bullet.initVariable
 		this.damage = damage;
 	}
+
+	public void setBulletType(int type) { // dùng trong hàm bullet.initVariable
+		this.bulletType = type;
+	}
+	
+	public void decreaseUltiShoot () { // Giảm số lượng ulti
+    	player.decreaseUltiShoot();
+    }
+    
+    public void increaseUltiShoot() { // tăng số lượng ulti
+    	player.increaseUltiShoot();
+    }
+    
+    public int getUltiShoot() { // lấy số lượng ulti
+    	return player.getUltiShoot();
+    }
 }

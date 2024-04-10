@@ -15,7 +15,8 @@ public class Bullet extends Entity {
 	private int width, height; // cài đặt kích cỡ của viên đạn
 	private boolean isIntersectEnermy; // kiểm tra xem có chạm vào địch hay chưa
 	private void initVariable() {
-		isIntersectEnermy = false;
+		isIntersectEnermy = false; setDamage();
+		setType();
 		String path = "/image/bullet/" + type + ".png";
 
 		try {
@@ -70,5 +71,13 @@ public class Bullet extends Entity {
 	
 	public void setDamage() {
 		gp.setBulletDamge(damage);
+	}
+	
+	public void setType() {
+		gp.setBulletType(type);
+	}
+	
+	public int getType() {
+		return type;
 	}
 }

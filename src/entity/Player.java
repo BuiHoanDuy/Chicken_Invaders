@@ -13,12 +13,12 @@ public class Player extends Entity {
     private int hp;
     private float attackCoolDown;
     private float attackCoolDownMax;
-    private int ultiShoot;
+    private int ultiShoot; // số lượng ulti còn lại
 
     private void initVariable() {
         point = 0;
         hp = 100;
-        ultiShoot = 0; // số lượng ulti
+        ultiShoot = 3; // số lượng ulti
 
         try {
             image = ImageIO.read(getClass().getResourceAsStream("/image/player/ship.png"));
@@ -59,5 +59,17 @@ public class Player extends Entity {
     
     public float getY() {
     	return y;
+    }
+   
+    public void decreaseUltiShoot () {
+    	ultiShoot --;
+    }
+    
+    public void increaseUltiShoot() {
+    	ultiShoot++;
+    }
+    
+    public int getUltiShoot() {
+    	return ultiShoot;
     }
 }

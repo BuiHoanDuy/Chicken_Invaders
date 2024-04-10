@@ -15,19 +15,22 @@ public class mouseController implements MouseMotionListener, MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
-
+		if (e.getButton() == MouseEvent.BUTTON3) {
+			gp.setIsRightClicked(true);
+		}
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		gp.setIsShooting(true);
+		if (e.getButton() == MouseEvent.BUTTON1) {
+			gp.setIsShooting(true);
+		}		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		gp.setIsShooting(false); 
-
+		gp.setIsRightClicked(false);
 	}
 
 	@Override

@@ -199,4 +199,5 @@ public class Enermy extends Entity {
 	public int getHP() {
 		return hp;
 	}
+	
 }
