@@ -26,13 +26,13 @@ public class ChickenItemList {
     }
 
     private boolean isDropItem() {
-        int rate = rand.nextInt(2);
-        if(rate == 1) return true;
-        else return false;
+        int rate = rand.nextInt(3);
+        if(rate == 0) return false;
+        else return true;
     }
 
     private void spawnItems(float x, float y) {
-        // int num = rand.nextInt(4) + 1;
+        // int num = rand.nextInt(3) + 1;
         // for(int i = 0; i < num; ++i) {
             int type = rand.nextInt(8);
             items.add(new ChichkenItem(gp, x, y, 1, type));
@@ -43,17 +43,21 @@ public class ChickenItemList {
         
         if (loadingTime >= loadingTimeMax) {
             loadingTime = 0;
-            if(isDropItem()) {
+            // if(isDropItem()) {
                 this.spawnItems(500, 200);
-            }
+            // }
 		} else
 			++loadingTime;
 
         for(int i = 0; i < items.size(); ++i) {
-            items.get(i).update();
-            // items.get(i).update(-0.1, 0, 10, 100);
-            if(items.get(i).y >= 800) {
+            items.get(i).update(i % 2 == 0);
+            if(items.get(i).y >= 500) {
+                while(items.get(i).splash() == false) {
+                }
                 items.remove(i);
+                // if(items.get(i).splash() == true) {
+                //     items.remove(i);
+                // }
             }
         }
     }

@@ -35,12 +35,19 @@ public class Player extends Entity {
     
 
     public void updateWindowCollision() {
-
+        // top
+        if(y <= 0) ++y;
+        // bottom
+        if(y >= 720) --y;
+        // left
+        if(x <= 0) ++x;
+        // right
+        if(x >= 1008) --x;
     }
 
     @Override
     public void update() {
-        
+        this.updateWindowCollision();
     }
 
     @Override

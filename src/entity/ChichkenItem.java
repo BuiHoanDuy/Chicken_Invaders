@@ -11,6 +11,9 @@ public class ChichkenItem extends Entity {
     int type;
     int point;
     double alpha;
+    int waitingTime;
+    boolean isSplashUp;
+    boolean isSplashDown;
     
 
     private void initVariable() {
@@ -21,36 +24,54 @@ public class ChichkenItem extends Entity {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        point = type;
+        alpha = -0.1;
+        waitingTime = 3000;
+        isSplashUp = false;
+        isSplashDown = false;
     }
 
     public ChichkenItem(GamePanel gp, float x, float y, float speed, int type) {
         super(gp, x, y, speed);
         this.type = type;
-        this.point = type;
-        alpha = -0.1;
         this.initVariable();
     }
 
-    @Override
-    public void update() {
-        // TODO Auto-generated method stub
-        x += 1;
-        y += alpha * x * x + 100 * x;
-        // alpha -= 0.1;
+    private void splashUp() {
+        if(y > 450) --y;
+        else isSplashUp = true;
+    }
+
+    private void splashDown() {
+        if(y < 490) ++y;
+        else isSplashDown = true;
+    }
+
+    public boolean splash() {
+        if(isSplashUp == false) {
+            this.splashUp();
+            return false;
+        }
+        
+        if(isSplashDown == false) {
+            this.splashDown();
+            return false;
+        }
+
+        if(waitingTime > 0) {
+            --waitingTime;
+            return false;
+        } else return true;
     }
 
     @Override
-    public void update(double a, double b, double c, int steps) {
-        // vẽ đồ thị đường cong cho vật thể
+    public void update(boolean key) {
         // TODO Auto-generated method stub
-        for(int i = 1; i <= steps; ++i) {
-            // x += i;
-            // y = a * x * x + b * x + c;
-            float newX = x + 1; // Đơn giản chỉ là di chuyển sang phải
-            float newY = (float)(a * newX * newX + b * newX + c);
-            x = newX;
-            y = newY;
-        }
+        if(key) {
+            x += speed * 1.5 + alpha;
+        } else x -= speed * 1.5 + alpha;
+        y += Math.pow(alpha, 2) + speed;
+        alpha += 0.05;
     }
 
     @Override
