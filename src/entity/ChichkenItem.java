@@ -65,13 +65,11 @@ public class ChichkenItem extends Entity {
     }
 
     @Override
-    public void update(boolean key) {
-        // TODO Auto-generated method stub
-        if(key) {
-            x += speed * 1.5 + alpha;
-        } else x -= speed * 1.5 + alpha;
-        y += Math.pow(alpha, 2) + speed;
-        alpha += 0.05;
+    public void update() {
+        y += speed;
+        // if(y >= 500) {
+            // this.splash();
+        // }
     }
 
     @Override

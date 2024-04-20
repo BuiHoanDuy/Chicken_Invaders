@@ -99,7 +99,7 @@ public class GamePanel extends JPanel implements Runnable {
 		player.update();
 		bulletList.update();
 		// giftList.update();
-		items.update();
+		items.update(500, 200);
 	}
 
 	public void paintComponent(Graphics g) {

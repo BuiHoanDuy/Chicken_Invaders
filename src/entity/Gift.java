@@ -26,6 +26,38 @@ public class Gift extends Entity {
         this.initVariable();
     }
 
+    
+
+    // private void rotate() {
+    //     image.
+    // }
+
+
+    // @Override
+    // protected void paintComponent(Graphics g) {
+    //     super.paintComponent(g);
+    //     Graphics2D g2d = (Graphics2D) g.create();
+        
+    //     // Get image dimensions
+    //     int imageWidth = image.getWidth();
+    //     int imageHeight = image.getHeight();
+        
+    //     // Calculate the center of the image
+    //     int centerX = imageWidth / 2;
+    //     int centerY = imageHeight / 2;
+        
+    //     // Create an AffineTransform for rotation
+    //     AffineTransform transform = new AffineTransform();
+        
+    //     // Rotate the image around its center (you can change the angle as needed)
+    //     transform.rotate(Math.toRadians(45), centerX, centerY);
+        
+    //     // Apply the transformation to the Graphics2D object
+    //     g2d.drawImage(image, transform, null);
+        
+    //     g2d.dispose();
+    // }
+
     @Override
     public void update() {
         // TODO Auto-generated method stub

@@ -32,32 +32,30 @@ public class ChickenItemList {
     }
 
     private void spawnItems(float x, float y) {
-        // int num = rand.nextInt(3) + 1;
-        // for(int i = 0; i < num; ++i) {
             int type = rand.nextInt(8);
-            items.add(new ChichkenItem(gp, x, y, 1, type));
-        // }
+            items.add(new ChichkenItem(gp, x, y, 3, type));
     }
 
-    public void update() {
-        
+    public void update(float x, float y) {
         if (loadingTime >= loadingTimeMax) {
-            loadingTime = 0;
-            // if(isDropItem()) {
-                this.spawnItems(500, 200);
-            // }
+            if(isDropItem()) {
+                this.spawnItems(x, y);
+                loadingTime = 0;
+            }
 		} else
 			++loadingTime;
 
+
+        // if(isDropItem()) {
+        //     this.spawnItems(x, y);
+        // }
+
         for(int i = 0; i < items.size(); ++i) {
-            items.get(i).update(i % 2 == 0);
+            items.get(i).update();
             if(items.get(i).y >= 500) {
-                while(items.get(i).splash() == false) {
-                }
-                items.remove(i);
-                // if(items.get(i).splash() == true) {
-                //     items.remove(i);
+                // while(items.get(i).splash() == false) {
                 // }
+                items.remove(i);
             }
         }
     }
