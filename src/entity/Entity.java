@@ -22,4 +22,5 @@ public abstract class Entity {
     public void draw(Graphics2D g2) {}
     public void update() {}
     public void update(float a, float b, float c, int steps) {}
+	public void update(int wave) {}
 }

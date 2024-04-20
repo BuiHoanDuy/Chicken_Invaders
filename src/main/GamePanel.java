@@ -102,7 +102,11 @@ public class GamePanel extends JPanel implements Runnable {
 		bulletList.update();
 		enermyList.update();
 
-		checkBulletIntersectEnermy();
+		try {
+			checkBulletIntersectEnermy();			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	public void paintComponent(Graphics g) {

@@ -25,7 +25,8 @@ public class Enermy extends Entity {
 	private boolean isIntersectBullet; // kiểm tra xem có bị dính đạn hay chưa
 
 	private void initVariable() {
-		width = (int) (gp.tileSize*1.5); height = (int) (gp.tileSize*1.5);
+		width = (int) (gp.tileSize * 1.5);
+		height = (int) (gp.tileSize * 1.5);
 		isIntersectBullet = false;
 		changePosition = false;
 		rand = new Random();
@@ -39,11 +40,14 @@ public class Enermy extends Entity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			width = (int) (gp.tileSize * 2);
+			height = (int) (gp.tileSize);
 			numOfFrame = 3;
 			hp = 15;
 			break;
 		case 1:
-			width = (int) (gp.tileSize*1.5); height = (int) (gp.tileSize);
+			width = (int) (gp.tileSize * 1.5);
+			height = (int) (gp.tileSize);
 			try {
 				image = ImageIO.read(getClass().getResourceAsStream("/image/enermy/1.png"));
 			} catch (IOException e) {
@@ -60,7 +64,7 @@ public class Enermy extends Entity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			hp = 3;
+			hp = 2;
 			numOfFrame = 1;
 			break;
 		case 3:
@@ -70,7 +74,7 @@ public class Enermy extends Entity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			hp = 5;
+			hp = 2;
 			numOfFrame = 1;
 			break;
 		case 4:
@@ -80,7 +84,7 @@ public class Enermy extends Entity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			hp = 7;
+			hp = 2;
 			numOfFrame = 1;
 			break;
 		case 5:
@@ -90,8 +94,8 @@ public class Enermy extends Entity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			hp = 10;
-			numOfFrame = 2;
+			hp = 4;
+			numOfFrame = 1;
 			break;
 		case 6:
 			try {
@@ -100,7 +104,7 @@ public class Enermy extends Entity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			hp = 20;
+			hp = 5;
 			numOfFrame = 2;
 			break;
 		case 7:
@@ -110,11 +114,55 @@ public class Enermy extends Entity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			width = (int) (gp.tileSize*4); height = (int) (gp.tileSize*4);
+			hp = 5;
+			numOfFrame = 1;
+			break;
+		case 8:
+			try {
+				image = ImageIO.read(getClass().getResourceAsStream("/image/enermy/8.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			hp = 6;
+			numOfFrame = 2;
+			break;
+		case 9:
+			try {
+				image = ImageIO.read(getClass().getResourceAsStream("/image/enermy/9.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			width = (int) (gp.tileSize * 4);
+			height = (int) (gp.tileSize * 3);
+			hp = 10;
+			numOfFrame = 1;
+			break;
+		case 10:
+			try {
+				image = ImageIO.read(getClass().getResourceAsStream("/image/enermy/10.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			width = (int) (gp.tileSize * 4);
+			height = (int) (gp.tileSize * 4);
 			hp = 25;
 			numOfFrame = 4;
 			break;
+
+		case 11:
+			try {
+				image = ImageIO.read(getClass().getResourceAsStream("/image/enermy/egg2.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			numOfFrame = 1;
+			break;
 		}
+
 		loadAnimation();
 	}
 
@@ -125,7 +173,18 @@ public class Enermy extends Entity {
 		this.initVariable();
 	}
 
-	public Enermy(GamePanel gp, float x, float y, float xDes, float yDes, float speed, int type, int hp) {
+	public Enermy(GamePanel gp, float x, float y, float xDes, float yDes, float speed, int type) {
+		super(gp, x, y, speed);
+		this.type = type;
+		this.xDes = xDes;
+		this.yDes = yDes;
+		this.x0 = x;
+		y0 = y;
+		this.initVariable();
+	}
+
+	public Enermy(GamePanel gp, float x, float y, float xDes, float yDes, float speed, int type, int hp,
+			float widthTile, float heightTile) {
 		super(gp, x, y, speed);
 		this.type = type;
 		this.xDes = xDes;
@@ -134,34 +193,72 @@ public class Enermy extends Entity {
 		y0 = y;
 		this.hp = hp;
 		this.initVariable();
+		width = (int) (gp.tileSize * widthTile);
+		height = (int) (gp.tileSize * heightTile);
+	}
+
+	public void changeDirection(int direction) {
+		switch (direction) {
+		case 1: // left
+			x--;
+			break;
+		case 2: // right
+			x++;
+			break;
+		case 3: // up
+			y++;
+			break;
+		case 4: // down
+			y--;
+			break;
+		case 5: // up right
+			x++;
+			y++;
+			break;
+		case 6: // up left
+			x--;
+			y++;
+			break;
+		case 7: // down right
+			x++;
+			y--;
+			break;
+		case 8: // down left
+			x--;
+			y--;
+			break;
+		}
 	}
 
 	@Override
-	public void update() {
-		if (t <= 1 && changePosition == false) {
-			t += 0.007;
-			x = x0 + (xDes - x0) * t;
-			y = y0 + (yDes - y0) * t;
-			if (t == 1)
-				changePosition = true;
-		} else {
+	public void update(int wave) {
+		if (wave == 11) {
+			// chưa hoàn thành, chờ hoàn thành hàm check collision 
 			int num = 0;
-			if (x > 10 && x < 1000 && y > 0 && y < 700) {
-				num = rand.nextInt(8);
+			changeDirection(num);
+			num = rand.nextInt(8) + 1;
+		} else {
+			if (t <= 1 && changePosition == false) {
+				t += 0.007;
+				x = x0 + (xDes - x0) * t;
+				y = y0 + (yDes - y0) * t;
+				if (t == 1)
+					changePosition = true;
 			} else {
-				changePosition = false;
-			}
-			if (num == 0) {
-				x--;
-			} else if (num == 1) {
-				x++;
-			} else if (num == 2) {
-				y--;
-			} else if (num == 3) {
-				y++;
+				int num = 0;
+				num = rand.nextInt(8);
+				if (num == 0) {
+					x--;
+				} else if (num == 1) {
+					x++;
+				} else if (num == 2) {
+					y--;
+				} else if (num == 3) {
+					y++;
+				}
 			}
 		}
-		
+
 		upDateWhenIntersect();
 	}
 
@@ -170,8 +267,7 @@ public class Enermy extends Entity {
 		if (indexToLoadAnimation / 10 >= animation.size()) {
 			indexToLoadAnimation = 0;
 		}
-		g2.drawImage(animation.get(indexToLoadAnimation / 10), (int) x - gp.tileSize, (int) y,
-				width, height, null);
+		g2.drawImage(animation.get(indexToLoadAnimation / 10), (int) x - gp.tileSize, (int) y, width, height, null);
 		indexToLoadAnimation++;
 	}
 
@@ -195,9 +291,9 @@ public class Enermy extends Entity {
 			isIntersectBullet = false;
 		}
 	}
-	
+
 	public int getHP() {
 		return hp;
 	}
-	
+
 }

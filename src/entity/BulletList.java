@@ -8,7 +8,7 @@ import main.GamePanel;
 public class BulletList {
 	private GamePanel gp;
 	private ArrayList<Bullet> bulletList; // danh sách các viên đạn đang có trên game
-	private int momentType = 3; // loại đạn hiện tại máy bay đang sử dụng, mặc định ban đầu là 1;
+	private int momentType = 5; // loại đạn hiện tại máy bay đang sử dụng, mặc định ban đầu là 1;
 	private float speed = 8; // tốc độ dùng để cài đặt cho đạn, thay đổi theo cấp độ / loại đạn. Mặc định là
 								// 8.
 	private int damage = 1; // dame dùng để cài đặt cho đạn, thay đổi theo cấp độ / loại đạn. Mặc định là 1.
@@ -248,7 +248,7 @@ public class BulletList {
 					bulletList.add(new Bullet(this.gp, gp.getPlayerX() - 20, gp.getPlayerY() - gp.tileSize * 15, 0, 54,
 							damage, gp.tileSize * 2, gp.tileSize * 15));
 				}
-			} 
+			}
 		}
 	}
 
@@ -265,17 +265,16 @@ public class BulletList {
 		if (gp.getIsRightClicked() == true && gp.getUltiShoot() > 0) {
 			loadingTimeMax = 0;
 			damage = 50;
-			bulletList.add(new Bullet(this.gp, gp.getPlayerX() , gp.getPlayerY() - 50, 3, 6, damage,
-					gp.tileSize , gp.tileSize * 6));
-			
+			bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY() - 50, 3, 6, damage, gp.tileSize,
+					gp.tileSize * 6));
+
 			for (int i = 0; i < 30; i++) {
-				bulletList.add(new Bullet(this.gp, 35*i, 800, 3, 61, damage,
-					gp.tileSize / 2, gp.tileSize * 2));
+				bulletList.add(new Bullet(this.gp, 35 * i, 800, 3, 61, damage, gp.tileSize / 2, gp.tileSize * 2));
 			}
 			gp.setIsRightClicked(false);
 			gp.decreaseUltiShoot();
 		}
-		
+
 		// di chuyển và thu hồi đạn khi lên khỏi màn hình
 		for (int i = 0; i < bulletList.size(); i++) {
 			bulletList.get(i).update();
@@ -296,22 +295,20 @@ public class BulletList {
 	}
 
 	public void draw(Graphics2D g2) {
-	    int i = 0;
-	    while (i < bulletList.size()) {
-	        bulletList.get(i).draw(g2);
-	        if (bulletList.get(i).getIsIntersectEnermy()) {
-	        	try {
-					 bulletList.remove(i);
-				} catch (Exception e) {
-				}
-	           
-	        } else {
-	        	try {
-					 i++;
-				} catch (Exception e) {
-				}
-	        }
-	    }
+		int i = 0;
+		try {
+			while (i < bulletList.size()) {
+			bulletList.get(i).draw(g2);
+			if (bulletList.get(i).getIsIntersectEnermy()) {
+				bulletList.remove(i);
+			} else {
+				i++;
+			}
+		}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 	}
 
 	public int getSize() {
