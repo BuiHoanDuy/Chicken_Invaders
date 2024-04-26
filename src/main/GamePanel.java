@@ -12,9 +12,12 @@ import javax.swing.JPanel;
 
 import controller.keyHandler;
 import controller.mouseController;
+
 import entity.BulletList;
-import entity.Enermy;
-import entity.EnermyList;
+import entity.Enemy;
+import entity.EnemyList;
+import entity.ChickenItemList;
+import entity.GiftList;
 import entity.Player;
 import gui.Sound;
 
@@ -43,8 +46,12 @@ public class GamePanel extends JPanel implements Runnable {
 	int bulletType;
 
 	Player player = new Player(this, 500, 570, 10);
+	EnemyList enemyList = new EnemyList(this);
 	BulletList bulletList = new BulletList(this);
-	EnermyList enermyList = new EnermyList(this);
+
+	GiftList giftList = new GiftList(this);
+	ChickenItemList items = new ChickenItemList(this);
+	
 
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -100,13 +107,17 @@ public class GamePanel extends JPanel implements Runnable {
 		// Put Update function here
 		player.update();
 		bulletList.update();
-		enermyList.update();
+
+		enemyList.update();
 
 		try {
 			checkBulletIntersectEnermy();			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+		// giftList.update();
+		items.update(500, 200);
+
 	}
 
 	public void paintComponent(Graphics g) {
@@ -117,7 +128,9 @@ public class GamePanel extends JPanel implements Runnable {
 		drawBackground(g2);
 		player.draw(g2);
 		bulletList.draw(g2);
-		enermyList.draw(g2);
+		enemyList.draw(g2);
+		// giftList.draw(g2);
+		items.draw(g2);
 
 		g2.dispose();
 	}
@@ -178,12 +191,12 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public void checkBulletIntersectEnermy() { // Kiểm tra xem đạn có chạm vào địch chưa
 		for (int i = 0; i < bulletList.getSize(); i++) {
-			for (int j = 0; j < enermyList.getSize(); j++) {
-				if (bulletList.getSize() == 0 || enermyList.getSize() == 0)
+			for (int j = 0; j < enemyList.getSize(); j++) {
+				if (bulletList.getSize() == 0 || enemyList.getSize() == 0)
 					return;
-				if (bulletList.getBulletFromIndex(i).getBulletBound().intersects(enermyList.getEnermyFromIndex(j).getEnermyBound())) {
+				if (bulletList.getBulletFromIndex(i).getBulletBound().intersects(enemyList.getEnermyFromIndex(j).getEnermyBound())) {
 					bulletList.getBulletFromIndex(i).setIsIntersectEnermy(); // đạn chạm địch
-					enermyList.getEnermyFromIndex(j).setIsIntersectBullet(); // địch chạm đạn
+					enemyList.getEnermyFromIndex(j).setIsIntersectBullet(); // địch chạm đạn
 				}
 			}
 		}

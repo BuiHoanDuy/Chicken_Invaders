@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 
 import main.GamePanel;
 
-public class Enermy extends Entity {
+public class Enemy extends Entity {
 	private float xDes, yDes, x0, y0;
 	private int type;
 	private int hp;
@@ -166,14 +166,14 @@ public class Enermy extends Entity {
 		loadAnimation();
 	}
 
-	public Enermy(GamePanel gp, float x, float y, float speed, int type, int hp) {
+	public Enemy(GamePanel gp, float x, float y, float speed, int type, int hp) {
 		super(gp, x, y, speed);
 		this.type = type;
 		this.hp = hp;
 		this.initVariable();
 	}
 
-	public Enermy(GamePanel gp, float x, float y, float xDes, float yDes, float speed, int type) {
+	public Enemy(GamePanel gp, float x, float y, float xDes, float yDes, float speed, int type) {
 		super(gp, x, y, speed);
 		this.type = type;
 		this.xDes = xDes;
@@ -183,7 +183,7 @@ public class Enermy extends Entity {
 		this.initVariable();
 	}
 
-	public Enermy(GamePanel gp, float x, float y, float xDes, float yDes, float speed, int type, int hp,
+	public Enemy(GamePanel gp, float x, float y, float xDes, float yDes, float speed, int type, int hp,
 			float widthTile, float heightTile) {
 		super(gp, x, y, speed);
 		this.type = type;
