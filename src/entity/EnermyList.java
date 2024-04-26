@@ -10,11 +10,11 @@ import main.GamePanel;
 public class EnermyList {
 	GamePanel gp;
 	ArrayList<Enermy> enermyList;
-	int wave = 5; // màn chơi hiện tại
-	int waveSize; // số lượng con gà đã bị giết, nếu chưa giết thì sẽ render ra con gà khác để đủ
+	private int wave = 1; // màn chơi hiện tại
+	private int waveSize; // số lượng con gà đã bị giết, nếu chưa giết thì sẽ render ra con gà khác để đủ
 					// số lượng gà muốn xuất hiện thì thôi
-	int count = 0; // dùng để đếm số vòng lặp để render ra con gà sau số vòng lặp nhất định
-	int waveNum = 0; // dùng cho màn 4, số lượng đợt gà đã render ra
+	private int count = 0; // dùng để đếm số vòng lặp để render ra con gà sau số vòng lặp nhất định
+	private int waveNum = 0; // dùng cho màn 4, số lượng đợt gà đã render ra
 	private Random rand = new Random();
 
 	public EnermyList(GamePanel gp) {

@@ -8,15 +8,15 @@ import main.GamePanel;
 public class BulletList {
 	private GamePanel gp;
 	private ArrayList<Bullet> bulletList; // danh sách các viên đạn đang có trên game
-	private int momentType = 5; // loại đạn hiện tại máy bay đang sử dụng, mặc định ban đầu là 1;
+	private int momentType = 4; // loại đạn hiện tại máy bay đang sử dụng, mặc định ban đầu là 1;
 	private float speed = 8; // tốc độ dùng để cài đặt cho đạn, thay đổi theo cấp độ / loại đạn. Mặc định là
 								// 8.
 	private int damage = 1; // dame dùng để cài đặt cho đạn, thay đổi theo cấp độ / loại đạn. Mặc định là 1.
 
 	private int loadingTime = 0; // tốc độ ra đạn, sau mỗi vòng lặp thì tăng lên 1
 	private int loadingTimeMax = 15; // loadingTime == loadingTimeMax, loadingTime = 0;
-	int bulletCountLoop = 0; // dùng để deley đạn sấm sét, type 5.
-	int distanceToLevel6; // dùng để quay lại level đạn trước khi bật ulti
+	private int bulletCountLoop = 0; // dùng để deley đạn sấm sét, type 5.
+	private int distanceToLevel6; // dùng để quay lại level đạn trước khi bật ulti
 
 	private int level = 5; // cấp đạn.
 
