@@ -53,8 +53,10 @@ public class ChickenItemList {
         for(int i = 0; i < items.size(); ++i) {
             items.get(i).update();
             if(items.get(i).y >= 500) {
-                // while(items.get(i).splash() == false) {
-                // }
+                while(true) {
+                    if(items.get(i).waiting() == true) break;
+                    else continue;
+                }
                 items.remove(i);
             }
         }

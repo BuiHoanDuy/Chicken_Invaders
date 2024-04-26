@@ -12,6 +12,7 @@ public class ChichkenItem extends Entity {
     int point;
     double alpha;
     int waitingTime;
+    int waitingTimeMax;
     boolean isSplashUp;
     boolean isSplashDown;
     
@@ -26,7 +27,8 @@ public class ChichkenItem extends Entity {
         }
         point = type;
         alpha = -0.1;
-        waitingTime = 3000;
+        waitingTimeMax = 3000;
+        waitingTime = 0;
         isSplashUp = false;
         isSplashDown = false;
     }
@@ -60,6 +62,13 @@ public class ChichkenItem extends Entity {
 
         if(waitingTime > 0) {
             --waitingTime;
+            return false;
+        } else return true;
+    }
+
+    public boolean waiting() {
+        if(waitingTime <= waitingTimeMax) {
+            waitingTime += 1;
             return false;
         } else return true;
     }
