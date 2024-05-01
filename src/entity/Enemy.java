@@ -289,6 +289,7 @@ public class Enemy extends Entity {
 		if (isIntersectBullet == true) {
 			hp -= gp.getBulletDamge();
 			isIntersectBullet = false;
+			isIntersectBullet = false;
 		}
 	}
 

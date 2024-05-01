@@ -107,11 +107,12 @@ public class GamePanel extends JPanel implements Runnable {
 		// Put Update function here
 		player.update();
 		bulletList.update();
-
 		enemyList.update();
 
 		try {
-			checkBulletIntersectEnermy();			
+			checkBulletIntersectEnermy();	
+			checkPlayerIntersectEnermy();
+			checkPlayerIntersectGift();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -201,7 +202,30 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 		}
 	}
+	
+	public void checkPlayerIntersectEnermy() { // Kiểm tra xem máy bay có chạm vào địch chưa
+			for (int j = 0; j < enemyList.getSize(); j++) {
+				if (enemyList.getSize() == 0)
+					return;
+				if (player.getPlayerBound().intersects(enemyList.getEnermyFromIndex(j).getEnermyBound())) {
+					player.setIsIntersectEnermy(); // máy bay chạm địch
+					bulletList.decreaseLevel(); // giảm cấp đạn về 1
+				}
+		}
+	}
 
+	public void checkPlayerIntersectGift() { // Kiểm tra xem máy bay có chạm vào quà chưa
+		for (int j = 0; j < giftList.getSize(); j++) {
+			if (giftList.getSize() == 0)
+				return;
+			if (player.getPlayerBound().intersects(giftList.getGiftFromIndex(j).getGiftBound())) {
+				player.setIsIntersectGift(); // máy bay chạm quà
+				giftList.getGiftFromIndex(j).upDateWhenIntersectPlayer();
+				bulletList.setMomentType(giftList.getType());
+			}
+	}
+}
+	
 	public int getBulletDamge() {
 		return damage;
 	}

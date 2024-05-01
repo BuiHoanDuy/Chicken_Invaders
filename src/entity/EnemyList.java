@@ -8,10 +8,10 @@ import java.util.Random;
 import main.GamePanel;
 
 public class EnemyList {
-	GamePanel gp;
+	private GamePanel gp;
 	
-	ArrayList<Enemy> enermyList;
-	private int wave = 1; // màn chơi hiện tại
+	private ArrayList<Enemy> enermyList;
+	private int wave = 7; // màn chơi hiện tại
 	private int waveSize; // số lượng con gà đã bị giết, nếu chưa giết thì sẽ render ra con gà khác để đủ
 					// số lượng gà muốn xuất hiện thì thôi
 	private int count = 0; // dùng để đếm số vòng lặp để render ra con gà sau số vòng lặp nhất định
@@ -92,7 +92,7 @@ public class EnemyList {
 			break;
 		case 5:
 			count = 0;
-			if (waveNum <= 1) {
+			if (waveNum < 1) {
 				createWave5();
 				waveNum++;
 			} else if (waveNum > 1 && enermyList.isEmpty()) {
@@ -183,11 +183,11 @@ public class EnemyList {
 		if (count % 800 == 0) {
 			waveNum++;
 			for (int i = 0; i <= 5; i++) {
-				enermyList.add(new Enemy(this.gp, 96 + (144 * i), -96, 96 + (144 * i), 432, 1, 5));
-				enermyList.add(new Enemy(this.gp, 96 + (144 * i), -1, 96 + (144 * i), 528, 1, 5));
-				enermyList.add(new Enemy(this.gp, 144 + (144 * i), -48, 144 + (144 * i), 480, 1, 8));
-				enermyList.add(new Enemy(this.gp, 192 + (144 * i), -96, 192 + (144 * i), 432, 1, 5));
-				enermyList.add(new Enemy(this.gp, 192 + (144 * i), -1, 192 + (144 * i), 528, 1, 5));
+				enermyList.add(new Enemy(this.gp, 96 + (144 * i), -96, 96 + (144 * i), 332, 1, 5));
+				enermyList.add(new Enemy(this.gp, 96 + (144 * i), -1, 96 + (144 * i), 428, 1, 5));
+				enermyList.add(new Enemy(this.gp, 144 + (144 * i), -48, 144 + (144 * i), 380, 1, 8));
+				enermyList.add(new Enemy(this.gp, 192 + (144 * i), -96, 192 + (144 * i), 332, 1, 5));
+				enermyList.add(new Enemy(this.gp, 192 + (144 * i), -1, 192 + (144 * i), 428, 1, 5));
 			}
 		}
 	}

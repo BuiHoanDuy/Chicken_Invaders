@@ -8,7 +8,7 @@ import main.GamePanel;
 public class BulletList {
 	private GamePanel gp;
 	private ArrayList<Bullet> bulletList; // danh sách các viên đạn đang có trên game
-	private int momentType = 4; // loại đạn hiện tại máy bay đang sử dụng, mặc định ban đầu là 1;
+	private int momentType = 1; // loại đạn hiện tại máy bay đang sử dụng, mặc định ban đầu là 1;
 	private float speed = 8; // tốc độ dùng để cài đặt cho đạn, thay đổi theo cấp độ / loại đạn. Mặc định là
 								// 8.
 	private int damage = 1; // dame dùng để cài đặt cho đạn, thay đổi theo cấp độ / loại đạn. Mặc định là 1.
@@ -16,9 +16,8 @@ public class BulletList {
 	private int loadingTime = 0; // tốc độ ra đạn, sau mỗi vòng lặp thì tăng lên 1
 	private int loadingTimeMax = 15; // loadingTime == loadingTimeMax, loadingTime = 0;
 	private int bulletCountLoop = 0; // dùng để deley đạn sấm sét, type 5.
-	private int distanceToLevel6; // dùng để quay lại level đạn trước khi bật ulti
 
-	private int level = 5; // cấp đạn.
+	private int level = 1; // cấp đạn.
 
 	public BulletList(GamePanel gp) {
 		this.gp = gp;
@@ -255,11 +254,15 @@ public class BulletList {
 	public void update() {
 
 		// thời gian load đạn
-		if (loadingTime >= loadingTimeMax) { // reset lại loading time
-			loadingTime = 0;
-			createBulletList();
-		} else
-			loadingTime++;
+		if (gp.getIsShooting()) {
+			if (loadingTime >= loadingTimeMax) { // reset lại loading time
+				loadingTime = 0;
+				createBulletList();
+			} else
+				loadingTime++;
+		} else {
+			loadingTime = 15;
+		}
 
 		// check ulti
 		if (gp.getIsRightClicked() == true && gp.getUltiShoot() > 0) {
@@ -298,17 +301,17 @@ public class BulletList {
 		int i = 0;
 		try {
 			while (i < bulletList.size()) {
-			bulletList.get(i).draw(g2);
-			if (bulletList.get(i).getIsIntersectEnermy()) {
-				bulletList.remove(i);
-			} else {
-				i++;
+				bulletList.get(i).draw(g2);
+				if (bulletList.get(i).getIsIntersectEnermy()) {
+					bulletList.remove(i);
+				} else {
+					i++;
+				}
 			}
-		}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		
+
 	}
 
 	public int getSize() {
@@ -317,5 +320,20 @@ public class BulletList {
 
 	public Bullet getBulletFromIndex(int index) { // lấy viên đạn vị trí thứ i
 		return bulletList.get(index);
+	}
+
+	public void setMomentType(int i) {
+		if (momentType == i && level < 5 || i == 0 && level < 5) {
+			level++;
+		} else if (i == 0 && level >= 5) {
+		} 
+		else {
+			momentType = i;
+		}
+		System.out.println(level);
+	}
+	
+	public void decreaseLevel() {
+		level = 1;
 	}
 }
