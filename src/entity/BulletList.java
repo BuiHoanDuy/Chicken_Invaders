@@ -330,7 +330,6 @@ public class BulletList {
 		else {
 			momentType = i;
 		}
-		System.out.println(level);
 	}
 	
 	public void decreaseLevel() {

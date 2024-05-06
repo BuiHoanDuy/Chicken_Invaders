@@ -11,7 +11,7 @@ public class EnemyList {
 	private GamePanel gp;
 	
 	private ArrayList<Enemy> enermyList;
-	private int wave = 7; // màn chơi hiện tại
+	private int wave = 10; // màn chơi hiện tại
 	private int waveSize; // số lượng con gà đã bị giết, nếu chưa giết thì sẽ render ra con gà khác để đủ
 					// số lượng gà muốn xuất hiện thì thôi
 	private int count = 0; // dùng để đếm số vòng lặp để render ra con gà sau số vòng lặp nhất định
@@ -95,7 +95,7 @@ public class EnemyList {
 			if (waveNum < 1) {
 				createWave5();
 				waveNum++;
-			} else if (waveNum > 1 && enermyList.isEmpty()) {
+			} else if (waveNum >= 1 && enermyList.isEmpty()) {
 				wave++;
 				waveNum = 0;
 			}
@@ -134,14 +134,17 @@ public class EnemyList {
 		case 10:
 			if (waveSize <= 200) {
 				createWave10();
-			} else if (waveNum > 0 && enermyList.isEmpty()) {
-				wave++;
+			} else {
+				if (count % 1500 == 0) {
+					enermyList.clear();
+					wave++;
+				}
 			}
 			break;
 		case 11:
 			if (waveNum <= 0) {
 				createWave11();
-			} else if (waveNum > 0 && enermyList.isEmpty()) {
+			} else if (enermyList.isEmpty()) {
 				wave++;
 			}
 			break;
@@ -294,8 +297,8 @@ public class EnemyList {
 
 	public void createWave11() {
 		waveNum++;
-		enermyList.add(new Enemy(this.gp, -200, 432, 900, 240, 1, 10));
-		enermyList.add(new Enemy(this.gp, 1100, 288, 100, 144, 1, 10));
+		enermyList.add(new Enemy(this.gp, -200, 432, 890, 240, 1, 10));
+		enermyList.add(new Enemy(this.gp, 1100, 288, 10, 144, 1, 10));
 	}
 
 	public int getSize() {

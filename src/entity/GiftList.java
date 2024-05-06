@@ -10,7 +10,6 @@ public class GiftList {
 	private GamePanel gp;
 	private ArrayList<Gift> gifts;
 	private Random rand;
-	private int type; // Loại của item
 	private int loadingTime;
 	private int loadingTimeMax; // quãng thời gian tối thiểu để 2 hộp quà xuất hiện
 
@@ -34,9 +33,8 @@ public class GiftList {
 	private void spawnGifts() {
 		// random loại của hộp quà sẽ rơi
 		int num = rand.nextInt(16);
-		type  = (int) Math.ceil(num / 3);
 		// tỉ lệ rơi ra ngôi sao may mắn sẽ bằng 1/3 tỉ lệ rơi ra các vật phẩm còn lại
-		gifts.add(new Gift(gp, rand.nextInt(980) + 30, -100, 1, type));
+		gifts.add(new Gift(gp, rand.nextInt(980) + 30, -100, 1, (int) Math.ceil(num / 3)));
 	}
 
 	public void update() {
@@ -71,9 +69,5 @@ public class GiftList {
 	
 	public Gift getGiftFromIndex(int i) {
 		return gifts.get(i);
-	}
-	
-	public int getType() {
-		return type;
 	}
 }

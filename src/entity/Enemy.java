@@ -23,6 +23,7 @@ public class Enemy extends Entity {
 	private int numOfFrame;
 	private Random rand;
 	private boolean isIntersectBullet; // kiểm tra xem có bị dính đạn hay chưa
+	private int num = 3; // dùng để đổi hướng di chuyển cho con boss
 
 	private void initVariable() {
 		width = (int) (gp.tileSize * 1.5);
@@ -183,8 +184,8 @@ public class Enemy extends Entity {
 		this.initVariable();
 	}
 
-	public Enemy(GamePanel gp, float x, float y, float xDes, float yDes, float speed, int type, int hp,
-			float widthTile, float heightTile) {
+	public Enemy(GamePanel gp, float x, float y, float xDes, float yDes, float speed, int type, int hp, float widthTile,
+			float heightTile) {
 		super(gp, x, y, speed);
 		this.type = type;
 		this.xDes = xDes;
@@ -200,50 +201,66 @@ public class Enemy extends Entity {
 	public void changeDirection(int direction) {
 		switch (direction) {
 		case 1: // left
-			x--;
+			x -= speed; 
 			break;
-		case 2: // right
-			x++;
+		case 2: // up left
+			x -= speed;
+			y += speed;
 			break;
-		case 3: // up
-			y++;
+		case 3: // down left
+			x -= speed;
+			y -= speed;
 			break;
 		case 4: // down
-			y--;
+			y -= speed;
 			break;
-		case 5: // up right
-			x++;
-			y++;
+		case 5: // up
+			y += speed;
 			break;
-		case 6: // up left
-			x--;
-			y++;
+		case 6: // right
+			x += speed;
 			break;
-		case 7: // down right
-			x++;
-			y--;
+		case 7: // up right
+			x += speed;
+			y += speed;
 			break;
-		case 8: // down left
-			x--;
-			y--;
+		case 8: // down right
+			x += speed;
+			y -= speed;
 			break;
 		}
 	}
 
+	public void randomNum() {
+		int a[] = {1,2,5,6,7}; // 2 mảng dùng để thay đổi hướng di chuyển của con boss
+		int b[] = {1,3,4,6,8};
+		if (y < 0) {
+			num = a[rand.nextInt(5)];
+		} else if (y > 500) {
+			num = b[rand.nextInt(5)];
+		}
+		if(x>=900) {
+			num = rand.nextInt(5) + 1;
+		} else if (x<=0) {
+			num = rand.nextInt(6) + 3;
+		}
+	}
+	
 	@Override
 	public void update(int wave) {
-		if (wave == 11) {
-			// chưa hoàn thành, chờ hoàn thành hàm check collision 
-			int num = 0;
-			changeDirection(num);
-			num = rand.nextInt(8) + 1;
+		if (t <= 1 && changePosition == false) {
+			t += 0.007;
+			x = x0 + (xDes - x0) * t;
+			y = y0 + (yDes - y0) * t;
+			if (t == 1)
+				changePosition = true;
 		} else {
-			if (t <= 1 && changePosition == false) {
-				t += 0.007;
-				x = x0 + (xDes - x0) * t;
-				y = y0 + (yDes - y0) * t;
-				if (t == 1)
-					changePosition = true;
+			if (wave == 11) {
+				speed = 7;
+				// chưa hoàn thành, chờ hoàn thành hàm check collision
+				randomNum();
+				changeDirection(num);
+
 			} else {
 				int num = 0;
 				num = rand.nextInt(8);
@@ -257,8 +274,8 @@ public class Enemy extends Entity {
 					y++;
 				}
 			}
-		}
 
+		}
 		upDateWhenIntersect();
 	}
 
@@ -278,7 +295,7 @@ public class Enemy extends Entity {
 	}
 
 	public Rectangle getEnermyBound() {
-		return new Rectangle((int) x, (int) y, width, height);
+		return new Rectangle((int) x + 20, (int) y + 10, width - 50, height - 20);
 	}
 
 	public void setIsIntersectBullet() {

@@ -15,21 +15,25 @@ public class mouseController implements MouseMotionListener, MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (e.getButton() == MouseEvent.BUTTON3) {
-			gp.setIsRightClicked(true);
-		}
+		if (!gp.getIsIntersectEnermy()) {
+			if (e.getButton() == MouseEvent.BUTTON3) {
+				gp.setIsRightClicked(true);
+			}
+		} else gp.setIsRightClicked(false);
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if (e.getButton() == MouseEvent.BUTTON1) {
-			gp.setIsShooting(true);
-		}		
+		if (!gp.getIsIntersectEnermy()) {
+			if (e.getButton() == MouseEvent.BUTTON1) {
+				gp.setIsShooting(true);
+			}
+		} else gp.setIsShooting(false);
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		gp.setIsShooting(false); 
+		gp.setIsShooting(false);
 		gp.setIsRightClicked(false);
 	}
 
@@ -45,13 +49,15 @@ public class mouseController implements MouseMotionListener, MouseListener {
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		gp.setPlayerLocation(e.getX(), e.getY());
+		if (!gp.getIsIntersectEnermy())
+			gp.setPlayerLocation(e.getX(), e.getY());
 
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		gp.setPlayerLocation(e.getX(), e.getY());
+		if (!gp.getIsIntersectEnermy())
+			gp.setPlayerLocation(e.getX(), e.getY());
 	}
 
 }

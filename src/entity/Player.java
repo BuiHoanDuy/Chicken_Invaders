@@ -1,7 +1,9 @@
 package entity;
 
+import java.awt.AWTException;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -17,7 +19,9 @@ public class Player extends Entity {
 	private int ultiShoot; // số lượng ulti còn lại
 	private boolean isIntersectEnermy; // có chạm địch hay không
 	private boolean isIntersectGift;
-	
+	private BufferedImage bang; // nổ
+	private int i = 0, j = 0;
+
 	private void initVariable() {
 		point = 0;
 		hp = 100;
@@ -25,6 +29,7 @@ public class Player extends Entity {
 		isIntersectEnermy = false;
 		isIntersectGift = false;
 		try {
+			bang = ImageIO.read(getClass().getResourceAsStream("/image/player/bang.png"));
 			image = ImageIO.read(getClass().getResourceAsStream("/image/player/ship.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -46,7 +51,22 @@ public class Player extends Entity {
 
 	@Override
 	public void draw(Graphics2D g2) {
+		BufferedImage animation = null;
 		g2.drawImage(image, (int) x - gp.tileSize, (int) y, gp.tileSize * 2, gp.tileSize * 2, null);
+		if (isIntersectEnermy) {
+			
+			if (j<5) j++;
+			else {
+				j=0; i++;
+			}
+			if (i>=5) i = 0;
+			try {
+				animation = bang.getSubimage(j * (64), i * (64), 64, 64);				
+			} catch (Exception e) {
+			}
+			g2.drawImage(animation, (int) x - gp.tileSize/2, (int) y, (int) (gp.tileSize),
+					(int) (gp.tileSize), null);
+		}
 	}
 
 	public void setLocation(float x, float y) { // cài đặt tọa độ x, y
@@ -57,25 +77,58 @@ public class Player extends Entity {
 			this.y = y;
 		}
 	}
-	
+
 	public Rectangle getPlayerBound() {
-		return new Rectangle((int) x+20, (int) y, gp.tileSize , gp.tileSize-20);
+		return new Rectangle((int) x + 20, (int) y, gp.tileSize, gp.tileSize - 20);
 	}
 
-	public void upDateWhenIntersectEnemy () {
-		hp --;
-		setLocation( 500, 570);
-		isIntersectEnermy = false;
+	public void upDateWhenIntersectEnemy() {
+		// hp-- viết ở setIsIntersectEnermy;
+		moveToStartPosition();
+		try {
+            // Khởi tạo đối tượng Robot
+            Robot robot = new Robot();
+
+            // Di chuyển con trỏ chuột đến vị trí mong muốn (x, y)
+            int x = (int) this.x + 255; // Tọa độ x
+            int y = (int) this.y + 48; // Tọa độ y
+            robot.mouseMove(x, y);
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
 	}
-	
+
+	public void moveToStartPosition() { // di chuyển về vị trí xuất phát
+		if (x > 500 && y > 570) {
+			x--; y --;
+		} else if (x < 500 && y > 570) {
+			x ++; y--;
+		} else if (x < 500 && y < 570) {
+			x++; y++;
+		} else if (x > 500 && y < 570 ) {
+			x--; y++;
+		} else if (x == 500 && y > 570) {
+			y--;
+		}else if (x == 500 && y < 570) {
+			y++;
+		}else if (x > 500 && y == 570) {
+			x--;
+		}else if (x < 500 && y == 570) {
+			x++;
+		}
+		else isIntersectEnermy = false;
+	}
+
 	public void setIsIntersectEnermy() {
+		if (!isIntersectEnermy)
+		hp--;
 		isIntersectEnermy = true;
 	}
-	
+
 	public void setIsIntersectGift() {
 		isIntersectGift = true;
 	}
-	
+
 	public float getX() {
 		return x;
 	}
@@ -94,5 +147,9 @@ public class Player extends Entity {
 
 	public int getUltiShoot() {
 		return ultiShoot;
+	}
+
+	public boolean getIsIntersectEnermy() {
+		return isIntersectEnermy;
 	}
 }

@@ -190,6 +190,10 @@ public class GamePanel extends JPanel implements Runnable {
 		return isShooting;
 	}
 	
+	public boolean getIsIntersectEnermy() { //kiểm tra xem có đang nổ hay không để không cho máy bay di chuyển.
+		return player.getIsIntersectEnermy();
+	}
+	
 	public void checkBulletIntersectEnermy() { // Kiểm tra xem đạn có chạm vào địch chưa
 		for (int i = 0; i < bulletList.getSize(); i++) {
 			for (int j = 0; j < enemyList.getSize(); j++) {
@@ -221,7 +225,7 @@ public class GamePanel extends JPanel implements Runnable {
 			if (player.getPlayerBound().intersects(giftList.getGiftFromIndex(j).getGiftBound())) {
 				player.setIsIntersectGift(); // máy bay chạm quà
 				giftList.getGiftFromIndex(j).upDateWhenIntersectPlayer();
-				bulletList.setMomentType(giftList.getType());
+				bulletList.setMomentType(giftList.getGiftFromIndex(j).getType());
 			}
 	}
 }
@@ -249,4 +253,6 @@ public class GamePanel extends JPanel implements Runnable {
     public int getUltiShoot() { // lấy số lượng ulti
     	return player.getUltiShoot();
     }
+    
+    
 }
