@@ -10,7 +10,7 @@ public class Main {
 public static void main(String[] args) {
 			
 		JFrame window = new JFrame();
-		window.setTitle("Dragon_invaders of YisiniT_HoanDuy");
+		window.setTitle("Chicken Invaders - CDUniverse");
 		window.setResizable(false);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

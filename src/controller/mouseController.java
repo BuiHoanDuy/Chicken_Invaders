@@ -15,6 +15,7 @@ public class mouseController implements MouseMotionListener, MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		gp.updateMouseClick(e.getX(), e.getY());
 		if (!gp.getIsIntersectEnermy()) {
 			if (e.getButton() == MouseEvent.BUTTON3) {
 				gp.setIsRightClicked(true);
