@@ -47,7 +47,9 @@ public class GamePanel extends JPanel implements Runnable {
 	private PauseMenu pauseMenu;
 	private HighScore highScore;
 	Sound sound;
-
+	private GuiText guiText;
+	private Background background;
+	
 
 	// controlers
 	private mouseController Mouse;
@@ -63,7 +65,6 @@ public class GamePanel extends JPanel implements Runnable {
 
 	private int wave;
 	private Boolean isChangeWave;
-	private Background background;
 
 
 	boolean isShooting = false; // có đang nhấn chuột hay không ?
@@ -73,7 +74,6 @@ public class GamePanel extends JPanel implements Runnable {
 
 	// game entity
 
-	private int score;
 	private Player player;
 	private BulletList bulletList;
 	private EnemyList enemyList;
@@ -88,17 +88,19 @@ public class GamePanel extends JPanel implements Runnable {
 		fpsIndex = 1;
 		fps = fpsArr[fpsIndex];
 		isChangeWave = false;
-		score = 0;
 		bulletType = 2;
 		audio = true;
 		hiddenCursor = false;
 	}
 	
 	private void initControllers() {
+		// init controllers
 		Mouse = new mouseController(this);
 		keyboard = new keyHandler(this);
 	}
 
+
+	// init game stage's menu
 	private void initSetting() {
 		settingMenu = new SettingMenu(this);
 	}
@@ -113,11 +115,14 @@ public class GamePanel extends JPanel implements Runnable {
 	
 
 	private void initGui() {
-		startMenu = new StartMenu(this);
+		startMenu = new StartMenu();
 		background = new Background(wave);
+		// các giá trị mặc định khi vừa vào game
+		guiText = new GuiText(3, 1, 3, 0);
 	}
 
 	private void initEntity() {
+		// init game entity
 		player = new Player(this, 500, 570, 10);
 		bulletList = new BulletList(this);
 		giftList = new GiftList(this);
@@ -174,20 +179,27 @@ public class GamePanel extends JPanel implements Runnable {
 				e.printStackTrace();
 			}
 		}
-		// -----------------------------
-
 	}
 
 
 	private void updateGamePlay() {
+		// update background if the wave is change
 		if(isChangeWave) {
 			background.update(wave);
 			isChangeWave = false;
 		}
+		// update gui
+		guiText.update(player.getHp(), bulletList.getLevel(), player.getUltiShoot(), player.getScore());
+
+		// update game entity
 		player.update();
 		bulletList.update();
 		enemyList.update();
+		giftList.update();
+		// items.update(500, 200);
 
+
+		// entity collision update
 		try {
 			checkBulletIntersectEnermy();	
 			checkPlayerIntersectEnermy();
@@ -195,11 +207,10 @@ public class GamePanel extends JPanel implements Runnable {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		 giftList.update();
-//		items.update(500, 200);
 	}
 
 	private void updateCursor() {
+		// update cursor status (display none | block)
 		Cursor cursor;
 		if(hiddenCursor) cursor = Toolkit.getDefaultToolkit().createCustomCursor(Toolkit.getDefaultToolkit().getImage(""), new java.awt.Point(), "cursor");
 		else cursor = Cursor.getDefaultCursor();
@@ -224,7 +235,8 @@ public class GamePanel extends JPanel implements Runnable {
 		bulletList.draw(g2);
 		enemyList.draw(g2);
 		giftList.draw(g2);
-
+		guiText.draw(g);
+		
 		g2.dispose();
 	}
 
@@ -377,8 +389,6 @@ public class GamePanel extends JPanel implements Runnable {
 		mouseX = x;
 		mouseY = y;
 	
-		// Cập nhật trạng thái khi click chuột
-	
 		// In ra tọa độ chuột
 		System.out.println("Mouse clicked at: " + mouseX + ", " + mouseY);
 		switch(stage) {
@@ -393,6 +403,8 @@ public class GamePanel extends JPanel implements Runnable {
 				break;
 			case GAME_PAUSE:
 				pauseMenuAction();
+				break;
+			default:
 				break;
 		}
 	}

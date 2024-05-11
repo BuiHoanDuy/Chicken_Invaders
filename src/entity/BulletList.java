@@ -335,4 +335,8 @@ public class BulletList {
 	public void decreaseLevel() {
 		level = 1;
 	}
+
+	public int getLevel() {
+		return level;
+	}
 }

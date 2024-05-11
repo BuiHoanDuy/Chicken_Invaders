@@ -10,7 +10,6 @@ public class HighScore {
     private BufferedImage background;
 
     private void initVar() {
-        
         try {
             background = ImageIO.read(getClass().getResourceAsStream("/image/background_image/menu/startMenu.png"));
         } catch (IOException e) {
@@ -18,7 +17,7 @@ public class HighScore {
         }
 
         label = new Btn("HIGH SCORE", 25, 420, 380);
-        score = new Btn("0", 60, 482, 450);
+        score = new Btn("20", 60, 482, 450);
         exiBtn = new Btn("EXIT", 25, 475, 592);
     }
 

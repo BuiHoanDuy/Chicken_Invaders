@@ -4,10 +4,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import main.GamePanel;
 
 public class StartMenu {
-    private GamePanel gp;
     private Btn playBtn, highScoreBtn, settingBtn, exiBtn;
     private BufferedImage background;
 
@@ -25,8 +23,7 @@ public class StartMenu {
         exiBtn = new Btn("EXIT", 25, 475, 615);
     }
 
-    public StartMenu(GamePanel gp) {
-        this.gp = gp;
+    public StartMenu() {
         this.initVar();
     }
 

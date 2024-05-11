@@ -9,7 +9,6 @@ import main.GamePanel;
 public class PauseMenu {
     private GamePanel gp;
     private Btn continueBtn, audioBtn, fpsBtn, exiBtn;
-    // private JButton prevBtn, nextBtn;
     private BufferedImage prevBtn, nextBtn;
     private BufferedImage background;
 
@@ -31,16 +30,8 @@ public class PauseMenu {
 
         exiBtn = new Btn("EXIT", 25, 475, 592);
 
-        // prevBtn = new JButton(new ImageIcon("resource/image/gui/prevIcon.png"));
-        // nextBtn = new JButton(new ImageIcon("resource/image/gui/nextIcon.png"));
-
         try {
             prevBtn = ImageIO.read(getClass().getResourceAsStream("/image/gui/prevIcon.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
             nextBtn = ImageIO.read(getClass().getResourceAsStream("/image/gui/nextIcon.png"));
         } catch (IOException e) {
             e.printStackTrace();
@@ -85,8 +76,6 @@ public class PauseMenu {
         audioBtn.draw(g2);
         fpsBtn.draw(g2);
         exiBtn.draw(g2);
-
-        // g.drawString(nextBtn, 604, 410);
 
         g2.dispose();
     }

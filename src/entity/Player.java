@@ -12,10 +12,8 @@ import javax.imageio.ImageIO;
 import main.GamePanel;
 
 public class Player extends Entity {
-	private int point;
+	private int score;
 	private int hp;
-	private float attackCoolDown;
-	private float attackCoolDownMax;
 	private int ultiShoot; // số lượng ulti còn lại
 	private boolean isIntersectEnermy; // có chạm địch hay không
 	private boolean isIntersectGift;
@@ -23,8 +21,8 @@ public class Player extends Entity {
 	private int i = 0, j = 0;
 
 	private void initVariable() {
-		point = 0;
-		hp = 100;
+		score = 0;
+		hp = 3;
 		ultiShoot = 3; // số lượng ulti
 		isIntersectEnermy = false;
 		isIntersectGift = false;
@@ -151,5 +149,13 @@ public class Player extends Entity {
 
 	public boolean getIsIntersectEnermy() {
 		return isIntersectEnermy;
+	}
+
+	public int getHp() {
+		return hp;
+	}
+
+	public int getScore() {
+		return score;
 	}
 }

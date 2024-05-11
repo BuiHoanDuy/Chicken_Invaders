@@ -16,15 +16,13 @@ public class Btn {
         this.y = y;
     }
 
+    public void setName(String newName) {
+        name = newName;
+    }
+
     public void draw(Graphics2D g2) {
         g2.setFont(font);
         g2.setColor(Color.WHITE);
         g2.drawString(name, x, y);
     }
-
-    // public void hover(float x, float y) {
-    //     font = new Font("Inter", Font.BOLD, 30);
-    //     this.x = x;
-    //     this.y = y;
-    // }
 }

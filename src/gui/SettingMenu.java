@@ -32,11 +32,6 @@ public class SettingMenu {
     
         try {
             prevBtn = ImageIO.read(getClass().getResourceAsStream("/image/gui/prevIcon.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
             nextBtn = ImageIO.read(getClass().getResourceAsStream("/image/gui/nextIcon.png"));
         } catch (IOException e) {
             e.printStackTrace();
