@@ -36,7 +36,7 @@ public class Enemy extends Entity {
 		switch (type) {
 		case 0:
 			try {
-				image = ImageIO.read(getClass().getResourceAsStream("/image/enermy/0.png"));
+				image = ImageIO.read(getClass().getResourceAsStream("/image/enemy/0.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -50,7 +50,7 @@ public class Enemy extends Entity {
 			width = (int) (gp.tileSize * 1.5);
 			height = (int) (gp.tileSize);
 			try {
-				image = ImageIO.read(getClass().getResourceAsStream("/image/enermy/1.png"));
+				image = ImageIO.read(getClass().getResourceAsStream("/image/enemy/1.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -60,7 +60,7 @@ public class Enemy extends Entity {
 			break;
 		case 2:
 			try {
-				image = ImageIO.read(getClass().getResourceAsStream("/image/enermy/2.png"));
+				image = ImageIO.read(getClass().getResourceAsStream("/image/enemy/2.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -70,7 +70,7 @@ public class Enemy extends Entity {
 			break;
 		case 3:
 			try {
-				image = ImageIO.read(getClass().getResourceAsStream("/image/enermy/3.png"));
+				image = ImageIO.read(getClass().getResourceAsStream("/image/enemy/3.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -80,7 +80,7 @@ public class Enemy extends Entity {
 			break;
 		case 4:
 			try {
-				image = ImageIO.read(getClass().getResourceAsStream("/image/enermy/4.png"));
+				image = ImageIO.read(getClass().getResourceAsStream("/image/enemy/4.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -90,7 +90,7 @@ public class Enemy extends Entity {
 			break;
 		case 5:
 			try {
-				image = ImageIO.read(getClass().getResourceAsStream("/image/enermy/5.png"));
+				image = ImageIO.read(getClass().getResourceAsStream("/image/enemy/5.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -100,7 +100,7 @@ public class Enemy extends Entity {
 			break;
 		case 6:
 			try {
-				image = ImageIO.read(getClass().getResourceAsStream("/image/enermy/6.png"));
+				image = ImageIO.read(getClass().getResourceAsStream("/image/enemy/6.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -110,7 +110,7 @@ public class Enemy extends Entity {
 			break;
 		case 7:
 			try {
-				image = ImageIO.read(getClass().getResourceAsStream("/image/enermy/7.png"));
+				image = ImageIO.read(getClass().getResourceAsStream("/image/enemy/7.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -120,7 +120,7 @@ public class Enemy extends Entity {
 			break;
 		case 8:
 			try {
-				image = ImageIO.read(getClass().getResourceAsStream("/image/enermy/8.png"));
+				image = ImageIO.read(getClass().getResourceAsStream("/image/enemy/8.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -130,7 +130,7 @@ public class Enemy extends Entity {
 			break;
 		case 9:
 			try {
-				image = ImageIO.read(getClass().getResourceAsStream("/image/enermy/9.png"));
+				image = ImageIO.read(getClass().getResourceAsStream("/image/enemy/9.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -142,7 +142,7 @@ public class Enemy extends Entity {
 			break;
 		case 10:
 			try {
-				image = ImageIO.read(getClass().getResourceAsStream("/image/enermy/10.png"));
+				image = ImageIO.read(getClass().getResourceAsStream("/image/enemy/10.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -155,7 +155,7 @@ public class Enemy extends Entity {
 
 		case 11:
 			try {
-				image = ImageIO.read(getClass().getResourceAsStream("/image/enermy/egg2.png"));
+				image = ImageIO.read(getClass().getResourceAsStream("/image/enemy/egg2.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
