@@ -16,7 +16,6 @@ public class ChichkenItem extends Entity {
     boolean isSplashUp;
     boolean isSplashDown;
     private Boolean canRemove;
-    private Boolean isOnTheGround;
     
 
     private void initVariable() {
@@ -33,7 +32,6 @@ public class ChichkenItem extends Entity {
         isSplashUp = false;
         isSplashDown = false;
         canRemove = false;
-        isOnTheGround = false;
     }
 
     public ChichkenItem(GamePanel gp, float x, float y, float speed, int type) {
@@ -75,7 +73,6 @@ public class ChichkenItem extends Entity {
         if(y < 640) {
             y += speed;
         } else {
-            isOnTheGround = true;
             if(waitingTime <= 0) canRemove = true;
             else --waitingTime;
         }

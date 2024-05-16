@@ -492,33 +492,34 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void checkPlayerIntersectEnemy() { // Kiểm tra xem máy bay có chạm vào địch chưa
-		for (int j = 0; j < enemyList.getSize(); j++) {
+		for (int i = 0; i < enemyList.getSize(); i++) {
 			if (enemyList.getSize() == 0)
 				break;
-			if (player.getPlayerBound().intersects(enemyList.getEnemyFromIndex(j).getEnemyBound())) {
+			if (player.getPlayerBound().intersects(enemyList.getEnemyFromIndex(i).getEnemyBound())) {
 				player.setIsIntersectEnemy(); // máy bay chạm địch
 				bulletList.decreaseLevel(); // giảm cấp đạn về 1
 			}
 		}
 
-		for (int j = 0; j < chickenBulletList.getSize(); j++) {
+		for (int i = 0; i < chickenBulletList.getSize(); i++) {
 			if (chickenBulletList.getSize() == 0)
 				return;
-			if (!chickenBulletList.getCBFromIndex(j).onTheGround() && player.getPlayerBound().intersects(chickenBulletList.getCBFromIndex(j).getCBBound())) {
+			if (!chickenBulletList.getCBFromIndex(i).onTheGround() && player.getPlayerBound().intersects(chickenBulletList.getCBFromIndex(i).getCBBound())) {
 				player.setIsIntersectEnemy(); // máy bay chạm đạn của địch
+				chickenBulletList.remove(i);
 				bulletList.decreaseLevel(); // giảm cấp đạn về 1
 			}
 		}
 	}
 
 	public void checkPlayerIntersectGift() { // Kiểm tra xem máy bay có chạm vào quà chưa
-		for (int j = 0; j < giftList.getSize(); j++) {
+		for (int i = 0; i < giftList.getSize(); i++) {
 			if (giftList.getSize() == 0)
 				return;
-			if (player.getPlayerBound().intersects(giftList.getGiftFromIndex(j).getGiftBound())) {
+			if (player.getPlayerBound().intersects(giftList.getGiftFromIndex(i).getGiftBound())) {
 				player.setIsIntersectGift(); // máy bay chạm quà
-				giftList.getGiftFromIndex(j).upDateWhenIntersectPlayer();
-				bulletList.setMomentType(giftList.getGiftFromIndex(j).getType());
+				giftList.getGiftFromIndex(i).upDateWhenIntersectPlayer();
+				bulletList.setMomentType(giftList.getGiftFromIndex(i).getType());
 			}
 		}
 	}

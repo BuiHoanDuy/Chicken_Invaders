@@ -51,4 +51,8 @@ public class ChickenBulletList {
     public ChickenBullet getCBFromIndex(int index) {
 		return bullets.get(index);
 	}
+
+    public void remove(int index) {
+        bullets.remove(index);
+    }
 }
