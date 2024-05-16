@@ -21,7 +21,7 @@ public class ChickenBulletList {
     }
 
     private Boolean isSpawnBullet() {
-        return (rand.nextInt(15) == 0);
+        return (rand.nextInt(10) == 0);
     }
 
     

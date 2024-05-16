@@ -38,6 +38,7 @@ public class EnemyList {
 					// trả về tọa độ con gà chết
 					Enemy temp = enemyList.get(i);
 					gp.setLastPos(temp.getX(), temp.getY());
+					gp.setIsSpawnItem();
 
 					// xóa nó ra khỏi list
 					enemyList.remove(i);

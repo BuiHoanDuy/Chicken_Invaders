@@ -15,6 +15,7 @@ import entity.Player;
 import entity.GiftList;
 import entity.EnemyList;
 import entity.BulletList;
+import entity.ChichkenItem;
 import entity.ChickenBulletList;
 import entity.ChickenItemList;
 
@@ -71,6 +72,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// game variables
 	private float xLastPos;			// lưu vị trí của con gà vừa mới chết
 	private float yLastPos;
+	private Boolean isSpawnItem;
 
 	private float xPos;				// lưu vị trí của con gà còn sống
 	private float yPos;
@@ -89,7 +91,7 @@ public class GamePanel extends JPanel implements Runnable {
 	private EnemyList enemyList;
 	private GiftList giftList;
 	private ChickenBulletList chickenBulletList;
-	// private ChickenItemList items;
+	private ChickenItemList chickenItemList;
 
 	private void initVar() {
 		mouseX = 0;
@@ -102,6 +104,7 @@ public class GamePanel extends JPanel implements Runnable {
 		bulletType = 2;
 		audio = true;
 		hiddenCursor = false;
+		isSpawnItem = false;
 		isSpawnCB = false;
 	}
 	
@@ -140,6 +143,7 @@ public class GamePanel extends JPanel implements Runnable {
 		giftList = new GiftList(this);
 		enemyList = new EnemyList(this);
 		chickenBulletList = new ChickenBulletList(this);
+		chickenItemList = new ChickenItemList(this);
 	}
 
 	public GamePanel() {
@@ -211,7 +215,7 @@ public class GamePanel extends JPanel implements Runnable {
 		enemyList.update();
 		giftList.update();
 		chickenBulletList.update();
-		// items.update(500, 200);
+		chickenItemList.update();
 
 
 		// entity collision update
@@ -219,6 +223,7 @@ public class GamePanel extends JPanel implements Runnable {
 			checkBulletIntersectEnemy();	
 			checkPlayerIntersectEnemy();
 			checkPlayerIntersectGift();
+			checkPlayerIntersectItem();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -250,6 +255,7 @@ public class GamePanel extends JPanel implements Runnable {
 		enemyList.draw(g2);
 		giftList.draw(g2);
 		chickenBulletList.draw(g2);
+		chickenItemList.draw(g2);
 		player.draw(g2);
 		guiText.draw(g);
 		
@@ -514,8 +520,20 @@ public class GamePanel extends JPanel implements Runnable {
 				giftList.getGiftFromIndex(j).upDateWhenIntersectPlayer();
 				bulletList.setMomentType(giftList.getGiftFromIndex(j).getType());
 			}
+		}
 	}
-}
+
+	public void checkPlayerIntersectItem() { // Kiểm tra xem máy bay có chạm vào item chưa
+		for (int i = 0; i < chickenItemList.getSize(); i++) {
+			if (chickenItemList.getSize() == 0)
+				return;
+			ChichkenItem item = chickenItemList.getItemFromIndex(i);
+			if (player.getPlayerBound().intersects(item.getItemBound())) {
+				player.upScore(item.getType()); // cộng điểm cho player với số điểm tương ứng với loại quà
+				chickenItemList.remove(i);
+			}
+		}
+	}
 	
 	public int getBulletDamge() {
 		return damage;
@@ -566,6 +584,22 @@ public class GamePanel extends JPanel implements Runnable {
 		this.yLastPos = y;
 	}
 
+	public float getLastX() {
+		return xLastPos;
+	}
+
+	public float getLastY() {
+		return yLastPos;
+	}
+
+	public void setIsSpawnItem() {
+		isSpawnItem = !isSpawnItem;
+	}
+
+	public Boolean getIsSpawnItem() {
+		return isSpawnItem;
+	}
+
 	public void setChickenBulletPos(float x, float y) {
 		this.xPos = x;
 		this.yPos = y;
@@ -580,7 +614,7 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	public void setIsSpawnCB() {
-		isSpawnCB = true;
+		isSpawnCB = !isSpawnCB;
 	}
 
 	public Boolean getIsSpawnCB() {

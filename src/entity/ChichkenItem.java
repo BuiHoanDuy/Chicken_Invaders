@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -12,9 +13,10 @@ public class ChichkenItem extends Entity {
     int point;
     double alpha;
     int waitingTime;
-    int waitingTimeMax;
     boolean isSplashUp;
     boolean isSplashDown;
+    private Boolean canRemove;
+    private Boolean isOnTheGround;
     
 
     private void initVariable() {
@@ -27,10 +29,11 @@ public class ChichkenItem extends Entity {
         }
         point = type;
         alpha = -0.1;
-        waitingTimeMax = 3000;
-        waitingTime = 0;
+        waitingTime = 100;
         isSplashUp = false;
         isSplashDown = false;
+        canRemove = false;
+        isOnTheGround = false;
     }
 
     public ChichkenItem(GamePanel gp, float x, float y, float speed, int type) {
@@ -66,24 +69,32 @@ public class ChichkenItem extends Entity {
         } else return true;
     }
 
-    public boolean waiting() {
-        if(waitingTime <= waitingTimeMax) {
-            waitingTime += 1;
-            return false;
-        } else return true;
-    }
 
     @Override
     public void update() {
-        y += speed;
-        // if(y >= 500) {
-            // this.splash();
-        // }
+        if(y < 640) {
+            y += speed;
+        } else {
+            isOnTheGround = true;
+            if(waitingTime <= 0) canRemove = true;
+            else --waitingTime;
+        }
     }
 
     @Override
     public void draw(Graphics2D g2) {
-        // TODO Auto-generated method stub
-		g2.drawImage(image, (int) x - gp.tileSize/2, (int) y, gp.tileSize, gp.tileSize, null);
+		g2.drawImage(image, (int) x - gp.tileSize/2, (int) y, 40, 40, null);
+    }
+
+    public Boolean getCanRemove() {
+        return canRemove;
+    }
+
+    public Rectangle getItemBound() {
+        return new Rectangle((int) x + gp.tileSize / 2, (int) y, 40, 40);
+	}
+
+    public int getType() {
+        return type;
     }
 }

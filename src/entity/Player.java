@@ -16,7 +16,7 @@ public class Player extends Entity {
 	private int hp;
 	private int ultiShoot; // số lượng ulti còn lại
 	private boolean isIntersectEnemy; // có chạm địch hay không
-	// private Boolean isIntersectChickenBullet;
+	private Boolean isIntersectItem;
 	private boolean isIntersectGift;
 	private BufferedImage bang; // nổ
 	private int i = 0, j = 0;
@@ -26,7 +26,7 @@ public class Player extends Entity {
 		hp = 3;
 		ultiShoot = 3; // số lượng ulti
 		isIntersectEnemy = false;
-		// isIntersectChickenBullet = false;
+		isIntersectItem = false;
 		isIntersectGift = false;
 		try {
 			bang = ImageIO.read(getClass().getResourceAsStream("/image/player/bang.png"));
@@ -159,5 +159,9 @@ public class Player extends Entity {
 
 	public int getScore() {
 		return score;
+	}
+
+	public void upScore(int m_score) {
+		score += m_score;
 	}
 }
