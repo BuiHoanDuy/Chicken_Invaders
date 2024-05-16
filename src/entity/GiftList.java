@@ -26,8 +26,8 @@ public class GiftList {
 	}
 
 	private boolean isDropItem() {
-		// tính tỉ lệ có 20% sẽ rơi hộp quà
-		return (rand.nextInt(5) + 1 == 1);
+		// tính tỉ lệ có 25% sẽ rơi hộp quà
+		return (rand.nextInt(4) == 0);
 	}
 
 	private void spawnGifts() {

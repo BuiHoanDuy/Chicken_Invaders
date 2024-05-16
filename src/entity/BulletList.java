@@ -302,7 +302,7 @@ public class BulletList {
 		try {
 			while (i < bulletList.size()) {
 				bulletList.get(i).draw(g2);
-				if (bulletList.get(i).getIsIntersectEnermy()) {
+				if (bulletList.get(i).getIsIntersectEnemy()) {
 					bulletList.remove(i);
 				} else {
 					i++;
@@ -333,7 +333,8 @@ public class BulletList {
 	}
 	
 	public void decreaseLevel() {
-		level = 1;
+		level -= 2;
+		if(level <= 0) level = 1;
 	}
 
 	public int getLevel() {

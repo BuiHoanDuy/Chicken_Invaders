@@ -15,6 +15,7 @@ import entity.Player;
 import entity.GiftList;
 import entity.EnemyList;
 import entity.BulletList;
+import entity.ChickenBulletList;
 import entity.ChickenItemList;
 
 
@@ -67,17 +68,27 @@ public class GamePanel extends JPanel implements Runnable {
 	private Boolean isChangeWave;
 
 
+	// game variables
+	private float xLastPos;			// lưu vị trí của con gà vừa mới chết
+	private float yLastPos;
+
+	private float xPos;				// lưu vị trí của con gà còn sống
+	private float yPos;
+	private Boolean isSpawnCB;
+
 	boolean isShooting = false; // có đang nhấn chuột hay không ?
 	boolean isRightClicked = false; // có nhấn  chuột phải hay không?
 	int damage = 1;
 	int bulletType;
 
-	// game entity
 
-	private Player player;
+	// game entity
+	// private Player player;
+	private Player player = new Player(this, 500, 570, 10);
 	private BulletList bulletList;
 	private EnemyList enemyList;
 	private GiftList giftList;
+	private ChickenBulletList chickenBulletList;
 	// private ChickenItemList items;
 
 	private void initVar() {
@@ -91,6 +102,7 @@ public class GamePanel extends JPanel implements Runnable {
 		bulletType = 2;
 		audio = true;
 		hiddenCursor = false;
+		isSpawnCB = false;
 	}
 	
 	private void initControllers() {
@@ -123,10 +135,11 @@ public class GamePanel extends JPanel implements Runnable {
 
 	private void initEntity() {
 		// init game entity
-		player = new Player(this, 500, 570, 10);
+		// player = new Player(this, 500, 570, 10);
 		bulletList = new BulletList(this);
 		giftList = new GiftList(this);
 		enemyList = new EnemyList(this);
+		chickenBulletList = new ChickenBulletList(this);
 	}
 
 	public GamePanel() {
@@ -188,6 +201,7 @@ public class GamePanel extends JPanel implements Runnable {
 			background.update(wave);
 			isChangeWave = false;
 		}
+
 		// update gui
 		guiText.update(player.getHp(), bulletList.getLevel(), player.getUltiShoot(), player.getScore());
 
@@ -196,13 +210,14 @@ public class GamePanel extends JPanel implements Runnable {
 		bulletList.update();
 		enemyList.update();
 		giftList.update();
+		chickenBulletList.update();
 		// items.update(500, 200);
 
 
 		// entity collision update
 		try {
-			checkBulletIntersectEnermy();	
-			checkPlayerIntersectEnermy();
+			checkBulletIntersectEnemy();	
+			checkPlayerIntersectEnemy();
 			checkPlayerIntersectGift();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -231,10 +246,11 @@ public class GamePanel extends JPanel implements Runnable {
 
 		// draw game entity
 		Graphics2D g2 = (Graphics2D) g;
-		player.draw(g2);
 		bulletList.draw(g2);
 		enemyList.draw(g2);
 		giftList.draw(g2);
+		chickenBulletList.draw(g2);
+		player.draw(g2);
 		guiText.draw(g);
 		
 		g2.dispose();
@@ -452,31 +468,40 @@ public class GamePanel extends JPanel implements Runnable {
 		return isShooting;
 	}
 	
-	public boolean getIsIntersectEnermy() { //kiểm tra xem có đang nổ hay không để không cho máy bay di chuyển.
-		return player.getIsIntersectEnermy();
+	public boolean getIsIntersectEnemy() { //kiểm tra xem có đang nổ hay không để không cho máy bay di chuyển.
+		return player.getIsIntersectEnemy();
 	}
 	
-	public void checkBulletIntersectEnermy() { // Kiểm tra xem đạn có chạm vào địch chưa
+	public void checkBulletIntersectEnemy() { // Kiểm tra xem đạn có chạm vào địch chưa
 		for (int i = 0; i < bulletList.getSize(); i++) {
 			for (int j = 0; j < enemyList.getSize(); j++) {
 				if (bulletList.getSize() == 0 || enemyList.getSize() == 0)
 					return;
-				if (bulletList.getBulletFromIndex(i).getBulletBound().intersects(enemyList.getEnermyFromIndex(j).getEnermyBound())) {
-					bulletList.getBulletFromIndex(i).setIsIntersectEnermy(); // đạn chạm địch
-					enemyList.getEnermyFromIndex(j).setIsIntersectBullet(); // địch chạm đạn
+				if (bulletList.getBulletFromIndex(i).getBulletBound().intersects(enemyList.getEnemyFromIndex(j).getEnemyBound())) {
+					bulletList.getBulletFromIndex(i).setIsIntersectEnemy(); // đạn chạm địch
+					enemyList.getEnemyFromIndex(j).setIsIntersectBullet(); // địch chạm đạn
 				}
 			}
 		}
 	}
 	
-	public void checkPlayerIntersectEnermy() { // Kiểm tra xem máy bay có chạm vào địch chưa
-			for (int j = 0; j < enemyList.getSize(); j++) {
-				if (enemyList.getSize() == 0)
-					return;
-				if (player.getPlayerBound().intersects(enemyList.getEnermyFromIndex(j).getEnermyBound())) {
-					player.setIsIntersectEnermy(); // máy bay chạm địch
-					bulletList.decreaseLevel(); // giảm cấp đạn về 1
-				}
+	public void checkPlayerIntersectEnemy() { // Kiểm tra xem máy bay có chạm vào địch chưa
+		for (int j = 0; j < enemyList.getSize(); j++) {
+			if (enemyList.getSize() == 0)
+				break;
+			if (player.getPlayerBound().intersects(enemyList.getEnemyFromIndex(j).getEnemyBound())) {
+				player.setIsIntersectEnemy(); // máy bay chạm địch
+				bulletList.decreaseLevel(); // giảm cấp đạn về 1
+			}
+		}
+
+		for (int j = 0; j < chickenBulletList.getSize(); j++) {
+			if (chickenBulletList.getSize() == 0)
+				return;
+			if (!chickenBulletList.getCBFromIndex(j).onTheGround() && player.getPlayerBound().intersects(chickenBulletList.getCBFromIndex(j).getCBBound())) {
+				player.setIsIntersectEnemy(); // máy bay chạm đạn của địch
+				bulletList.decreaseLevel(); // giảm cấp đạn về 1
+			}
 		}
 	}
 
@@ -535,5 +560,30 @@ public class GamePanel extends JPanel implements Runnable {
 	public void setFps(int newFps) {
 		fps = newFps;
 	}
-    
+
+	public void setLastPos(float x, float y) {
+		this.xLastPos = x;
+		this.yLastPos = y;
+	}
+
+	public void setChickenBulletPos(float x, float y) {
+		this.xPos = x;
+		this.yPos = y;
+	}
+
+	public float getXPos() {
+		return xPos;
+	}
+
+	public float getYPos() {
+		return yPos;
+	}
+
+	public void setIsSpawnCB() {
+		isSpawnCB = true;
+	}
+
+	public Boolean getIsSpawnCB() {
+		return isSpawnCB;
+	}
 }

@@ -12,10 +12,10 @@ public class Bullet extends Entity {
 	private int type;
 	private int damage;
 	private int width, height; // cài đặt kích cỡ của viên đạn
-	private boolean isIntersectEnermy; // kiểm tra xem có chạm vào địch hay chưa
+	private boolean isIntersectEnemy; // kiểm tra xem có chạm vào địch hay chưa
 	
 	private void initVariable() {
-		isIntersectEnermy = false; setDamage();
+		isIntersectEnemy = false; setDamage();
 		
 		setType();
 		String path = "/image/bullet/" + type + ".png";
@@ -62,12 +62,12 @@ public class Bullet extends Entity {
 		return new Rectangle((int) x, (int) y, (int) width, (int) height);
 	}
 	
-	public void setIsIntersectEnermy () {
-		isIntersectEnermy = true;
+	public void setIsIntersectEnemy () {
+		isIntersectEnemy = true;
 	}
 	
-	public boolean getIsIntersectEnermy () {
-		return isIntersectEnermy;
+	public boolean getIsIntersectEnemy () {
+		return isIntersectEnemy;
 	}
 	
 	public void setDamage() {

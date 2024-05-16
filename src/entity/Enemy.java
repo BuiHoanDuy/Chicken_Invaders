@@ -294,7 +294,7 @@ public class Enemy extends Entity {
 					image.getHeight() / numOfFrame));
 	}
 
-	public Rectangle getEnermyBound() {
+	public Rectangle getEnemyBound() {
 		return new Rectangle((int) x + 20, (int) y + 10, width - 50, height - 20);
 	}
 
@@ -312,6 +312,14 @@ public class Enemy extends Entity {
 
 	public int getHP() {
 		return hp;
+	}
+
+	public float getX() {
+		return x;
+	}
+
+	public float getY() {
+		return y;
 	}
 
 }

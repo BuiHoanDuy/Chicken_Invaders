@@ -15,7 +15,8 @@ public class Player extends Entity {
 	private int score;
 	private int hp;
 	private int ultiShoot; // số lượng ulti còn lại
-	private boolean isIntersectEnermy; // có chạm địch hay không
+	private boolean isIntersectEnemy; // có chạm địch hay không
+	// private Boolean isIntersectChickenBullet;
 	private boolean isIntersectGift;
 	private BufferedImage bang; // nổ
 	private int i = 0, j = 0;
@@ -24,7 +25,8 @@ public class Player extends Entity {
 		score = 0;
 		hp = 3;
 		ultiShoot = 3; // số lượng ulti
-		isIntersectEnermy = false;
+		isIntersectEnemy = false;
+		// isIntersectChickenBullet = false;
 		isIntersectGift = false;
 		try {
 			bang = ImageIO.read(getClass().getResourceAsStream("/image/player/bang.png"));
@@ -42,7 +44,7 @@ public class Player extends Entity {
 
 	@Override
 	public void update() {
-		if (isIntersectEnermy) {
+		if (isIntersectEnemy) {
 			upDateWhenIntersectEnemy();
 		}
 	}
@@ -51,7 +53,7 @@ public class Player extends Entity {
 	public void draw(Graphics2D g2) {
 		BufferedImage animation = null;
 		g2.drawImage(image, (int) x - gp.tileSize, (int) y, gp.tileSize * 2, gp.tileSize * 2, null);
-		if (isIntersectEnermy) {
+		if (isIntersectEnemy) {
 			
 			if (j<5) j++;
 			else {
@@ -81,7 +83,7 @@ public class Player extends Entity {
 	}
 
 	public void upDateWhenIntersectEnemy() {
-		// hp-- viết ở setIsIntersectEnermy;
+		// hp-- viết ở setIsIntersectEnemy;
 		moveToStartPosition();
 		try {
             // Khởi tạo đối tượng Robot
@@ -114,13 +116,13 @@ public class Player extends Entity {
 		}else if (x < 500 && y == 570) {
 			x++;
 		}
-		else isIntersectEnermy = false;
+		else isIntersectEnemy = false;
 	}
 
-	public void setIsIntersectEnermy() {
-		if (!isIntersectEnermy)
+	public void setIsIntersectEnemy() {
+		if (!isIntersectEnemy)
 		hp--;
-		isIntersectEnermy = true;
+		isIntersectEnemy = true;
 	}
 
 	public void setIsIntersectGift() {
@@ -147,8 +149,8 @@ public class Player extends Entity {
 		return ultiShoot;
 	}
 
-	public boolean getIsIntersectEnermy() {
-		return isIntersectEnermy;
+	public boolean getIsIntersectEnemy() {
+		return isIntersectEnemy;
 	}
 
 	public int getHp() {
