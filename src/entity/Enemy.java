@@ -249,7 +249,7 @@ public class Enemy extends Entity {
 	@Override
 	public void update(int wave) {
 		if (t <= 1 && changePosition == false) {
-			t += 0.007;
+			t += 0.003;
 			x = x0 + (xDes - x0) * t;
 			y = y0 + (yDes - y0) * t;
 			if (t == 1)
@@ -257,7 +257,6 @@ public class Enemy extends Entity {
 		} else {
 			if (wave == 11) {
 				speed = 7;
-				// chưa hoàn thành, chờ hoàn thành hàm check collision
 				randomNum();
 				changeDirection(num);
 

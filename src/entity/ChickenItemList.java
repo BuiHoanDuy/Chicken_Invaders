@@ -23,7 +23,9 @@ public class ChickenItemList {
 
     private void spawnItems(float x, float y) {
             int type = rand.nextInt(8);
-            items.add(new ChichkenItem(gp, x, y, 5, type));
+            if (rand.nextInt(4) == 1) {
+            	items.add(new ChichkenItem(gp, x, y, 2, type));            	
+            }
     }
 
     public void update() {

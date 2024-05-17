@@ -21,14 +21,14 @@ public class ChickenBulletList {
     }
 
     private Boolean isSpawnBullet() {
-        return (rand.nextInt(10) == 0);
+        return (rand.nextInt(15) == 0);
     }
 
     
     public void update() {
         if(isSpawnBullet() && gp.getIsSpawnCB()) {
             // System.out.println("Spawn egg");
-            bullets.add(new ChickenBullet(gp, gp.getXPos(), gp.getYPos(), 5, rand.nextInt(2) + 1));
+            bullets.add(new ChickenBullet(gp, gp.getXPos(), gp.getYPos(), 2, rand.nextInt(2) + 1));
             gp.setIsSpawnCB();
         }
 
