@@ -9,13 +9,13 @@ import javax.imageio.ImageIO;
 import main.GamePanel;
 
 public class ChichkenItem extends Entity {
-    int type;
-    int point;
-    double alpha;
-    int waitingTime;
-    boolean isSplashUp;
-    boolean isSplashDown;
-    private Boolean canRemove;
+   private int type;
+   private int point;
+   private double alpha;
+   private int waitingTime;
+   private boolean isSplashUp;
+   private boolean isSplashDown;
+   private Boolean canRemove;
     
 
     private void initVariable() {
@@ -80,7 +80,7 @@ public class ChichkenItem extends Entity {
 
     @Override
     public void draw(Graphics2D g2) {
-		g2.drawImage(image, (int) x - gp.tileSize/2, (int) y, 40, 40, null);
+		g2.drawImage(image, (int) x - gp.getTileSize()/2, (int) y, 40, 40, null);
     }
 
     public Boolean getCanRemove() {
@@ -88,7 +88,7 @@ public class ChichkenItem extends Entity {
     }
 
     public Rectangle getItemBound() {
-        return new Rectangle((int) x + gp.tileSize / 2, (int) y, 40, 40);
+        return new Rectangle((int) x + gp.getTileSize() / 2, (int) y, 40, 40);
 	}
 
     public int getType() {

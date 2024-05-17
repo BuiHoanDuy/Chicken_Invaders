@@ -7,9 +7,9 @@ import java.util.Random;
 import main.GamePanel;
 
 public class ChickenItemList {
-    GamePanel gp;
-    ArrayList<ChichkenItem> items;
-    Random rand;
+	private GamePanel gp;
+	private ArrayList<ChichkenItem> items;
+	private Random rand;
 
     private void initVariable() {
         items = new ArrayList<>();

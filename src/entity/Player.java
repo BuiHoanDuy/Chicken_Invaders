@@ -16,7 +16,7 @@ public class Player extends Entity {
 	private int hp;
 	private int ultiShoot; // số lượng ulti còn lại
 	private boolean isIntersectEnemy; // có chạm địch hay không
-	private Boolean isIntersectItem;
+	private boolean isIntersectItem;
 	private boolean isIntersectGift;
 	private BufferedImage bang; // nổ
 	private int i = 0, j = 0;
@@ -52,7 +52,7 @@ public class Player extends Entity {
 	@Override
 	public void draw(Graphics2D g2) {
 		BufferedImage animation = null;
-		g2.drawImage(image, (int) x - gp.tileSize, (int) y, gp.tileSize * 2, gp.tileSize * 2, null);
+		g2.drawImage(image, (int) x - gp.getTileSize(), (int) y, gp.getTileSize() * 2, gp.getTileSize() * 2, null);
 		if (isIntersectEnemy) {
 			
 			if (j<5) j++;
@@ -64,8 +64,8 @@ public class Player extends Entity {
 				animation = bang.getSubimage(j * (64), i * (64), 64, 64);				
 			} catch (Exception e) {
 			}
-			g2.drawImage(animation, (int) x - gp.tileSize/2, (int) y, (int) (gp.tileSize),
-					(int) (gp.tileSize), null);
+			g2.drawImage(animation, (int) x - gp.getTileSize()/2, (int) y, (int) (gp.getTileSize()),
+					(int) (gp.getTileSize()), null);
 		}
 	}
 
@@ -79,7 +79,7 @@ public class Player extends Entity {
 	}
 
 	public Rectangle getPlayerBound() {
-		return new Rectangle((int) x + 20, (int) y, gp.tileSize, gp.tileSize - 20);
+		return new Rectangle((int) x + 20, (int) y, gp.getTileSize(), gp.getTileSize() - 20);
 	}
 
 	public void upDateWhenIntersectEnemy() {
@@ -96,6 +96,10 @@ public class Player extends Entity {
         } catch (AWTException e) {
             e.printStackTrace();
         }
+	}
+	
+	public void setPreStartPosition() {
+		x = 500; y = 630;
 	}
 
 	public void moveToStartPosition() { // di chuyển về vị trí xuất phát

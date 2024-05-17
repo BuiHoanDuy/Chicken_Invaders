@@ -51,7 +51,11 @@ public class ChickenBullet extends Entity{
         // TODO Auto-generated method stub
         if(y < 640) {
             y += speed;
-        } else {
+        } else if (y >= 640 && !isOnTheGround) {
+        	gp.playSE(13);
+        	isOnTheGround = true;
+        }
+        else {
             updateTexture();
             isOnTheGround = true;
             if(waitingTime <= 0) canRemove = true;
@@ -65,16 +69,16 @@ public class ChickenBullet extends Entity{
         switch(type) {
             case 1:
                 if(!isOnTheGround) 
-                    g2.drawImage(image, (int) x - gp.tileSize / 2, (int) y, 25, 35, null);
+                    g2.drawImage(image, (int) x - gp.getTileSize() / 2, (int) y, 25, 35, null);
                 else 
-                    g2.drawImage(image, (int) x - gp.tileSize / 2, (int) y, 50, 20, null);
+                    g2.drawImage(image, (int) x - gp.getTileSize() / 2, (int) y, 50, 20, null);
                 break;
             case 2:
                 if(!isOnTheGround) {
                     if(num >= 6) num = 0;
                     else ++num;
                     g2.drawImage(image.getSubimage(0, num * 23, image.getWidth(), 23), (int)x, (int)y, 15, 25, null);
-                } else g2.drawImage(image, (int) x - gp.tileSize / 2, (int) y, 40, 40, null);
+                } else g2.drawImage(image, (int) x - gp.getTileSize() / 2, (int) y, 40, 40, null);
                 break;
             default:
                 break;
@@ -88,8 +92,8 @@ public class ChickenBullet extends Entity{
     public Rectangle getCBBound() {
 		// return new Rectangle((int) x, (int) y, image.getWidth(), image.getHeight());
         if(type == 1)
-            return new Rectangle((int) x + gp.tileSize / 2, (int) y - 10, 25, 35);
-		else return new Rectangle((int) x + gp.tileSize / 2, (int) y - 10, 15, 25);
+            return new Rectangle((int) x + gp.getTileSize() / 2, (int) y - 10, 25, 35);
+		else return new Rectangle((int) x + gp.getTileSize() / 2, (int) y - 10, 15, 25);
 	}
 
     public Boolean onTheGround() {

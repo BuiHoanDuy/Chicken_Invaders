@@ -83,17 +83,17 @@ public class Gift extends Entity {
 				j++;
 				starAnimation = image.getSubimage(j * (110 + 36), i * (111 + 52), 110, 111);
 			}
-			g2.drawImage(starAnimation, (int) x - gp.tileSize / 2, (int) y, (int) (gp.tileSize / 1.5),
-					(int) (gp.tileSize / 1.5), null);
+			g2.drawImage(starAnimation, (int) x - gp.getTileSize() / 2, (int) y, (int) (gp.getTileSize() / 1.5),
+					(int) (gp.getTileSize() / 1.5), null);
 		} else {
-			g2.drawImage(image, (int) x - gp.tileSize / 2, (int) y, (int) (gp.tileSize / 1.5),
-					(int) (gp.tileSize / 1.5), null);
+			g2.drawImage(image, (int) x - gp.getTileSize() / 2, (int) y, (int) (gp.getTileSize() / 1.5),
+					(int) (gp.getTileSize() / 1.5), null);
 		}
 	}
 	
 	public Rectangle getGiftBound() {
-		return new Rectangle((int) x + (gp.tileSize / 2), (int) y, (int) (gp.tileSize / 2),
-				(int) (gp.tileSize / 2));
+		return new Rectangle((int) x + (gp.getTileSize() / 2), (int) y, (int) (gp.getTileSize() / 2),
+				(int) (gp.getTileSize() / 2));
 	}
 	
 	public void upDateWhenIntersectPlayer () {
