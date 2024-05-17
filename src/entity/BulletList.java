@@ -226,24 +226,24 @@ public class BulletList {
 				}
 			} else if (momentType == 5) {
 				loadingTimeMax = 60;
+				damage = 1;
 				if (level == 1) {
-					damage = 1;
 					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 13, gp.getPlayerY() - gp.tileSize * 15, 0, 5,
 							damage, gp.tileSize / 2, gp.tileSize * 15));
 				} else if (level == 2) {
-					damage = 3;
+					//damage = 3;
 					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY() - gp.tileSize * 15, 0, 51,
 							damage, gp.tileSize, gp.tileSize * 15));
 				} else if (level == 3) {
-					damage = 5;
+					//damage = 5;
 					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY() - gp.tileSize * 15, 0, 52,
 							damage, gp.tileSize, gp.tileSize * 15));
 				} else if (level == 4) {
-					damage = 7;
+					//damage = 7;
 					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY() - gp.tileSize * 15, 0, 53,
 							damage, gp.tileSize, gp.tileSize * 15));
 				} else if (level == 5) {
-					damage = 10;
+					//damage = 10;
 					bulletList.add(new Bullet(this.gp, gp.getPlayerX() - 20, gp.getPlayerY() - gp.tileSize * 15, 0, 54,
 							damage, gp.tileSize * 2, gp.tileSize * 15));
 				}

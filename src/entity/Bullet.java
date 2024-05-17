@@ -63,8 +63,11 @@ public class Bullet extends Entity {
 	}
 	
 	public void setIsIntersectEnemy () {
-		isIntersectEnemy = true;
+		if (type != 5 && type != 51 && type != 52 && type != 53 && type != 54) {
+			isIntersectEnemy = true;			
+		}
 	}
+	
 	
 	public boolean getIsIntersectEnemy () {
 		return isIntersectEnemy;

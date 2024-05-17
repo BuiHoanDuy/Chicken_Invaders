@@ -347,7 +347,7 @@ public class GamePanel extends JPanel implements Runnable {
 				else fpsIndex = fpsArr.length - 1;
 				fps = fpsArr[fpsIndex];
 				break;
-				case 8:
+			case 8:
 				System.out.println("fps change");
 				if(fpsIndex < fpsArr.length - 1) fpsIndex++;
 				else fpsIndex = 0;
@@ -481,7 +481,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public void checkBulletIntersectEnemy() { // Kiểm tra xem đạn có chạm vào địch chưa
 		for (int i = 0; i < bulletList.getSize(); i++) {
 			for (int j = 0; j < enemyList.getSize(); j++) {
-				if (bulletList.getSize() == 0 || enemyList.getSize() == 0)
+				if (bulletList.getSize() == 0 || enemyList.getSize() == 0) 
 					return;
 				if (bulletList.getBulletFromIndex(i).getBulletBound().intersects(enemyList.getEnemyFromIndex(j).getEnemyBound())) {
 					bulletList.getBulletFromIndex(i).setIsIntersectEnemy(); // đạn chạm địch

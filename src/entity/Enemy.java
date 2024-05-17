@@ -294,7 +294,7 @@ public class Enemy extends Entity {
 	}
 
 	public Rectangle getEnemyBound() {
-		return new Rectangle((int) x + 20, (int) y + 10, width - 50, height - 20);
+		return new Rectangle((int) x + 10, (int) y + 10, width - 50, height - 20);
 	}
 
 	public void setIsIntersectBullet() {

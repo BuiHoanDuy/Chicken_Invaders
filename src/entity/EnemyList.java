@@ -186,7 +186,7 @@ public class EnemyList {
 	public void createWave2() {
 		if (count % 30 == 0) {
 			enemyList.add(new Enemy(this.gp, -50, 144, 1300, 144, 1, 3));
-			enemyList.add(new Enemy(this.gp, 1300, 288, -50, 288, 1, 4));
+			enemyList.add(new Enemy(this.gp, 1300, 288, -500, 288, 1, 4));
 			enemyList.add(new Enemy(this.gp, -50, 432, 1300, 432, 1, 3));
 		}
 	}
@@ -221,17 +221,17 @@ public class EnemyList {
 		if (count % 1600 == 0) {
 			for (int i = 0; i < 6; i++) {
 				if (i % 2 == 0) {
-					enemyList.add(new Enemy(this.gp, -20, 528, 120 + (144 * i), 528, 1, 0));
+					enemyList.add(new Enemy(this.gp, -20, 528, 120 + (144 * i), 428, 1, 0));
 				} else {
-					enemyList.add(new Enemy(this.gp, 1050, 528, 120 + (144 * i), 528, 1, 0));
+					enemyList.add(new Enemy(this.gp, 1050, 528, 120 + (144 * i), 428, 1, 0));
 				}
 			}
 			for (float i = 0; i <= 5; i += 1.5) {
-				enemyList.add(new Enemy(this.gp, 120 + (144 * i), -96, 120 + (144 * i), 336, 1, 6));
-				enemyList.add(new Enemy(this.gp, 120 + (144 * i), -1, 120 + (144 * i), 432, 1, 8));
-				enemyList.add(new Enemy(this.gp, 168 + (144 * i), -48, 168 + (144 * i), 384, 1, 6));
-				enemyList.add(new Enemy(this.gp, 216 + (144 * i), -96, 216 + (144 * i), 336, 1, 6));
-				enemyList.add(new Enemy(this.gp, 216 + (144 * i), -1, 216 + (144 * i), 432, 1, 8));
+				enemyList.add(new Enemy(this.gp, 120 + (144 * i), -96, 120 + (144 * i), 236, 1, 6));
+				enemyList.add(new Enemy(this.gp, 120 + (144 * i), -1, 120 + (144 * i), 332, 1, 8));
+				enemyList.add(new Enemy(this.gp, 168 + (144 * i), -48, 168 + (144 * i), 284, 1, 6));
+				enemyList.add(new Enemy(this.gp, 216 + (144 * i), -96, 216 + (144 * i), 236, 1, 6));
+				enemyList.add(new Enemy(this.gp, 216 + (144 * i), -1, 216 + (144 * i), 332, 1, 8));
 			}
 		}
 	}

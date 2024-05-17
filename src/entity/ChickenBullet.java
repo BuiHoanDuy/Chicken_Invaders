@@ -71,10 +71,9 @@ public class ChickenBullet extends Entity{
                 break;
             case 2:
                 if(!isOnTheGround) {
-                    Graphics g = (Graphics) g2;
                     if(num >= 6) num = 0;
                     else ++num;
-                    g.drawImage(image.getSubimage(0, num * 23, image.getWidth(), 23), (int)x, (int)y, 15, 25, null);
+                    g2.drawImage(image.getSubimage(0, num * 23, image.getWidth(), 23), (int)x, (int)y, 15, 25, null);
                 } else g2.drawImage(image, (int) x - gp.tileSize / 2, (int) y, 40, 40, null);
                 break;
             default:
