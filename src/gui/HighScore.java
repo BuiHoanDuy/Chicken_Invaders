@@ -3,6 +3,8 @@ package gui;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class HighScore {
@@ -17,7 +19,16 @@ public class HighScore {
         }
 
         label = new Btn("HIGH SCORE", 25, 420, 380);
-        score = new Btn("20", 60, 482, 450);
+
+        try (BufferedReader br = new BufferedReader(new FileReader("/save/score.txt"))) {
+            String scoreText;
+            while ((scoreText = br.readLine()) != null) {
+                score = new Btn(scoreText, 60, 482, 450);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         exiBtn = new Btn("EXIT", 25, 475, 592);
     }
 
