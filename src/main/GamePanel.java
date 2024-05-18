@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
+import java.util.Random;
 
 import javax.swing.JPanel;
 
@@ -15,6 +16,8 @@ import entity.Player;
 import entity.GiftList;
 import entity.EnemyList;
 import entity.BulletList;
+import entity.ChichkenItem;
+import entity.ChickenBulletList;
 import entity.ChickenItemList;
 
 
@@ -22,21 +25,21 @@ enum STAGE { START_MENU, HIGH_SCORE, SETTING, GAME_PLAY, GAME_PAUSE, GAME_OVER, 
 
 public class GamePanel extends JPanel implements Runnable {
 	// screen setting
-	final int originalTileSize = 16; // 16x16
-	final int scale = 3;
+	private final int originalTileSize = 16; // 16x16
+	private final int scale = 3;
 
-	public final int tileSize = originalTileSize * scale; // 48x48
-	final int maxScreenCol = 21;
-	final int maxScreenRow = 15;
+	private  final int tileSize = originalTileSize * scale; // 48x48
+	private final int maxScreenCol = 21;
+	private final int maxScreenRow = 15;
 
-	final int screenWidth = tileSize * maxScreenCol; // 1008px
-	final int screenHeight = tileSize * maxScreenRow; // 720px
+	private final int screenWidth = tileSize * maxScreenCol; // 1008px
+	private final int screenHeight = tileSize * maxScreenRow; // 720px
 
 	private int fps;
 	private int fpsIndex;
 	private int[] fpsArr = {60, 90, 120};
 
-	Thread gameThread; // fps
+	private Thread gameThread; // fps
 
 
 	// gui
@@ -46,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable {
 	private SettingMenu settingMenu;
 	private PauseMenu pauseMenu;
 	private HighScore highScore;
-	Sound sound;
+	private Sound sound;
 	private GuiText guiText;
 	private Background background;
 	
@@ -66,31 +69,46 @@ public class GamePanel extends JPanel implements Runnable {
 	private int wave;
 	private Boolean isChangeWave;
 
+	private Random rand;
+
+	// game variables
+	private float xLastPos;			// lưu vị trí của con gà vừa mới chết
+	private float yLastPos;
+	private Boolean isSpawnItem;
+
+	private float xPos;				// lưu vị trí của con gà còn sống
+	private float yPos;
+	private Boolean isSpawnCB;
 
 	boolean isShooting = false; // có đang nhấn chuột hay không ?
 	boolean isRightClicked = false; // có nhấn  chuột phải hay không?
-	int damage = 1;
-	int bulletType;
+	private int damage = 1;
+	private int bulletType;
+
 
 	// game entity
-
-	private Player player;
+	// private Player player;
+	private Player player = new Player(this, 500, 570, 10);
 	private BulletList bulletList;
 	private EnemyList enemyList;
 	private GiftList giftList;
-	// private ChickenItemList items;
+	private ChickenBulletList chickenBulletList;
+	private ChickenItemList chickenItemList;
 
 	private void initVar() {
 		mouseX = 0;
 		mouseY = 0;
 		stage = STAGE.START_MENU;
-		wave = 1;
+		wave = 3;
 		fpsIndex = 1;
 		fps = fpsArr[fpsIndex];
 		isChangeWave = false;
 		bulletType = 2;
 		audio = true;
 		hiddenCursor = false;
+		isSpawnItem = false;
+		isSpawnCB = false;
+		sound = new Sound();
 	}
 	
 	private void initControllers() {
@@ -123,10 +141,12 @@ public class GamePanel extends JPanel implements Runnable {
 
 	private void initEntity() {
 		// init game entity
-		player = new Player(this, 500, 570, 10);
+		// player = new Player(this, 500, 570, 10);
 		bulletList = new BulletList(this);
 		giftList = new GiftList(this);
 		enemyList = new EnemyList(this);
+		chickenBulletList = new ChickenBulletList(this);
+		chickenItemList = new ChickenItemList(this);
 	}
 
 	public GamePanel() {
@@ -142,7 +162,6 @@ public class GamePanel extends JPanel implements Runnable {
 		this.addKeyListener(keyboard);
 		this.setFocusable(true);
 		playMusic(0);
-
 	}
 
 	public void startGameThread() {
@@ -188,6 +207,7 @@ public class GamePanel extends JPanel implements Runnable {
 			background.update(wave);
 			isChangeWave = false;
 		}
+
 		// update gui
 		guiText.update(player.getHp(), bulletList.getLevel(), player.getUltiShoot(), player.getScore());
 
@@ -196,14 +216,16 @@ public class GamePanel extends JPanel implements Runnable {
 		bulletList.update();
 		enemyList.update();
 		giftList.update();
-		// items.update(500, 200);
+		chickenBulletList.update();
+		chickenItemList.update();
 
 
 		// entity collision update
 		try {
-			checkBulletIntersectEnermy();	
-			checkPlayerIntersectEnermy();
+			checkBulletIntersectEnemy();	
+			checkPlayerIntersectEnemy();
 			checkPlayerIntersectGift();
+			checkPlayerIntersectItem();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -231,10 +253,12 @@ public class GamePanel extends JPanel implements Runnable {
 
 		// draw game entity
 		Graphics2D g2 = (Graphics2D) g;
-		player.draw(g2);
 		bulletList.draw(g2);
 		enemyList.draw(g2);
 		giftList.draw(g2);
+		chickenBulletList.draw(g2);
+		chickenItemList.draw(g2);
+		player.draw(g2);
 		guiText.draw(g);
 		
 		g2.dispose();
@@ -325,7 +349,7 @@ public class GamePanel extends JPanel implements Runnable {
 				else fpsIndex = fpsArr.length - 1;
 				fps = fpsArr[fpsIndex];
 				break;
-				case 8:
+			case 8:
 				System.out.println("fps change");
 				if(fpsIndex < fpsArr.length - 1) fpsIndex++;
 				else fpsIndex = 0;
@@ -410,18 +434,18 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	public void playMusic(int i) {
-//		sound.setFile(i);
-//		sound.play();
-//		sound.loop();
+		sound.setFile(i);
+		sound.play();
+		sound.loop();
 	}
 
 	public void stopMusic() {
-//		sound.stop();
+		sound.stop();
 	}
 
 	public void playSE(int i) { // sound effect
-//		sound.setFile(i);
-//		sound.play();
+		sound.setFile(i);
+		sound.play();
 	}
 
 	public void setPlayerLocation(float x, float y) { // cài đặt tọa độ máy bay
@@ -452,45 +476,74 @@ public class GamePanel extends JPanel implements Runnable {
 		return isShooting;
 	}
 	
-	public boolean getIsIntersectEnermy() { //kiểm tra xem có đang nổ hay không để không cho máy bay di chuyển.
-		return player.getIsIntersectEnermy();
+	public boolean getIsIntersectEnemy() { //kiểm tra xem có đang nổ hay không để không cho máy bay di chuyển.
+		return player.getIsIntersectEnemy();
 	}
 	
-	public void checkBulletIntersectEnermy() { // Kiểm tra xem đạn có chạm vào địch chưa
+	public void checkBulletIntersectEnemy() { // Kiểm tra xem đạn có chạm vào địch chưa
 		for (int i = 0; i < bulletList.getSize(); i++) {
 			for (int j = 0; j < enemyList.getSize(); j++) {
-				if (bulletList.getSize() == 0 || enemyList.getSize() == 0)
+				if (bulletList.getSize() == 0 || enemyList.getSize() == 0) 
 					return;
-				if (bulletList.getBulletFromIndex(i).getBulletBound().intersects(enemyList.getEnermyFromIndex(j).getEnermyBound())) {
-					bulletList.getBulletFromIndex(i).setIsIntersectEnermy(); // đạn chạm địch
-					enemyList.getEnermyFromIndex(j).setIsIntersectBullet(); // địch chạm đạn
+				if (bulletList.getBulletFromIndex(i).getBulletBound().intersects(enemyList.getEnemyFromIndex(j).getEnemyBound())) {
+					bulletList.getBulletFromIndex(i).setIsIntersectEnemy(); // đạn chạm địch
+					enemyList.getEnemyFromIndex(j).setIsIntersectBullet(); // địch chạm đạn
+					playSE(rand.nextInt(4)+6);
 				}
 			}
 		}
 	}
 	
-	public void checkPlayerIntersectEnermy() { // Kiểm tra xem máy bay có chạm vào địch chưa
-			for (int j = 0; j < enemyList.getSize(); j++) {
-				if (enemyList.getSize() == 0)
-					return;
-				if (player.getPlayerBound().intersects(enemyList.getEnermyFromIndex(j).getEnermyBound())) {
-					player.setIsIntersectEnermy(); // máy bay chạm địch
-					bulletList.decreaseLevel(); // giảm cấp đạn về 1
-				}
+	public void checkPlayerIntersectEnemy() { // Kiểm tra xem máy bay có chạm vào địch chưa
+		for (int i = 0; i < enemyList.getSize(); i++) {
+			if (enemyList.getSize() == 0)
+				break;
+			if (player.getPlayerBound().intersects(enemyList.getEnemyFromIndex(i).getEnemyBound())) {
+				playSE(15);
+				player.setPreStartPosition(); // cho máy bay về vị trí gần xuất phát
+				player.setIsIntersectEnemy(); // máy bay chạm địch
+				bulletList.decreaseLevel(); // giảm cấp đạn về 1
+			}
+		}
+
+		for (int i = 0; i < chickenBulletList.getSize(); i++) {
+			if (chickenBulletList.getSize() == 0)
+				return;
+			if (!chickenBulletList.getCBFromIndex(i).onTheGround() && player.getPlayerBound().intersects(chickenBulletList.getCBFromIndex(i).getCBBound())) {
+				player.setPreStartPosition(); // cho máy bay về vị trí gần xuất phát
+				player.setIsIntersectEnemy(); // máy bay chạm đạn của địch
+				playSE(15);
+				chickenBulletList.remove(i);
+				bulletList.decreaseLevel(); // giảm cấp đạn về 1
+			}
 		}
 	}
 
 	public void checkPlayerIntersectGift() { // Kiểm tra xem máy bay có chạm vào quà chưa
-		for (int j = 0; j < giftList.getSize(); j++) {
+		for (int i = 0; i < giftList.getSize(); i++) {
 			if (giftList.getSize() == 0)
 				return;
-			if (player.getPlayerBound().intersects(giftList.getGiftFromIndex(j).getGiftBound())) {
+			if (player.getPlayerBound().intersects(giftList.getGiftFromIndex(i).getGiftBound())) {
+				playSE(2);
 				player.setIsIntersectGift(); // máy bay chạm quà
-				giftList.getGiftFromIndex(j).upDateWhenIntersectPlayer();
-				bulletList.setMomentType(giftList.getGiftFromIndex(j).getType());
+				giftList.getGiftFromIndex(i).upDateWhenIntersectPlayer();
+				bulletList.setMomentType(giftList.getGiftFromIndex(i).getType());
 			}
+		}
 	}
-}
+
+	public void checkPlayerIntersectItem() { // Kiểm tra xem máy bay có chạm vào item chưa
+		for (int i = 0; i < chickenItemList.getSize(); i++) {
+			if (chickenItemList.getSize() == 0)
+				return;
+			ChichkenItem item = chickenItemList.getItemFromIndex(i);
+			if (player.getPlayerBound().intersects(item.getItemBound())) {
+				playSE(2);
+				player.upScore(item.getType()); // cộng điểm cho player với số điểm tương ứng với loại quà
+				chickenItemList.remove(i);
+			}
+		}
+	}
 	
 	public int getBulletDamge() {
 		return damage;
@@ -535,5 +588,50 @@ public class GamePanel extends JPanel implements Runnable {
 	public void setFps(int newFps) {
 		fps = newFps;
 	}
-    
+
+	public void setLastPos(float x, float y) {
+		this.xLastPos = x;
+		this.yLastPos = y;
+	}
+
+	public float getLastX() {
+		return xLastPos;
+	}
+
+	public float getLastY() {
+		return yLastPos;
+	}
+
+	public void setIsSpawnItem() {
+		isSpawnItem = !isSpawnItem;
+	}
+
+	public Boolean getIsSpawnItem() {
+		return isSpawnItem;
+	}
+
+	public void setChickenBulletPos(float x, float y) {
+		this.xPos = x;
+		this.yPos = y;
+	}
+
+	public float getXPos() {
+		return xPos;
+	}
+
+	public float getYPos() {
+		return yPos;
+	}
+
+	public void setIsSpawnCB() {
+		isSpawnCB = !isSpawnCB;
+	}
+
+	public Boolean getIsSpawnCB() {
+		return isSpawnCB;
+	}
+	
+	public int getTileSize() {
+		return tileSize;
+	}
 }

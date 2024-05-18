@@ -7,17 +7,13 @@ import java.util.Random;
 import main.GamePanel;
 
 public class ChickenItemList {
-    GamePanel gp;
-    ArrayList<ChichkenItem> items;
-    Random rand;
-    int loadingTime;
-    int loadingTimeMax;
+	private GamePanel gp;
+	private ArrayList<ChichkenItem> items;
+	private Random rand;
 
     private void initVariable() {
         items = new ArrayList<>();
         rand = new Random();
-        loadingTimeMax = 100;
-        loadingTime = loadingTimeMax;
     }
 
     public ChickenItemList(GamePanel gp) {
@@ -25,40 +21,22 @@ public class ChickenItemList {
         this.initVariable();
     }
 
-    private boolean isDropItem() {
-        int rate = rand.nextInt(3);
-        if(rate == 0) return false;
-        else return true;
-    }
-
     private void spawnItems(float x, float y) {
-            int type = rand.nextInt(8);
-            items.add(new ChichkenItem(gp, x, y, 3, type));
+            int type = rand.nextInt(7)+1;
+            if (rand.nextInt(4) == 1) {
+            	items.add(new ChichkenItem(gp, x, y, 2, type));            	
+            }
     }
 
-    public void update(float x, float y) {
-        if (loadingTime >= loadingTimeMax) {
-            if(isDropItem()) {
-                this.spawnItems(x, y);
-                loadingTime = 0;
-            }
-		} else
-			++loadingTime;
-
-
-        // if(isDropItem()) {
-        //     this.spawnItems(x, y);
-        // }
+    public void update() {
+        if(gp.getIsSpawnItem()) {
+            spawnItems(gp.getLastX(), gp.getLastY());
+            gp.setIsSpawnItem();
+        }
 
         for(int i = 0; i < items.size(); ++i) {
             items.get(i).update();
-            if(items.get(i).y >= 500) {
-                while(true) {
-                    if(items.get(i).waiting() == true) break;
-                    else continue;
-                }
-                items.remove(i);
-            }
+            if(items.get(i).getCanRemove()) items.remove(i);
         }
     }
 
@@ -66,5 +44,17 @@ public class ChickenItemList {
         for(int i = 0; i < items.size(); ++i) {
             items.get(i).draw(g2);
         }
+    }
+
+    public int getSize() {
+        return items.size();
+    }
+
+    public ChichkenItem getItemFromIndex(int index) {
+        return items.get(index);
+    }
+
+    public void remove(int index) {
+        items.remove(index);
     }
 }

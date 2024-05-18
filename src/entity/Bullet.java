@@ -12,10 +12,10 @@ public class Bullet extends Entity {
 	private int type;
 	private int damage;
 	private int width, height; // cài đặt kích cỡ của viên đạn
-	private boolean isIntersectEnermy; // kiểm tra xem có chạm vào địch hay chưa
+	private boolean isIntersectEnemy; // kiểm tra xem có chạm vào địch hay chưa
 	
 	private void initVariable() {
-		isIntersectEnermy = false; setDamage();
+		isIntersectEnemy = false; setDamage();
 		
 		setType();
 		String path = "/image/bullet/" + type + ".png";
@@ -55,19 +55,22 @@ public class Bullet extends Entity {
 
 	@Override
 	public void draw(Graphics2D g2) {
-		g2.drawImage(image, (int) x - gp.tileSize/2, (int) y, width, height, null);
+		g2.drawImage(image, (int) x - gp.getTileSize()/2, (int) y, width, height, null);
 	}
 	
 	public Rectangle getBulletBound() {
 		return new Rectangle((int) x, (int) y, (int) width, (int) height);
 	}
 	
-	public void setIsIntersectEnermy () {
-		isIntersectEnermy = true;
+	public void setIsIntersectEnemy () {
+		if (type != 5 && type != 51 && type != 52 && type != 53 && type != 54) {
+			isIntersectEnemy = true;			
+		}
 	}
 	
-	public boolean getIsIntersectEnermy () {
-		return isIntersectEnermy;
+	
+	public boolean getIsIntersectEnemy () {
+		return isIntersectEnemy;
 	}
 	
 	public void setDamage() {

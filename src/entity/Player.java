@@ -15,7 +15,8 @@ public class Player extends Entity {
 	private int score;
 	private int hp;
 	private int ultiShoot; // số lượng ulti còn lại
-	private boolean isIntersectEnermy; // có chạm địch hay không
+	private boolean isIntersectEnemy; // có chạm địch hay không
+	private boolean isIntersectItem;
 	private boolean isIntersectGift;
 	private BufferedImage bang; // nổ
 	private int i = 0, j = 0;
@@ -24,7 +25,8 @@ public class Player extends Entity {
 		score = 0;
 		hp = 3;
 		ultiShoot = 3; // số lượng ulti
-		isIntersectEnermy = false;
+		isIntersectEnemy = false;
+		isIntersectItem = false;
 		isIntersectGift = false;
 		try {
 			bang = ImageIO.read(getClass().getResourceAsStream("/image/player/bang.png"));
@@ -42,7 +44,7 @@ public class Player extends Entity {
 
 	@Override
 	public void update() {
-		if (isIntersectEnermy) {
+		if (isIntersectEnemy) {
 			upDateWhenIntersectEnemy();
 		}
 	}
@@ -50,8 +52,8 @@ public class Player extends Entity {
 	@Override
 	public void draw(Graphics2D g2) {
 		BufferedImage animation = null;
-		g2.drawImage(image, (int) x - gp.tileSize, (int) y, gp.tileSize * 2, gp.tileSize * 2, null);
-		if (isIntersectEnermy) {
+		g2.drawImage(image, (int) x - gp.getTileSize(), (int) y, gp.getTileSize() * 2, gp.getTileSize() * 2, null);
+		if (isIntersectEnemy) {
 			
 			if (j<5) j++;
 			else {
@@ -62,8 +64,8 @@ public class Player extends Entity {
 				animation = bang.getSubimage(j * (64), i * (64), 64, 64);				
 			} catch (Exception e) {
 			}
-			g2.drawImage(animation, (int) x - gp.tileSize/2, (int) y, (int) (gp.tileSize),
-					(int) (gp.tileSize), null);
+			g2.drawImage(animation, (int) x - gp.getTileSize()/2, (int) y, (int) (gp.getTileSize()),
+					(int) (gp.getTileSize()), null);
 		}
 	}
 
@@ -77,11 +79,11 @@ public class Player extends Entity {
 	}
 
 	public Rectangle getPlayerBound() {
-		return new Rectangle((int) x + 20, (int) y, gp.tileSize, gp.tileSize - 20);
+		return new Rectangle((int) x + 20, (int) y, gp.getTileSize(), gp.getTileSize() - 20);
 	}
 
 	public void upDateWhenIntersectEnemy() {
-		// hp-- viết ở setIsIntersectEnermy;
+		// hp-- viết ở setIsIntersectEnemy;
 		moveToStartPosition();
 		try {
             // Khởi tạo đối tượng Robot
@@ -94,6 +96,10 @@ public class Player extends Entity {
         } catch (AWTException e) {
             e.printStackTrace();
         }
+	}
+	
+	public void setPreStartPosition() {
+		x = 500; y = 630;
 	}
 
 	public void moveToStartPosition() { // di chuyển về vị trí xuất phát
@@ -114,13 +120,13 @@ public class Player extends Entity {
 		}else if (x < 500 && y == 570) {
 			x++;
 		}
-		else isIntersectEnermy = false;
+		else isIntersectEnemy = false;
 	}
 
-	public void setIsIntersectEnermy() {
-		if (!isIntersectEnermy)
+	public void setIsIntersectEnemy() {
+		if (!isIntersectEnemy)
 		hp--;
-		isIntersectEnermy = true;
+		isIntersectEnemy = true;
 	}
 
 	public void setIsIntersectGift() {
@@ -147,8 +153,8 @@ public class Player extends Entity {
 		return ultiShoot;
 	}
 
-	public boolean getIsIntersectEnermy() {
-		return isIntersectEnermy;
+	public boolean getIsIntersectEnemy() {
+		return isIntersectEnemy;
 	}
 
 	public int getHp() {
@@ -157,5 +163,9 @@ public class Player extends Entity {
 
 	public int getScore() {
 		return score;
+	}
+
+	public void upScore(int m_score) {
+		score += m_score;
 	}
 }

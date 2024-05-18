@@ -26,8 +26,8 @@ public class Enemy extends Entity {
 	private int num = 3; // dùng để đổi hướng di chuyển cho con boss
 
 	private void initVariable() {
-		width = (int) (gp.tileSize * 1.5);
-		height = (int) (gp.tileSize * 1.5);
+		width = (int) (gp.getTileSize() * 1.5);
+		height = (int) (gp.getTileSize() * 1.5);
 		isIntersectBullet = false;
 		changePosition = false;
 		rand = new Random();
@@ -41,14 +41,14 @@ public class Enemy extends Entity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			width = (int) (gp.tileSize * 2);
-			height = (int) (gp.tileSize);
+			width = (int) (gp.getTileSize() * 2);
+			height = (int) (gp.getTileSize());
 			numOfFrame = 3;
 			hp = 15;
 			break;
 		case 1:
-			width = (int) (gp.tileSize * 1.5);
-			height = (int) (gp.tileSize);
+			width = (int) (gp.getTileSize() * 1.5);
+			height = (int) (gp.getTileSize());
 			try {
 				image = ImageIO.read(getClass().getResourceAsStream("/image/enemy/1.png"));
 			} catch (IOException e) {
@@ -135,8 +135,8 @@ public class Enemy extends Entity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			width = (int) (gp.tileSize * 4);
-			height = (int) (gp.tileSize * 3);
+			width = (int) (gp.getTileSize() * 4);
+			height = (int) (gp.getTileSize() * 3);
 			hp = 10;
 			numOfFrame = 1;
 			break;
@@ -147,8 +147,8 @@ public class Enemy extends Entity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			width = (int) (gp.tileSize * 4);
-			height = (int) (gp.tileSize * 4);
+			width = (int) (gp.getTileSize() * 4);
+			height = (int) (gp.getTileSize() * 4);
 			hp = 25;
 			numOfFrame = 4;
 			break;
@@ -194,8 +194,8 @@ public class Enemy extends Entity {
 		y0 = y;
 		this.hp = hp;
 		this.initVariable();
-		width = (int) (gp.tileSize * widthTile);
-		height = (int) (gp.tileSize * heightTile);
+		width = (int) (gp.getTileSize() * widthTile);
+		height = (int) (gp.getTileSize() * heightTile);
 	}
 
 	public void changeDirection(int direction) {
@@ -249,7 +249,7 @@ public class Enemy extends Entity {
 	@Override
 	public void update(int wave) {
 		if (t <= 1 && changePosition == false) {
-			t += 0.007;
+			t += 0.003;
 			x = x0 + (xDes - x0) * t;
 			y = y0 + (yDes - y0) * t;
 			if (t == 1)
@@ -257,7 +257,6 @@ public class Enemy extends Entity {
 		} else {
 			if (wave == 11) {
 				speed = 7;
-				// chưa hoàn thành, chờ hoàn thành hàm check collision
 				randomNum();
 				changeDirection(num);
 
@@ -284,7 +283,7 @@ public class Enemy extends Entity {
 		if (indexToLoadAnimation / 10 >= animation.size()) {
 			indexToLoadAnimation = 0;
 		}
-		g2.drawImage(animation.get(indexToLoadAnimation / 10), (int) x - gp.tileSize, (int) y, width, height, null);
+		g2.drawImage(animation.get(indexToLoadAnimation / 10), (int) x - gp.getTileSize(), (int) y, width, height, null);
 		indexToLoadAnimation++;
 	}
 
@@ -294,8 +293,11 @@ public class Enemy extends Entity {
 					image.getHeight() / numOfFrame));
 	}
 
-	public Rectangle getEnermyBound() {
-		return new Rectangle((int) x + 20, (int) y + 10, width - 50, height - 20);
+	public Rectangle getEnemyBound() {
+		if (type == 11) {
+			return new Rectangle((int) x+25, (int) y + 10, width - 50, height - 20);
+		} else
+		return new Rectangle((int) x-10, (int) y + 10, width - 20, height - 20);
 	}
 
 	public void setIsIntersectBullet() {
@@ -314,4 +316,15 @@ public class Enemy extends Entity {
 		return hp;
 	}
 
+	public float getX() {
+		return x;
+	}
+
+	public float getY() {
+		return y;
+	}
+	
+	public int getType() {
+		return type;
+	}
 }
