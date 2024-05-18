@@ -10,11 +10,7 @@ import main.GamePanel;
 
 public class ChichkenItem extends Entity {
    private int type;
-   private int point;
-   private double alpha;
    private int waitingTime;
-   private boolean isSplashUp;
-   private boolean isSplashDown;
    private Boolean canRemove;
     
 
@@ -26,11 +22,7 @@ public class ChichkenItem extends Entity {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        point = type;
-        alpha = -0.1;
         waitingTime = 100;
-        isSplashUp = false;
-        isSplashDown = false;
         canRemove = false;
     }
 
@@ -39,34 +31,6 @@ public class ChichkenItem extends Entity {
         this.type = type;
         this.initVariable();
     }
-
-    private void splashUp() {
-        if(y > 450) --y;
-        else isSplashUp = true;
-    }
-
-    private void splashDown() {
-        if(y < 490) ++y;
-        else isSplashDown = true;
-    }
-
-    public boolean splash() {
-        if(isSplashUp == false) {
-            this.splashUp();
-            return false;
-        }
-        
-        if(isSplashDown == false) {
-            this.splashDown();
-            return false;
-        }
-
-        if(waitingTime > 0) {
-            --waitingTime;
-            return false;
-        } else return true;
-    }
-
 
     @Override
     public void update() {

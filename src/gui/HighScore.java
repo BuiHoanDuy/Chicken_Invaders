@@ -20,7 +20,7 @@ public class HighScore {
 
         label = new Btn("HIGH SCORE", 25, 420, 380);
 
-        try (BufferedReader br = new BufferedReader(new FileReader("/save/score.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("save/score.txt"))) {
             String scoreText;
             while ((scoreText = br.readLine()) != null) {
                 score = new Btn(scoreText, 60, 482, 450);

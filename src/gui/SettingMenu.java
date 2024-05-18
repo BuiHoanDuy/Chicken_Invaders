@@ -8,7 +8,7 @@ import main.GamePanel;
 
 public class SettingMenu {
     private GamePanel gp;
-    private Btn continueBtn, audioBtn, fpsBtn, exiBtn;
+    private Btn audioBtn, fpsBtn, exiBtn;
     private BufferedImage prevBtn, nextBtn;
     private BufferedImage background;
 
@@ -19,8 +19,6 @@ public class SettingMenu {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        continueBtn = new Btn("CONTINUE", 25, 437, 320);
 
         String audioString = "AUDIO: " + (gp.getAudio() == true ? "ON" : "OFF");
         audioBtn = new Btn(audioString, 25, 432, 410);
@@ -45,14 +43,11 @@ public class SettingMenu {
 
 
     public int update(int mouseX, int mouseY) {
-        if(430 <= mouseX && mouseX <= 580 && 290 <= mouseY && mouseY <= 330) return 1;
-        else if(430 <= mouseX && mouseX <= 565 && 385 <= mouseY && mouseY <= 415) return 2;
-        else if(450 <= mouseX && mouseX <= 555 && 470 <= mouseY && mouseY <= 510) return 3;
-        else if(465 <= mouseX && mouseX <= 540 && 560 <= mouseY && mouseY <= 600) return 4;
-        else if(400 <= mouseX && mouseX <= 412 && 394 <= mouseY && mouseY <= 412) return 5;
-        else if(583 <= mouseX && mouseX <= 595 && 390 <= mouseY && mouseY <= 412) return 6;
-        else if(400 <= mouseX && mouseX <= 412 && 480 <= mouseY && mouseY <= 500) return 7;
-        else if(583 <= mouseX && mouseX <= 595 && 480 <= mouseY && mouseY <= 500) return 8;
+        if(465 <= mouseX && mouseX <= 540 && 560 <= mouseY && mouseY <= 600) return 1;
+        else if(400 <= mouseX && mouseX <= 412 && 394 <= mouseY && mouseY <= 412) return 2;
+        else if(583 <= mouseX && mouseX <= 595 && 390 <= mouseY && mouseY <= 412) return 3;
+        else if(400 <= mouseX && mouseX <= 412 && 480 <= mouseY && mouseY <= 500) return 4;
+        else if(583 <= mouseX && mouseX <= 595 && 480 <= mouseY && mouseY <= 500) return 5;
         else return -1;
     }
 
@@ -72,7 +67,6 @@ public class SettingMenu {
         g.drawImage(nextBtn, 585, 480, 10, 20, null);
 
         Graphics2D g2 = (Graphics2D) g;
-        continueBtn.draw(g2);
         audioBtn.draw(g2);
         fpsBtn.draw(g2);
         exiBtn.draw(g2);

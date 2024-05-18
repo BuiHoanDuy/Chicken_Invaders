@@ -6,6 +6,11 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 
 import javax.swing.JPanel;
@@ -80,15 +85,16 @@ public class GamePanel extends JPanel implements Runnable {
 	private float yPos;
 	private Boolean isSpawnCB;
 
-	boolean isShooting = false; // có đang nhấn chuột hay không ?
-	boolean isRightClicked = false; // có nhấn  chuột phải hay không?
+	private boolean isShooting = false; // có đang nhấn chuột hay không ?
+	private boolean isRightClicked = false; // có nhấn  chuột phải hay không?
 	private int damage = 1;
 	private int bulletType;
 
+	private Boolean isEndGame;
 
 	// game entity
 	// private Player player;
-	private Player player = new Player(this, 500, 570, 10);
+	private Player player;
 	private BulletList bulletList;
 	private EnemyList enemyList;
 	private GiftList giftList;
@@ -108,7 +114,7 @@ public class GamePanel extends JPanel implements Runnable {
 		hiddenCursor = false;
 		isSpawnItem = false;
 		isSpawnCB = false;
-		sound = new Sound();
+		isEndGame = false;
 	}
 	
 	private void initControllers() {
@@ -137,11 +143,15 @@ public class GamePanel extends JPanel implements Runnable {
 		background = new Background(wave);
 		// các giá trị mặc định khi vừa vào game
 		guiText = new GuiText(3, 1, 3, 0);
+		sound = new Sound();
+	}
+
+	private void initPlayer() {
+		player = new Player(this, 500, 570, 10);
 	}
 
 	private void initEntity() {
 		// init game entity
-		// player = new Player(this, 500, 570, 10);
 		bulletList = new BulletList(this);
 		giftList = new GiftList(this);
 		enemyList = new EnemyList(this);
@@ -153,6 +163,7 @@ public class GamePanel extends JPanel implements Runnable {
 		this.initControllers();
 		this.initVar();
 		this.initGui();
+		this.initPlayer();
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
@@ -161,7 +172,7 @@ public class GamePanel extends JPanel implements Runnable {
 		this.addMouseMotionListener(Mouse);
 		this.addKeyListener(keyboard);
 		this.setFocusable(true);
-		playMusic(0);
+		playMusic(1);
 	}
 
 	public void startGameThread() {
@@ -241,8 +252,13 @@ public class GamePanel extends JPanel implements Runnable {
 
 	public void update() {
 		// Put Update function here
+		if(player.getHp() == 0) {
+			stage = STAGE.GAME_OVER;
+		}
+
 		updateCursor();
 		if(stage == STAGE.GAME_PLAY)
+		// if(stage == STAGE.GAME_PLAY && !isEndGame)
 			updateGamePlay();
 	}
 
@@ -291,6 +307,9 @@ public class GamePanel extends JPanel implements Runnable {
 				pauseMenu.draw(g);
 				hiddenCursor = false;
 				break;
+			case GAME_OVER:
+				updateScore();
+				break;
 			default:
 				break;
 		}
@@ -301,6 +320,7 @@ public class GamePanel extends JPanel implements Runnable {
 		switch (option) {
 			case 1:
 				System.out.println("play");
+				initPlayer();
 				initEntity();
 				stage = STAGE.GAME_PLAY;
 				break;
@@ -326,30 +346,22 @@ public class GamePanel extends JPanel implements Runnable {
 		int option = settingMenu.update(mouseX, mouseY);
 		switch (option) {
 			case 1:
-				System.out.println("continue");
-				break;
-			case 2:
-				System.out.println("audio");
-				break;
-			case 3:
-				System.out.println("fps");
-				break;
-			case 4:
 				System.out.println("return");
 				stage = STAGE.START_MENU;
 				break;
-			case 5:
-			case 6:
+			case 2:
+			case 3:
 				System.out.println("audio change");
-				setAudio();
+				audio = !audio;
+				setMusic();
 				break;
-			case 7:
+			case 4:
 				System.out.println("fps change");
 				if(fpsIndex > 0) fpsIndex--;
 				else fpsIndex = fpsArr.length - 1;
 				fps = fpsArr[fpsIndex];
 				break;
-			case 8:
+			case 5:
 				System.out.println("fps change");
 				if(fpsIndex < fpsArr.length - 1) fpsIndex++;
 				else fpsIndex = 0;
@@ -376,27 +388,23 @@ public class GamePanel extends JPanel implements Runnable {
 				hiddenCursor = true;
 				break;
 			case 2:
-				System.out.println("audio");
-				break;
-			case 3:
-				System.out.println("fps");
-				break;
-			case 4:
 				System.out.println("return");
+				updateScore();
 				stage = STAGE.START_MENU;
 				break;
-			case 5:
-			case 6:
+			case 3:
+			case 4:
 				System.out.println("audio change");
-				setAudio();
+				audio = !audio;
+				setMusic();
 				break;
-			case 7:
+			case 5:
 				System.out.println("fps change");
 				if(fpsIndex > 0) fpsIndex--;
 				else fpsIndex = fpsArr.length - 1;
 				fps = fpsArr[fpsIndex];
 				break;
-				case 8:
+			case 6:
 				System.out.println("fps change");
 				if(fpsIndex < fpsArr.length - 1) fpsIndex++;
 				else fpsIndex = 0;
@@ -439,8 +447,9 @@ public class GamePanel extends JPanel implements Runnable {
 		sound.loop();
 	}
 
-	public void stopMusic() {
-		sound.stop();
+	public void setMusic() {
+		if(audio) sound.play();
+		else sound.stop();
 	}
 
 	public void playSE(int i) { // sound effect
@@ -577,10 +586,6 @@ public class GamePanel extends JPanel implements Runnable {
 		return audio;
 	}
 
-	public void setAudio() {
-		audio = !audio;
-	}
-
 	public int getFps() {
 		return fps;
 	}
@@ -633,5 +638,26 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public int getTileSize() {
 		return tileSize;
+	}
+
+	private void updateScore() {
+		int currentScore = 0;
+		try (BufferedReader br = new BufferedReader(new FileReader("save/score.txt"))) {
+			String s;
+            while ((s = br.readLine()) != null) {
+				currentScore = Integer.parseInt(s);
+			}
+        } catch (IOException e) {
+			e.printStackTrace();
+        }
+
+		int newScore = player.getScore();
+		if(currentScore < newScore) {
+			try (BufferedWriter bw = new BufferedWriter(new FileWriter("save/score.txt"))) {
+				bw.write(Integer.toString(newScore));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

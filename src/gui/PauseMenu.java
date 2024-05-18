@@ -46,13 +46,11 @@ public class PauseMenu {
 
     public int update(int mouseX, int mouseY) {
         if(430 <= mouseX && mouseX <= 580 && 290 <= mouseY && mouseY <= 330) return 1;
-        else if(430 <= mouseX && mouseX <= 565 && 385 <= mouseY && mouseY <= 415) return 2;
-        else if(450 <= mouseX && mouseX <= 555 && 470 <= mouseY && mouseY <= 510) return 3;
-        else if(465 <= mouseX && mouseX <= 540 && 560 <= mouseY && mouseY <= 600) return 4;
-        else if(400 <= mouseX && mouseX <= 412 && 394 <= mouseY && mouseY <= 412) return 5;
-        else if(583 <= mouseX && mouseX <= 595 && 390 <= mouseY && mouseY <= 412) return 6;
-        else if(400 <= mouseX && mouseX <= 412 && 480 <= mouseY && mouseY <= 500) return 7;
-        else if(583 <= mouseX && mouseX <= 595 && 480 <= mouseY && mouseY <= 500) return 8;
+        else if(465 <= mouseX && mouseX <= 540 && 560 <= mouseY && mouseY <= 600) return 2;
+        else if(400 <= mouseX && mouseX <= 412 && 394 <= mouseY && mouseY <= 412) return 3;
+        else if(583 <= mouseX && mouseX <= 595 && 390 <= mouseY && mouseY <= 412) return 4;
+        else if(400 <= mouseX && mouseX <= 412 && 480 <= mouseY && mouseY <= 500) return 5;
+        else if(583 <= mouseX && mouseX <= 595 && 480 <= mouseY && mouseY <= 500) return 6;
         else return -1;
     }
 
