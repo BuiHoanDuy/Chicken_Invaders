@@ -42,6 +42,12 @@ public class EnemyList {
 
 					// xóa nó ra khỏi list
 					enemyList.remove(i);
+					if (enemyList.get(i).getType() == 1) {
+						gp.playSE(3);
+					} else {
+						if (rand.nextInt(2) == 0) gp.playSE(4);
+						else gp.playSE(5);
+					}
 
 					waveSize++;
 				} else
@@ -328,5 +334,9 @@ public class EnemyList {
 
 	public Enemy getEnemyFromIndex(int index) {
 		return enemyList.get(index);
+	}
+	
+	public int getWave() {
+		return wave;
 	}
 }

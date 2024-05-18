@@ -29,6 +29,7 @@ public class ChickenBulletList {
         if(isSpawnBullet() && gp.getIsSpawnCB()) {
             // System.out.println("Spawn egg");
             bullets.add(new ChickenBullet(gp, gp.getXPos(), gp.getYPos(), 2, rand.nextInt(2) + 1));
+            gp.playSE(12);
             gp.setIsSpawnCB();
         }
 

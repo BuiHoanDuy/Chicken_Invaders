@@ -55,7 +55,7 @@ public class Bullet extends Entity {
 
 	@Override
 	public void draw(Graphics2D g2) {
-		g2.drawImage(image, (int) x - gp.tileSize/2, (int) y, width, height, null);
+		g2.drawImage(image, (int) x - gp.getTileSize()/2, (int) y, width, height, null);
 	}
 	
 	public Rectangle getBulletBound() {
