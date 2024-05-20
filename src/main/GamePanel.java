@@ -442,19 +442,19 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	public void playMusic(int i) {
-		sound.setFile(i);
-		sound.play();
+		sound.setFile(true, i);
+		sound.play(true);
 		sound.loop();
 	}
 
 	public void setMusic() {
-		if(audio) sound.play();
-		else sound.stop();
+		if(audio) sound.on();
+		else sound.off();
 	}
 
 	public void playSE(int i) { // sound effect
-		sound.setFile(i);
-		sound.play();
+		sound.setFile(false, i);
+		sound.play(false);
 	}
 
 	public void setPlayerLocation(float x, float y) { // cài đặt tọa độ máy bay
