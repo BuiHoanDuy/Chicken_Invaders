@@ -35,10 +35,13 @@ public class EnemyList {
 				enemyList.get(i).draw(g2);
 				enemyList.get(i).update(wave);
 				if (enemyList.get(i).getHP() <= 0) {
-					// trả về tọa độ con gà chết
+					// trả về tọa độ enemy vừa bị hạ gục
 					Enemy temp = enemyList.get(i);
-					gp.setLastPos(temp.getX(), temp.getY());
-					gp.setIsSpawnItem();
+					// nếu enemy có type != 0 (tấm khiên) và 11 (quả trứng thiên thạch) thì thả vật phẩm
+					if(temp.getType() != 0 && temp.getType() != 11) {
+						gp.setLastPos(temp.getX(), temp.getY());
+						gp.setIsSpawnItem();
+					}
 
 					// xóa nó ra khỏi list
 					enemyList.remove(i);
@@ -53,8 +56,7 @@ public class EnemyList {
 				} else
 					i++;
 			}
-		} catch (Exception e) {
-		}
+		} catch (Exception e) { }
 	}
 
 	private void spawnEnemyBullet() {
@@ -62,6 +64,7 @@ public class EnemyList {
 		if(enemyList.size() > 0) {
 			int index = rand.nextInt(enemyList.size());
 			Enemy temp = enemyList.get(index);
+			if(temp.getType() == 0 || temp.getType() == 11) return;
 			gp.setChickenBulletPos(temp.getX(), temp.getY());
 			gp.setIsSpawnCB();
 		}
@@ -85,6 +88,7 @@ public class EnemyList {
 				if (count % 1000 == 0) {
 					enemyList.clear();
 					wave++;
+					gp.changeWave();
 				}
 			}
 			break;
@@ -96,6 +100,7 @@ public class EnemyList {
 				if (count % 1500 == 0) {
 					enemyList.clear();
 					wave++;
+					gp.changeWave();
 				}
 			}
 			break;
@@ -106,6 +111,7 @@ public class EnemyList {
 				if (count % 1500 == 0) {
 					enemyList.clear();
 					wave++;
+					gp.changeWave();
 				}
 			}
 			break;
@@ -114,6 +120,7 @@ public class EnemyList {
 				createWave4();
 			} else if (enemyList.isEmpty()) {
 				wave++;
+				gp.changeWave();
 				waveNum = 0;
 			}
 			break;
@@ -124,6 +131,7 @@ public class EnemyList {
 				waveNum++;
 			} else if (waveNum >= 1 && enemyList.isEmpty()) {
 				wave++;
+				gp.changeWave();
 				waveNum = 0;
 			}
 			break;
@@ -134,6 +142,7 @@ public class EnemyList {
 				if (count % 1500 == 0) {
 					enemyList.clear();
 					wave++;
+					gp.changeWave();
 				}
 			}
 			break;
@@ -142,6 +151,7 @@ public class EnemyList {
 				createWave7();
 			} else if (waveNum > 0 && enemyList.isEmpty()) {
 				wave++;
+				gp.changeWave();
 			}
 			break;
 		case 8:
@@ -156,6 +166,7 @@ public class EnemyList {
 				createWave9();
 			} else if (waveNum > 0 && enemyList.isEmpty()) {
 				wave++;
+				gp.changeWave();
 			}
 			break;
 		case 10:
@@ -165,6 +176,7 @@ public class EnemyList {
 				if (count % 1500 == 0) {
 					enemyList.clear();
 					wave++;
+					gp.changeWave();
 				}
 			}
 			break;
@@ -173,6 +185,7 @@ public class EnemyList {
 				createWave11();
 			} else if (enemyList.isEmpty()) {
 				wave++;
+				gp.changeWave();
 			}
 			break;
 		}

@@ -23,7 +23,10 @@ public class HighScore {
         try (BufferedReader br = new BufferedReader(new FileReader("save/score.txt"))) {
             String scoreText;
             while ((scoreText = br.readLine()) != null) {
-                score = new Btn(scoreText, 60, 482, 450);
+                // 36 = 26 + 10 với 26 là chiều rộng một chữ cái size 60, 10 mà khoảng cách giữa 2 chữ
+                // tính tọa độ x để căn giữa score text
+                int x = (1008 - (36 * scoreText.length())) / 2;
+                score = new Btn(scoreText, 60, x, 450);
             }
         } catch (IOException e) {
             e.printStackTrace();

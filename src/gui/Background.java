@@ -7,15 +7,15 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Background {
-    private int wave;
     private BufferedImage background;
 
     public Background(int wave) {
-        this.wave = wave;
-        this.setPath();
+        this.setPath(wave);
     }
 
-    private void setPath() {
+    private void setPath(int wave) {
+        if(wave == 11) wave = 4;
+        else wave = (wave - 1) / 2;
         String path = "/image/background_image/background/" + wave + ".png";
 
         try {
@@ -26,7 +26,7 @@ public class Background {
     }
 
     public void update(int wave) {
-        this.setPath();
+        this.setPath(wave);
     }
 
     public void draw(Graphics g) {

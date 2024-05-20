@@ -105,7 +105,7 @@ public class GamePanel extends JPanel implements Runnable {
 		mouseX = 0;
 		mouseY = 0;
 		stage = STAGE.START_MENU;
-		wave = 3;
+		wave = 1;
 		fpsIndex = 1;
 		fps = fpsArr[fpsIndex];
 		isChangeWave = false;
@@ -269,9 +269,9 @@ public class GamePanel extends JPanel implements Runnable {
 
 		// draw game entity
 		Graphics2D g2 = (Graphics2D) g;
+		giftList.draw(g2);
 		bulletList.draw(g2);
 		enemyList.draw(g2);
-		giftList.draw(g2);
 		chickenBulletList.draw(g2);
 		chickenItemList.draw(g2);
 		player.draw(g2);
@@ -577,6 +577,12 @@ public class GamePanel extends JPanel implements Runnable {
     public int getUltiShoot() { // lấy số lượng ulti
     	return player.getUltiShoot();
     }
+	
+	public void changeWave() {
+		isChangeWave = true;
+		++wave;
+		System.out.println("change wave");
+	}
 
 	public void pauseGame() {
 		stage = STAGE.GAME_PAUSE;
