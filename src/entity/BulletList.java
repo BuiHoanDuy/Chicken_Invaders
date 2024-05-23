@@ -127,56 +127,56 @@ public class BulletList {
 					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 17, gp.getPlayerY(), 0, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize()));
 				} else if (level == 2) {
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), -10, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), 10, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 15, gp.getPlayerY(), 0, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 17, gp.getPlayerY(), 0, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize()));
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 35, gp.getPlayerY(), 10, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 35, gp.getPlayerY(), -10, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
 				} else if (level == 3) {
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), -20, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), 15, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), -10, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), 10, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 15, gp.getPlayerY(), 0, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 17, gp.getPlayerY(), 0, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize()));
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 35, gp.getPlayerY(), 10, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 35, gp.getPlayerY(), -10, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 35, gp.getPlayerY(), 20, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 35, gp.getPlayerY(), -15, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
 				} else if (level == 4) {
 					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 15, gp.getPlayerY(), -20, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 15, gp.getPlayerY(), -17, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 15, gp.getPlayerY(), -15, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
 					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 15, gp.getPlayerY(), -10, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 15, gp.getPlayerY(), 0, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 17, gp.getPlayerY(), 0, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize()));
 					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 15, gp.getPlayerY(), 10, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 15, gp.getPlayerY(), 17, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 15, gp.getPlayerY(), 15, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
 					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 15, gp.getPlayerY(), 20, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
 				} else if (level == 5) {
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), -140, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), 20, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), -130, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), 15, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), -110, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), 10, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), -90, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY(), 5, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 15, gp.getPlayerY(), 0, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 17, gp.getPlayerY(), 0, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize()));
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 35, gp.getPlayerY(), 90, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 35, gp.getPlayerY(), -5, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 35, gp.getPlayerY(), 110, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 35, gp.getPlayerY(), -10, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 35, gp.getPlayerY(), 130, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 35, gp.getPlayerY(), -15, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
-					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 35, gp.getPlayerY(), 140, 3, damage,
+					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 35, gp.getPlayerY(), -20, 3, damage,
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
 				}
 			} else if (momentType == 4) {
@@ -231,19 +231,15 @@ public class BulletList {
 					bulletList.add(new Bullet(this.gp, gp.getPlayerX() + 13, gp.getPlayerY() - gp.getTileSize() * 15, 0, 5,
 							damage, gp.getTileSize() / 2, gp.getTileSize() * 15));
 				} else if (level == 2) {
-					//damage = 3;
 					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY() - gp.getTileSize() * 15, 0, 51,
 							damage, gp.getTileSize(), gp.getTileSize() * 15));
 				} else if (level == 3) {
-					//damage = 5;
 					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY() - gp.getTileSize() * 15, 0, 52,
 							damage, gp.getTileSize(), gp.getTileSize() * 15));
 				} else if (level == 4) {
-					//damage = 7;
 					bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY() - gp.getTileSize() * 15, 0, 53,
 							damage, gp.getTileSize(), gp.getTileSize() * 15));
 				} else if (level == 5) {
-					//damage = 10;
 					bulletList.add(new Bullet(this.gp, gp.getPlayerX() - 20, gp.getPlayerY() - gp.getTileSize() * 15, 0, 54,
 							damage, gp.getTileSize() * 2, gp.getTileSize() * 15));
 				}
@@ -267,7 +263,7 @@ public class BulletList {
 		// check ulti
 		if (gp.getIsRightClicked() == true && gp.getUltiShoot() > 0) {
 			loadingTimeMax = 0;
-			damage = 50;
+			damage = 20;
 			bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY() - 50, 3, 6, damage, gp.getTileSize(),
 					gp.getTileSize() * 6));
 
@@ -323,6 +319,9 @@ public class BulletList {
 	}
 
 	public void setMomentType(int i) {
+		if (momentType == 5) { // khứ thằng này để tránh gặp bug nó không biến mất
+			bulletList.clear();
+		}
 		if (momentType == i && level < 5 || i == 0 && level < 5) {
 			level++;
 		} else if (i == 0 && level >= 5) {

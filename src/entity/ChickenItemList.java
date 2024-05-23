@@ -1,4 +1,4 @@
-package entity;
+	package entity;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class ChickenItemList {
     private void spawnItems(float x, float y) {
             int type = rand.nextInt(7)+1;
             if (rand.nextInt(4) == 1) {
-            	items.add(new ChichkenItem(gp, x, y, 8, type));            	
+            	items.add(new ChichkenItem(gp, x, y, 4, type));            	
             }
     }
 

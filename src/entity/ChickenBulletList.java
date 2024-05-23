@@ -28,7 +28,7 @@ public class ChickenBulletList {
     public void update() {
         if(isSpawnBullet() && gp.getIsSpawnCB()) {
             // System.out.println("Spawn egg");
-            bullets.add(new ChickenBullet(gp, gp.getXPos(), gp.getYPos(), 8, rand.nextInt(2) + 1));
+            bullets.add(new ChickenBullet(gp, gp.getXPos(), gp.getYPos(), 4, rand.nextInt(2) + 1));
             gp.playSE(12);
             gp.setIsSpawnCB();
         }

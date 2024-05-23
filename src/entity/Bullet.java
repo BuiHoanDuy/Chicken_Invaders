@@ -42,14 +42,20 @@ public class Bullet extends Entity {
 		if (type != 3) {
 			y -= speed;			
 		}
-		else {
-			if (speed >= 0) {
-				x = (float) (x + Math.abs((y*Math.tan(speed)/x))) ;				
+		else { // Định hướng riêng cho đạn loại 3
+			// Định nghĩa góc bay (theta) và vận tốc ban đầu (speed)
+			double theta = Math.toRadians(speed); // truyền speed ở bên BulletList. speed chỉ mang tính chất set góc
+
+			// Tính toán các thành phần vận tốc theo trục x và y
+			float angle = (float) (speed * Math.sin(theta));
+
+			// Điều chỉnh vị trí đạn
+			if (speed > 0) {
+			    x -= angle;
+			} else if (speed < 0){
+			    x += angle;
 			}
-			else if (speed < 0) {
-				x = (float) (x - Math.abs((y*Math.tan(speed)/x))) ;
-			}
-			y -= 6;
+			y -= 6; // Di chuyển đạn lên trên theo trục y với vận tốc cố định
 		}
 	}
 

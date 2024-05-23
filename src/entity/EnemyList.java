@@ -176,6 +176,7 @@ public class EnemyList {
 				if (count % 1500 == 0) {
 					enemyList.clear();
 					wave++;
+					waveNum = 0;
 					gp.changeWave();
 				}
 			}
@@ -336,9 +337,9 @@ public class EnemyList {
 	}
 
 	public void createWave11() {
-		waveNum++;
 		enemyList.add(new Enemy(this.gp, -200, 432, 890, 240, 1, 10));
 		enemyList.add(new Enemy(this.gp, 1100, 288, 10, 144, 1, 10));
+		waveNum++;
 	}
 
 	public int getSize() {

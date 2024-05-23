@@ -47,7 +47,7 @@ public class Enemy extends Entity {
 			width = (int) (gp.getTileSize() * 2);
 			height = (int) (gp.getTileSize());
 			numOfFrame = 3;
-			hp = 15;
+			hp = 25;
 			break;
 		case 1:
 			width = (int) (gp.getTileSize() * 1.5);
@@ -58,35 +58,35 @@ public class Enemy extends Entity {
 		case 2:
 		case 3:
 		case 4:
-			hp = 2;
+			hp = 5;
 			numOfFrame = 1;
 			break;
 		case 5:
-			hp = 4;
+			hp = 10;
 			numOfFrame = 1;
 			break;
 		case 6:
-			hp = 5;
+			hp = 15;
 			numOfFrame = 2;
 			break;
 		case 7:
-			hp = 5;
+			hp = 17;
 			numOfFrame = 1;
 			break;
 		case 8:
-			hp = 6;
+			hp = 20;
 			numOfFrame = 2;
 			break;
 		case 9:
 			width = (int) (gp.getTileSize() * 4);
 			height = (int) (gp.getTileSize() * 3);
-			hp = 10;
+			hp = 25;
 			numOfFrame = 1;
 			break;
 		case 10:
 			width = (int) (gp.getTileSize() * 4);
 			height = (int) (gp.getTileSize() * 4);
-			hp = 25;
+			hp = 250;
 			numOfFrame = 4;
 			break;
 		case 11:
@@ -134,12 +134,12 @@ public class Enemy extends Entity {
 			x -= speed; 
 			break;
 		case 2: // up left
-			x -= speed;
-			y += speed;
+			x -= speed * (Math.sqrt(2) / 2);
+			y += speed * (Math.sqrt(2) / 2);
 			break;
 		case 3: // down left
-			x -= speed;
-			y -= speed;
+			x -= speed * (Math.sqrt(2) / 2);
+			y -= speed * (Math.sqrt(2) / 2);
 			break;
 		case 4: // down
 			y -= speed;
@@ -151,12 +151,12 @@ public class Enemy extends Entity {
 			x += speed;
 			break;
 		case 7: // up right
-			x += speed;
-			y += speed;
+			x += speed * (Math.sqrt(2) / 2);
+			y += speed * (Math.sqrt(2) / 2);
 			break;
 		case 8: // down right
-			x += speed;
-			y -= speed;
+			x += speed * (Math.sqrt(2) / 2);
+			y -= speed * (Math.sqrt(2) / 2);
 			break;
 		}
 	}
@@ -225,7 +225,7 @@ public class Enemy extends Entity {
 
 	public Rectangle getEnemyBound() {
 		if (type == 11) {
-			return new Rectangle((int) x+25, (int) y + 10, width - 50, height - 20);
+			return new Rectangle((int) x+25, (int) y + 10,(int) (width*0.5),(int)( height*0.5));
 		} else
 		return new Rectangle((int) x-10, (int) y + 10, width - 20, height - 20);
 	}
