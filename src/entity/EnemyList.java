@@ -10,7 +10,7 @@ public class EnemyList {
 	private GamePanel gp;
 	
 	private ArrayList<Enemy> enemyList;
-	private int wave = 1; // màn chơi hiện tại
+	private int wave = 6; // màn chơi hiện tại
 	private int waveSize; // số lượng con gà đã bị giết, nếu chưa giết thì sẽ render ra con gà khác để đủ
 					// số lượng gà muốn xuất hiện thì thôi
 	private int count = 0; // dùng để đếm số vòng lặp để render ra con gà sau số vòng lặp nhất định
@@ -45,13 +45,19 @@ public class EnemyList {
 
 					// xóa nó ra khỏi list
 					enemyList.remove(i);
-					if (enemyList.get(i).getType() == 1) {
-						gp.playSE(3);
-					} else {
-						if (rand.nextInt(2) == 0) gp.playSE(4);
-						else gp.playSE(5);
+					switch(enemyList.get(i).getType()) {
+						case 0:
+						case 11:
+							gp.playSE(20);
+							break;
+						case 1:
+							gp.playSE(3);
+							break;
+						default:
+							if (rand.nextInt(2) == 0) gp.playSE(4);
+							else gp.playSE(5);
+							break;
 					}
-
 					waveSize++;
 				} else
 					i++;

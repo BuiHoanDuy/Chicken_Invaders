@@ -91,6 +91,7 @@ public class GamePanel extends JPanel implements Runnable {
 	private int bulletType;
 
 	private Boolean isEndGame;
+	private Boolean endGameSound;
 
 	// game entity
 	// private Player player;
@@ -115,6 +116,7 @@ public class GamePanel extends JPanel implements Runnable {
 		isSpawnItem = false;
 		isSpawnCB = false;
 		isEndGame = false;
+		endGameSound = false;
 	}
 	
 	private void initControllers() {
@@ -256,6 +258,11 @@ public class GamePanel extends JPanel implements Runnable {
 			stage = STAGE.GAME_OVER;
 		}
 
+		if(stage == STAGE.GAME_OVER && !endGameSound) {
+			playSE(21);
+			endGameSound = !endGameSound;
+		}
+		
 		updateCursor();
 		if(stage == STAGE.GAME_PLAY)
 		// if(stage == STAGE.GAME_PLAY && !isEndGame)
@@ -497,7 +504,17 @@ public class GamePanel extends JPanel implements Runnable {
 				if (bulletList.getBulletFromIndex(i).getBulletBound().intersects(enemyList.getEnemyFromIndex(j).getEnemyBound())) {
 					bulletList.getBulletFromIndex(i).setIsIntersectEnemy(); // đạn chạm địch
 					enemyList.getEnemyFromIndex(j).setIsIntersectBullet(); // địch chạm đạn
-					playSE(rand.nextInt(4)+6);
+					switch(enemyList.getEnemyFromIndex(j).getType()) {
+						case 0:
+							playSE(18);
+							break;
+						case 11:
+							playSE(19);
+							break;
+						default:
+							playSE(rand.nextInt(4)+6);
+							break;
+					}
 				}
 			}
 		}
@@ -508,7 +525,8 @@ public class GamePanel extends JPanel implements Runnable {
 			if (enemyList.getSize() == 0)
 				break;
 			if (player.getPlayerBound().intersects(enemyList.getEnemyFromIndex(i).getEnemyBound())) {
-				playSE(15);
+				// playSE(15);
+				playSE(20);
 				player.setPreStartPosition(); // cho máy bay về vị trí gần xuất phát
 				player.setIsIntersectEnemy(); // máy bay chạm địch
 				bulletList.decreaseLevel(); // giảm cấp đạn về 1
@@ -521,7 +539,8 @@ public class GamePanel extends JPanel implements Runnable {
 			if (!chickenBulletList.getCBFromIndex(i).onTheGround() && player.getPlayerBound().intersects(chickenBulletList.getCBFromIndex(i).getCBBound())) {
 				player.setPreStartPosition(); // cho máy bay về vị trí gần xuất phát
 				player.setIsIntersectEnemy(); // máy bay chạm đạn của địch
-				playSE(15);
+				playSE(20);
+				// playSE(15);
 				chickenBulletList.remove(i);
 				bulletList.decreaseLevel(); // giảm cấp đạn về 1
 			}
