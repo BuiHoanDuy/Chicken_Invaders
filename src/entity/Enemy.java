@@ -257,4 +257,9 @@ public class Enemy extends Entity {
 	public int getType() {
 		return type;
 	}
+
+	// lấy ra biến t
+	public float getT() {
+		return t;
+	}
 }

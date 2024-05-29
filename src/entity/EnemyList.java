@@ -10,7 +10,7 @@ public class EnemyList {
 	private GamePanel gp;
 	
 	private ArrayList<Enemy> enemyList;
-	private int wave = 6; // màn chơi hiện tại
+	private int wave = 1; // màn chơi hiện tại
 	private int waveSize; // số lượng con gà đã bị giết, nếu chưa giết thì sẽ render ra con gà khác để đủ
 					// số lượng gà muốn xuất hiện thì thôi
 	private int count = 0; // dùng để đếm số vòng lặp để render ra con gà sau số vòng lặp nhất định
@@ -34,6 +34,7 @@ public class EnemyList {
 			while (i < enemyList.size()) {
 				enemyList.get(i).draw(g2);
 				enemyList.get(i).update(wave);
+				
 				if (enemyList.get(i).getHP() <= 0) {
 					// trả về tọa độ enemy vừa bị hạ gục
 					Enemy temp = enemyList.get(i);
@@ -59,8 +60,15 @@ public class EnemyList {
 							break;
 					}
 					waveSize++;
-				} else
-					i++;
+					
+				} 
+				// vuợt qua khỏi màn hình thì remove
+				if (enemyList.get(i).getT() >=1 && (wave == 1 || wave == 2 || wave == 3 || wave == 6 || wave == 10)) {
+					enemyList.remove(i);
+					System.out.println(1);
+				}
+				i++;
+				
 			}
 		} catch (Exception e) { }
 	}
@@ -83,17 +91,14 @@ public class EnemyList {
 	}
 
 	public void setWave() {
-		if (enemyList.isEmpty()) {
-			waveSize = 0;
-		}
 		switch (wave) {
 		case 1:
 			if (waveSize < 70) {
 				createWave1();
 			} else {
-				if (count % 1000 == 0) {
-					enemyList.clear();
+				if (enemyList.isEmpty()) {
 					wave++;
+					waveSize = 0;
 					gp.changeWave();
 				}
 			}
@@ -103,9 +108,9 @@ public class EnemyList {
 			if (waveSize < 70) {
 				createWave2();
 			} else {
-				if (count % 1500 == 0) {
-					enemyList.clear();
+				if (enemyList.isEmpty()) {
 					wave++;
+					waveSize = 0;
 					gp.changeWave();
 				}
 			}
@@ -114,40 +119,45 @@ public class EnemyList {
 			if (waveSize < 5) {
 				createWave3();
 			} else {
-				if (count % 1500 == 0) {
-					enemyList.clear();
+				if (enemyList.isEmpty()) {
 					wave++;
+					waveSize = 0;
 					gp.changeWave();
 				}
 			}
 			break;
 		case 4:
-			if (waveNum <= 0) {
+			if (waveNum <= 2) {
 				createWave4();
-			} else if (enemyList.isEmpty()) {
-				wave++;
-				gp.changeWave();
-				waveNum = 0;
+			} else if (enemyList.isEmpty() && waveNum > 2) {
+				if (enemyList.isEmpty()) {
+					wave++;
+					waveSize = 0;
+					gp.changeWave();
+					waveNum = 0;
+				}
 			}
 			break;
 		case 5:
 			count = 0;
-			if (waveNum < 1) {
+			if (waveNum < 2) {
 				createWave5();
-				waveNum++;
-			} else if (waveNum >= 1 && enemyList.isEmpty()) {
-				wave++;
-				gp.changeWave();
-				waveNum = 0;
+			} else if (waveNum >= 2 && enemyList.isEmpty()) {
+				if (enemyList.isEmpty()) {
+					wave++;
+					waveSize = 0;
+					gp.changeWave();
+					waveNum = 0;
+				}
 			}
 			break;
 		case 6:
 			if (waveSize <= 70) {
 				createWave6();
 			} else {
-				if (count % 1500 == 0) {
-					enemyList.clear();
+				if (enemyList.isEmpty()) {
 					wave++;
+					waveSize = 0;
 					gp.changeWave();
 				}
 			}
@@ -156,33 +166,42 @@ public class EnemyList {
 			if (waveNum <= 0) {
 				createWave7();
 			} else if (waveNum > 0 && enemyList.isEmpty()) {
-				wave++;
-				gp.changeWave();
+				if (enemyList.isEmpty()) {
+					wave++;
+					waveSize = 0;
+					gp.changeWave();
+				}
 			}
 			break;
 		case 8:
 			if (waveNum <= 0) {
 				createWave8();
 			} else if (waveNum > 0 && enemyList.isEmpty()) {
-				++wave;
+				if (enemyList.isEmpty()) {
+					wave++;
+					waveSize = 0;
+					gp.changeWave();
+				}
 			}
 			break;
 		case 9:
 			if (waveNum <= 0) {
 				createWave9();
 			} else if (waveNum > 0 && enemyList.isEmpty()) {
-				wave++;
-				gp.changeWave();
+				if (enemyList.isEmpty()) {
+					wave++;
+					waveSize = 0;
+					gp.changeWave();
+				}
 			}
 			break;
 		case 10:
 			if (waveSize <= 200) {
 				createWave10();
 			} else {
-				if (count % 1500 == 0) {
-					enemyList.clear();
+				if (enemyList.isEmpty()) {
 					wave++;
-					waveNum = 0;
+					waveSize = 0;
 					gp.changeWave();
 				}
 			}
@@ -191,8 +210,11 @@ public class EnemyList {
 			if (waveNum <= 0) {
 				createWave11();
 			} else if (enemyList.isEmpty()) {
-				wave++;
-				gp.changeWave();
+				if (enemyList.isEmpty()) {
+					wave++;
+					waveSize = 0;
+					gp.changeWave();
+				}
 			}
 			break;
 		}
@@ -220,17 +242,17 @@ public class EnemyList {
 	// UFO bay qua, giết đủ 5 tàu sẽ qua màn mới
 	public void createWave3() {
 		if (count % 500 == 0) {
-			enemyList.add(new Enemy(this.gp, -300, 384, 1300, 384, 1, 9));
+			enemyList.add(new Enemy(this.gp, -300, 384, 1100, 384, 1, 9));
 		}
 
 		if (count % 200 == 0) {
-			enemyList.add(new Enemy(this.gp, 1300, 192, -1000, 192, 1, 9));
+			enemyList.add(new Enemy(this.gp, 1300, 192, -150, 192, 1, 9));
 		}
 	}
 
 	// có 3 đợt gà, hạ từ trên xuống
 	public void createWave4() {
-		if (count % 800 == 0) {
+		if (enemyList.isEmpty()) {
 			waveNum++;
 			for (int i = 0; i <= 5; i++) {
 				enemyList.add(new Enemy(this.gp, 96 + (144 * i), -96, 96 + (144 * i), 332, 1, 5));
@@ -244,7 +266,8 @@ public class EnemyList {
 
 	// có 2 đợt gà, hạ từ trên xuống, có khiên
 	public void createWave5() {
-		if (count % 1600 == 0) {
+		if (enemyList.isEmpty()) {
+			waveNum++;
 			for (int i = 0; i < 6; i++) {
 				if (i % 2 == 0) {
 					enemyList.add(new Enemy(this.gp, -20, 528, 120 + (144 * i), 428, 1, 0));
@@ -331,6 +354,7 @@ public class EnemyList {
 		++waveNum;
 	}
 
+	// giết đủ 200 con sẽ qua màn. gà sẽ bay tứ tung
 	public void createWave10() {
 		if (count % 30 == 0) {
 			enemyList.add(new Enemy(this.gp, -200, 432, 1300, 240, 1, rand.nextInt(9) + 1));
@@ -342,6 +366,7 @@ public class EnemyList {
 		}
 	}
 
+	// 2 con boss bay tứ tung
 	public void createWave11() {
 		enemyList.add(new Enemy(this.gp, -200, 432, 890, 240, 1, 10));
 		enemyList.add(new Enemy(this.gp, 1100, 288, 10, 144, 1, 10));

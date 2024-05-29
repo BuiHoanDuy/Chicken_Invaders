@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -21,6 +22,9 @@ public class GuiText {
 
     private Btn rockeBtn;
     private Btn scoreBtn;
+
+    private BufferedImage chapterScreen;
+    private Graphics2D chapterGraphics;
 
 
     private void initVar(int m_hp, int m_bullet, int m_rocket, int m_score) {
@@ -44,6 +48,31 @@ public class GuiText {
             guiBg  = new BufferedImage(280, 55, BufferedImage.TYPE_INT_ARGB);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void initChapterText(int wave) {
+        chapterScreen = new BufferedImage(1008, 720, BufferedImage.TYPE_INT_RGB);
+        chapterGraphics = chapterScreen.createGraphics();
+        chapterGraphics.setColor(Color.BLACK);
+        chapterGraphics.fillRect(0, 0, 1008, 720);
+        chapterGraphics.setColor(Color.WHITE);
+        chapterGraphics.setFont(new Font("Arial", Font.BOLD, 48));
+        String text = "Wave " + wave;
+        int textWidth = chapterGraphics.getFontMetrics().stringWidth(text);
+        int textHeight = chapterGraphics.getFontMetrics().getHeight();
+        chapterGraphics.drawString(text, 400 - textWidth / 2, 300 - textHeight / 2);
+    }
+
+    public void drawChapterText(Graphics g, int wave) {
+        if (chapterScreen != null) {
+            g.drawImage(chapterScreen, 0, 0, null);
+            try {
+                Thread.sleep(1000); // Đợi 1 giây
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            chapterScreen = null; // Xóa màn hình đen và dòng chữ
         }
     }
 

@@ -54,6 +54,8 @@ public class GamePanel extends JPanel implements Runnable {
 	private SettingMenu settingMenu;
 	private PauseMenu pauseMenu;
 	private HighScore highScore;
+	private GameOver gameOver;
+	private GameEnd gameEnd;
 	private Sound sound;
 	private GuiText guiText;
 	private Background background;
@@ -85,6 +87,10 @@ public class GamePanel extends JPanel implements Runnable {
 	private float yPos;
 	private Boolean isSpawnCB;
 
+	private Boolean isNewWave;
+	private Boolean musicChanged;
+	private Boolean victorySound;
+
 	private boolean isShooting = false; // có đang nhấn chuột hay không ?
 	private boolean isRightClicked = false; // có nhấn  chuột phải hay không?
 	private int damage = 1;
@@ -105,6 +111,7 @@ public class GamePanel extends JPanel implements Runnable {
 	private void initVar() {
 		mouseX = 0;
 		mouseY = 0;
+		// stage = STAGE.GAME_END;
 		stage = STAGE.START_MENU;
 		wave = 1;
 		fpsIndex = 1;
@@ -117,6 +124,9 @@ public class GamePanel extends JPanel implements Runnable {
 		isSpawnCB = false;
 		isEndGame = false;
 		endGameSound = false;
+		isNewWave = true;
+		musicChanged = false;
+		victorySound = false;
 	}
 	
 	private void initControllers() {
@@ -174,7 +184,7 @@ public class GamePanel extends JPanel implements Runnable {
 		this.addMouseMotionListener(Mouse);
 		this.addKeyListener(keyboard);
 		this.setFocusable(true);
-		playMusic(1);
+		playMusic(0);
 	}
 
 	public void startGameThread() {
@@ -219,6 +229,7 @@ public class GamePanel extends JPanel implements Runnable {
 		if(isChangeWave) {
 			background.update(wave);
 			isChangeWave = false;
+			isNewWave = true;
 		}
 
 		// update gui
@@ -258,10 +269,11 @@ public class GamePanel extends JPanel implements Runnable {
 			stage = STAGE.GAME_OVER;
 		}
 
-		if(stage == STAGE.GAME_OVER && !endGameSound) {
-			playSE(21);
-			endGameSound = !endGameSound;
+		if(stage == STAGE.GAME_PLAY && enemyList.getWave() == 12) {
+			stage = STAGE.GAME_END;
 		}
+
+		updateBgSound();
 		
 		updateCursor();
 		if(stage == STAGE.GAME_PLAY)
@@ -269,8 +281,31 @@ public class GamePanel extends JPanel implements Runnable {
 			updateGamePlay();
 	}
 
+	private void updateBgSound() {
+		if(stage == STAGE.GAME_OVER && !endGameSound) {
+			playSE(21);
+			endGameSound = !endGameSound;
+		}
+
+		if(wave > 5 && !musicChanged) {
+			playMusic(1);
+			musicChanged = !musicChanged;
+		}
+
+		if(stage == STAGE.GAME_END && !victorySound) {
+			playMusic(22);
+			victorySound = !victorySound;
+		}
+	}
+
 
 	private void drawGamePlay(Graphics g) {
+		// if(isNewWave) {
+		// 	guiText.initChapterText(wave);
+		// 	isNewWave = false;
+		// }
+		// guiText.drawChapterText(g, wave);
+
 		// draw background
 		background.draw(g);
 
@@ -316,6 +351,14 @@ public class GamePanel extends JPanel implements Runnable {
 				break;
 			case GAME_OVER:
 				updateScore();
+				gameOver = new GameOver(player.getScore());
+				gameOver.draw(g);
+				hiddenCursor = false;
+				break;
+			case GAME_END:
+				gameEnd = new GameEnd();
+				gameEnd.draw(g);
+				hiddenCursor = false;
 				break;
 			default:
 				break;
@@ -422,6 +465,29 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 
+	private void gameOverMenu() {
+		int option = gameOver.update(mouseX, mouseY);
+		switch (option) {
+			case 1:
+				initPlayer();
+				initEntity();
+				stage = stage.GAME_PLAY;
+				break;
+			case 2:
+				initPlayer();
+				stage = stage.START_MENU;
+				break;
+			default:
+				break;
+		}
+	}
+
+
+	private void gameEndAction() {
+		if(gameEnd.update(mouseX, mouseY)) {
+			stage = STAGE.START_MENU;
+		}
+	}
 
 	public void updateMouseClick(int x, int y) {
 		// Xử lý sự kiện khi click chuột và lưu tọa độ
@@ -443,12 +509,19 @@ public class GamePanel extends JPanel implements Runnable {
 			case GAME_PAUSE:
 				pauseMenuAction();
 				break;
+			case GAME_OVER:
+				gameOverMenu();
+				break;
+			case GAME_END:
+			 	gameEndAction();
+				break;
 			default:
 				break;
 		}
 	}
 
 	public void playMusic(int i) {
+		sound.stop();
 		sound.setFile(true, i);
 		sound.play(true);
 		sound.loop();
@@ -540,7 +613,6 @@ public class GamePanel extends JPanel implements Runnable {
 				player.setPreStartPosition(); // cho máy bay về vị trí gần xuất phát
 				player.setIsIntersectEnemy(); // máy bay chạm đạn của địch
 				playSE(20);
-				// playSE(15);
 				chickenBulletList.remove(i);
 				bulletList.decreaseLevel(); // giảm cấp đạn về 1
 			}
