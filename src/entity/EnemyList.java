@@ -65,7 +65,6 @@ public class EnemyList {
 				// vuợt qua khỏi màn hình thì remove
 				if (enemyList.get(i).getT() >=1 && (wave == 1 || wave == 2 || wave == 3 || wave == 6 || wave == 10)) {
 					enemyList.remove(i);
-					System.out.println(1);
 				}
 				i++;
 				

@@ -48,9 +48,9 @@ public class ChickenBullet extends Entity{
     @Override
     public void update() {
         // TODO Auto-generated method stub
-        if(y < 640) {
+        if(y < 680) {
             y += speed;
-        } else if (y >= 640 && !isOnTheGround) {
+        } else if (y >= 680 && !isOnTheGround) {
         	gp.playSE(13);
         	isOnTheGround = true;
         }

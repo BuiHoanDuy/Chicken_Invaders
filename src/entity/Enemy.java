@@ -86,7 +86,7 @@ public class Enemy extends Entity {
 		case 10:
 			width = (int) (gp.getTileSize() * 4);
 			height = (int) (gp.getTileSize() * 4);
-			hp = 250;
+			hp = 500;
 			numOfFrame = 4;
 			break;
 		case 11:
@@ -166,7 +166,7 @@ public class Enemy extends Entity {
 		int b[] = {1,3,4,6,8};
 		if (y < 0) {
 			num = a[rand.nextInt(5)];
-		} else if (y > 500) {
+		} else if (y > 530) {
 			num = b[rand.nextInt(5)];
 		}
 		if(x>=900) {
