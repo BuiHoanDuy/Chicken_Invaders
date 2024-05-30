@@ -27,6 +27,7 @@ public class BulletList {
 	public void createBulletList() { // tạo danh sách đạn
 		if (gp.getIsShooting()) {
 			if (momentType == 1) {
+				gp.playSE(23);
 				damage = 1;
 				speed = 8;
 				loadingTimeMax = 15;
@@ -69,6 +70,7 @@ public class BulletList {
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
 				}
 			} else if (momentType == 2) {
+				gp.playSE(24);
 				damage = 2;
 				speed = 8;
 				loadingTimeMax = 15;
@@ -120,6 +122,7 @@ public class BulletList {
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
 				}
 			} else if (momentType == 3) {
+				gp.playSE(25);
 				damage = 1;
 				speed = 6;
 				loadingTimeMax = 15;
@@ -180,6 +183,7 @@ public class BulletList {
 							gp.getTileSize() / 3, gp.getTileSize() / 2));
 				}
 			} else if (momentType == 4) {
+				gp.playSE(26);
 				damage = 1;
 				speed = 10;
 				loadingTimeMax = 15;
@@ -225,6 +229,7 @@ public class BulletList {
 							gp.getTileSize() / 2, gp.getTileSize() * 3));
 				}
 			} else if (momentType == 5) {
+				gp.playSE(17);
 				loadingTimeMax = 60;
 				damage = 1;
 				if (level == 1) {
@@ -262,6 +267,7 @@ public class BulletList {
 
 		// check ulti
 		if (gp.getIsRightClicked() == true && gp.getUltiShoot() > 0) {
+			gp.playSE(27);
 			loadingTimeMax = 0;
 			damage = 20;
 			bulletList.add(new Bullet(this.gp, gp.getPlayerX(), gp.getPlayerY() - 50, 3, 6, damage, gp.getTileSize(),

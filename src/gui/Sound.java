@@ -33,8 +33,12 @@ public class Sound {
         // bullet sound
         soundURL[15] = getClass().getResource("/sound/bullet_sound/boom.wav");
         soundURL[16] = getClass().getResource("/sound/bullet_sound/Lazer.wav");
-        soundURL[17] = getClass().getResource("/sound/bullet_sound/Neutron.wav");
-        
+        soundURL[17] = getClass().getResource("/sound/bullet_sound/bulletSound_5.wav");
+        soundURL[23] = getClass().getResource("/sound/bullet_sound/bulletSound_1.wav");
+        soundURL[24] = getClass().getResource("/sound/bullet_sound/bulletSound_2.wav");
+        soundURL[25] = getClass().getResource("/sound/bullet_sound/bulletSound_3.wav");
+        soundURL[26] = getClass().getResource("/sound/bullet_sound/bulletSound_4.wav");
+        soundURL[27] = getClass().getResource("/sound/bullet_sound/ultiSound.wav");
 		
         soundURL[18] = getClass().getResource("/sound/enemy_sound/bulletOnShield.wav");
 		soundURL[19] = getClass().getResource("/sound/enemy_sound/bulletOnEgg.wav");
