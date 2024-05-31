@@ -41,13 +41,13 @@ public class Enemy extends Entity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		switch (type) {
 		case 0:
 			width = (int) (gp.getTileSize() * 2);
 			height = (int) (gp.getTileSize());
 			numOfFrame = 3;
-			hp = 25;
+			hp = 30;
 			break;
 		case 1:
 			width = (int) (gp.getTileSize() * 1.5);
@@ -86,7 +86,7 @@ public class Enemy extends Entity {
 		case 10:
 			width = (int) (gp.getTileSize() * 4);
 			height = (int) (gp.getTileSize() * 4);
-			hp = 500;
+			hp = 700;
 			numOfFrame = 4;
 			break;
 		case 11:
@@ -131,7 +131,7 @@ public class Enemy extends Entity {
 	public void changeDirection(int direction) {
 		switch (direction) {
 		case 1: // left
-			x -= speed; 
+			x -= speed;
 			break;
 		case 2: // up left
 			x -= speed * (Math.sqrt(2) / 2);
@@ -162,20 +162,20 @@ public class Enemy extends Entity {
 	}
 
 	public void randomNum() {
-		int a[] = {1,2,5,6,7}; // 2 mảng dùng để thay đổi hướng di chuyển của con boss
-		int b[] = {1,3,4,6,8};
+		int a[] = { 1, 2, 5, 6, 7 }; // 2 mảng dùng để thay đổi hướng di chuyển của con boss
+		int b[] = { 1, 3, 4, 6, 8 };
 		if (y < 0) {
 			num = a[rand.nextInt(5)];
 		} else if (y > 530) {
 			num = b[rand.nextInt(5)];
 		}
-		if(x>=900) {
+		if (x >= 900) {
 			num = rand.nextInt(5) + 1;
-		} else if (x<=0) {
+		} else if (x <= 0) {
 			num = rand.nextInt(6) + 3;
 		}
 	}
-	
+
 	@Override
 	public void update(int wave) {
 		if (t <= 1 && changePosition == false) {
@@ -210,11 +210,23 @@ public class Enemy extends Entity {
 
 	@Override
 	public void draw(Graphics2D g2) {
-		if (indexToLoadAnimation / 10 >= animation.size()) {
-			indexToLoadAnimation = 0;
+		if (type == 0) {
+			if (hp <= 10) {
+				g2.drawImage(animation.get(2), (int) x - gp.getTileSize(), (int) y, width, height, null);
+			} else if (hp <= 20) {
+				g2.drawImage(animation.get(1), (int) x - gp.getTileSize(), (int) y, width, height, null);
+			} else {
+				g2.drawImage(animation.get(0), (int) x - gp.getTileSize(), (int) y, width, height, null);
+			}
+		} else {
+
+			if (indexToLoadAnimation / 10 >= animation.size()) {
+				indexToLoadAnimation = 0;
+			}
+			g2.drawImage(animation.get(indexToLoadAnimation / 10), (int) x - gp.getTileSize(), (int) y, width, height,
+					null);
+			indexToLoadAnimation++;
 		}
-		g2.drawImage(animation.get(indexToLoadAnimation / 10), (int) x - gp.getTileSize(), (int) y, width, height, null);
-		indexToLoadAnimation++;
 	}
 
 	private void loadAnimation() {
@@ -225,9 +237,9 @@ public class Enemy extends Entity {
 
 	public Rectangle getEnemyBound() {
 		if (type == 11) {
-			return new Rectangle((int) x+25, (int) y + 10,(int) (width*0.5),(int)( height*0.5));
+			return new Rectangle((int) x + 25, (int) y + 10, (int) (width * 0.5), (int) (height * 0.5));
 		} else
-		return new Rectangle((int) x-10, (int) y + 10, width - 20, height - 20);
+			return new Rectangle((int) x - 10, (int) y + 10, width - 20, height - 20);
 	}
 
 	public void setIsIntersectBullet() {
@@ -253,7 +265,7 @@ public class Enemy extends Entity {
 	public float getY() {
 		return y;
 	}
-	
+
 	public int getType() {
 		return type;
 	}

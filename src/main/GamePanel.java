@@ -83,6 +83,8 @@ public class GamePanel extends JPanel implements Runnable {
 	private float yLastPos;
 	private Boolean isSpawnItem;
 
+	private int lastType;
+	
 	private float xPos;				// lưu vị trí của con gà còn sống
 	private float yPos;
 	private Boolean isSpawnCB;
@@ -107,6 +109,7 @@ public class GamePanel extends JPanel implements Runnable {
 	private GiftList giftList;
 	private ChickenBulletList chickenBulletList;
 	private ChickenItemList chickenItemList;
+	private EffectList effectList;
 
 	private void initVar() {
 		mouseX = 0;
@@ -169,6 +172,7 @@ public class GamePanel extends JPanel implements Runnable {
 		enemyList = new EnemyList(this);
 		chickenBulletList = new ChickenBulletList(this);
 		chickenItemList = new ChickenItemList(this);
+		effectList = new EffectList(this);
 	}
 
 	public GamePanel() {
@@ -242,7 +246,7 @@ public class GamePanel extends JPanel implements Runnable {
 		giftList.update();
 		chickenBulletList.update();
 		chickenItemList.update();
-
+		effectList.update();
 
 		// entity collision update
 		try {
@@ -316,6 +320,7 @@ public class GamePanel extends JPanel implements Runnable {
 		enemyList.draw(g2);
 		chickenBulletList.draw(g2);
 		chickenItemList.draw(g2);
+		effectList.draw(g2);
 		player.draw(g2);
 		guiText.draw(g);
 		
@@ -737,6 +742,14 @@ public class GamePanel extends JPanel implements Runnable {
 		return tileSize;
 	}
 
+	public void setLastType(int lastType) {
+		this.lastType = lastType;
+	}
+	
+	public int getLastType() {
+		return lastType;
+	}
+	
 	private void updateScore() {
 		int currentScore = 0;
 		try (BufferedReader br = new BufferedReader(new FileReader("save/score.txt"))) {

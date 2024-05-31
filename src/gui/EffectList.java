@@ -21,8 +21,8 @@ public class EffectList {
 	}
 
 	public void update() {
-		if (gp.getIsSpawnItem()) {System.out.println("yes");
-			effects.add(new Effect((int) gp.getLastX(), (int) gp.getLastY(), type));
+		if (gp.getIsSpawnItem()) {
+			effects.add(new Effect((int) gp.getLastX()-15, (int) gp.getLastY()-25, type));
 			gp.setIsSpawnItem();
 		}
 	}

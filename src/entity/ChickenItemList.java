@@ -31,7 +31,7 @@ public class ChickenItemList {
     public void update() {
         if(gp.getIsSpawnItem()) {
             spawnItems(gp.getLastX(), gp.getLastY());
-            gp.setIsSpawnItem();
+           // gp.setIsSpawnItem(); // Goi trong effectList_Update
         }
 
         for(int i = 0; i < items.size(); ++i) {
