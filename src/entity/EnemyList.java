@@ -11,7 +11,7 @@ public class EnemyList {
 	
 	private ArrayList<Enemy> enemyList;
 
-	private int wave = 5; // màn chơi hiện tại
+	private int wave = 1; // màn chơi hiện tại
 	private int waveSize; // số lượng con gà đã bị giết, nếu chưa giết thì sẽ render ra con gà khác để đủ
 					// số lượng gà muốn xuất hiện thì thôi
 	private int count = 0; // dùng để đếm số vòng lặp để render ra con gà sau số vòng lặp nhất định
@@ -129,12 +129,10 @@ public class EnemyList {
 			if (waveNum <= 2) {
 				createWave4();
 			} else if (enemyList.isEmpty() && waveNum > 2) {
-				if (enemyList.isEmpty()) {
 					wave++;
 					waveSize = 0;
 					gp.changeWave();
 					waveNum = 0;
-				}
 			}
 			break;
 		case 5:
@@ -142,12 +140,10 @@ public class EnemyList {
 			if (waveNum < 2) {
 				createWave5();
 			} else if (waveNum >= 2 && enemyList.isEmpty()) {
-				if (enemyList.isEmpty()) {
 					wave++;
 					waveSize = 0;
 					gp.changeWave();
 					waveNum = 0;
-				}
 			}
 			break;
 		case 6:
@@ -158,6 +154,7 @@ public class EnemyList {
 					wave++;
 					waveSize = 0;
 					gp.changeWave();
+					waveNum = 0;
 				}
 			}
 			break;
@@ -165,33 +162,30 @@ public class EnemyList {
 			if (waveNum <= 0) {
 				createWave7();
 			} else if (waveNum > 0 && enemyList.isEmpty()) {
-				if (enemyList.isEmpty()) {
 					wave++;
 					waveSize = 0;
 					gp.changeWave();
-				}
+					waveNum = 0;
 			}
 			break;
 		case 8:
 			if (waveNum <= 0) {
 				createWave8();
 			} else if (waveNum > 0 && enemyList.isEmpty()) {
-				if (enemyList.isEmpty()) {
 					wave++;
 					waveSize = 0;
 					gp.changeWave();
-				}
+					waveNum = 0;
 			}
 			break;
 		case 9:
 			if (waveNum <= 0) {
 				createWave9();
 			} else if (waveNum > 0 && enemyList.isEmpty()) {
-				if (enemyList.isEmpty()) {
 					wave++;
 					waveSize = 0;
 					gp.changeWave();
-				}
+					waveNum = 0;
 			}
 			break;
 		case 10:
@@ -202,6 +196,7 @@ public class EnemyList {
 					wave++;
 					waveSize = 0;
 					gp.changeWave();
+					waveNum = 0;
 				}
 			}
 			break;
@@ -209,11 +204,10 @@ public class EnemyList {
 			if (waveNum <= 0) {
 				createWave11();
 			} else if (enemyList.isEmpty()) {
-				if (enemyList.isEmpty()) {
 					wave++;
 					waveSize = 0;
 					gp.changeWave();
-				}
+					waveNum = 0;
 			}
 			break;
 		}

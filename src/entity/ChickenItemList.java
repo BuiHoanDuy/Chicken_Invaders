@@ -29,7 +29,7 @@ public class ChickenItemList {
     }
 
     public void update() {
-        if(gp.getIsSpawnItem()) {
+        if(gp.getIsSpawnItem() && gp.getLastType() != 0 && gp.getLastType() != 11) {
             spawnItems(gp.getLastX(), gp.getLastY());
            // gp.setIsSpawnItem(); // Goi trong effectList_Update
         }

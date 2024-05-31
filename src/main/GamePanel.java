@@ -114,7 +114,6 @@ public class GamePanel extends JPanel implements Runnable {
 	private void initVar() {
 		mouseX = 0;
 		mouseY = 0;
-		// stage = STAGE.GAME_END;
 		stage = STAGE.START_MENU;
 		wave = 0;
 		fpsIndex = 1;
@@ -276,14 +275,17 @@ public class GamePanel extends JPanel implements Runnable {
 			stage = STAGE.GAME_OVER;
 		}
 
-		if(stage == STAGE.GAME_PLAY && enemyList.getWave() == 12) {
-			stage = STAGE.GAME_END;
-		}
+//		if(stage == STAGE.GAME_PLAY && enemyList.getWave() == 12) {
+//			stage = STAGE.GAME_END;
+//		}
 
 		updateBgSound();
 		updateCursor();
 		if(stage == STAGE.GAME_PLAY) {
 			updateGamePlay();
+			if(wave > 11) {
+				stage = STAGE.GAME_END;
+			}
 		}
 	}
 
@@ -372,6 +374,8 @@ public class GamePanel extends JPanel implements Runnable {
 			case 1:
 				initPlayer();
 				initEntity();
+				wave = 0;
+				isChangeWave = true;
 				stage = STAGE.GAME_PLAY;
 				break;
 			case 2:
@@ -459,6 +463,8 @@ public class GamePanel extends JPanel implements Runnable {
 			case 1:
 				initPlayer();
 				initEntity();
+				wave = 0;
+				isChangeWave = true;
 				stage = stage.GAME_PLAY;
 				break;
 			case 2:
@@ -658,8 +664,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public void changeWave() {
 		isChangeWave = true;
-		++wave;
-		System.out.println("change wave");
+		System.out.println(wave);
 	}
 
 	public void pauseGame() {

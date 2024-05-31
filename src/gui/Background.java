@@ -14,7 +14,7 @@ public class Background {
     }
 
     private void setPath(int wave) {
-        if(wave == 11) wave = 4;
+        if(wave >= 11) wave = 4;
         else wave = (wave - 1) / 2;
         String path = "/image/background_image/background/" + wave + ".png";
 
