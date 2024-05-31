@@ -113,10 +113,10 @@ public class GamePanel extends JPanel implements Runnable {
 		mouseY = 0;
 		// stage = STAGE.GAME_END;
 		stage = STAGE.START_MENU;
-		wave = 1;
+		wave = 0;
 		fpsIndex = 1;
 		fps = fpsArr[fpsIndex];
-		isChangeWave = false;
+		isChangeWave = true;
 		bulletType = 2;
 		audio = true;
 		hiddenCursor = false;
@@ -152,9 +152,6 @@ public class GamePanel extends JPanel implements Runnable {
 
 	private void initGui() {
 		startMenu = new StartMenu();
-		background = new Background(wave);
-		// các giá trị mặc định khi vừa vào game
-		guiText = new GuiText(3, 1, 3, 0);
 		sound = new Sound();
 	}
 
@@ -169,6 +166,11 @@ public class GamePanel extends JPanel implements Runnable {
 		enemyList = new EnemyList(this);
 		chickenBulletList = new ChickenBulletList(this);
 		chickenItemList = new ChickenItemList(this);
+
+		// gameplay gui
+		background = new Background(wave);
+		// các giá trị mặc định khi vừa vào game
+		guiText = new GuiText(3, 1, 3, 0);
 	}
 
 	public GamePanel() {
@@ -227,9 +229,10 @@ public class GamePanel extends JPanel implements Runnable {
 	private void updateGamePlay() {
 		// update background if the wave is change
 		if(isChangeWave) {
+			wave = enemyList.getWave();
 			background.update(wave);
+			guiText.updateWave(wave);
 			isChangeWave = false;
-			isNewWave = true;
 		}
 
 		// update gui
@@ -274,11 +277,10 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 
 		updateBgSound();
-		
 		updateCursor();
-		if(stage == STAGE.GAME_PLAY)
-		// if(stage == STAGE.GAME_PLAY && !isEndGame)
+		if(stage == STAGE.GAME_PLAY) {
 			updateGamePlay();
+		}
 	}
 
 	private void updateBgSound() {
@@ -300,12 +302,6 @@ public class GamePanel extends JPanel implements Runnable {
 
 
 	private void drawGamePlay(Graphics g) {
-		// if(isNewWave) {
-		// 	guiText.initChapterText(wave);
-		// 	isNewWave = false;
-		// }
-		// guiText.drawChapterText(g, wave);
-
 		// draw background
 		background.draw(g);
 
@@ -369,21 +365,17 @@ public class GamePanel extends JPanel implements Runnable {
 		int option = startMenu.update(mouseX, mouseY);
 		switch (option) {
 			case 1:
-				System.out.println("play");
 				initPlayer();
 				initEntity();
 				stage = STAGE.GAME_PLAY;
 				break;
 			case 2:
-				System.out.println("high score");
 				stage = STAGE.HIGH_SCORE;
 				break;
 			case 3:
-				System.out.println("setting");
 				stage = STAGE.SETTING;
 				break;
 			case 4:
-				System.out.println("exit");
 				System.exit(0);
 				break;
 			default:
@@ -396,23 +388,19 @@ public class GamePanel extends JPanel implements Runnable {
 		int option = settingMenu.update(mouseX, mouseY);
 		switch (option) {
 			case 1:
-				System.out.println("return");
 				stage = STAGE.START_MENU;
 				break;
 			case 2:
 			case 3:
-				System.out.println("audio change");
 				audio = !audio;
 				setMusic();
 				break;
 			case 4:
-				System.out.println("fps change");
 				if(fpsIndex > 0) fpsIndex--;
 				else fpsIndex = fpsArr.length - 1;
 				fps = fpsArr[fpsIndex];
 				break;
 			case 5:
-				System.out.println("fps change");
 				if(fpsIndex < fpsArr.length - 1) fpsIndex++;
 				else fpsIndex = 0;
 				fps = fpsArr[fpsIndex];
@@ -433,29 +421,24 @@ public class GamePanel extends JPanel implements Runnable {
 		int option = pauseMenu.update(mouseX, mouseY);
 		switch (option) {
 			case 1:
-				System.out.println("continue");
 				stage = STAGE.GAME_PLAY;
 				hiddenCursor = true;
 				break;
 			case 2:
-				System.out.println("return");
 				updateScore();
 				stage = STAGE.START_MENU;
 				break;
 			case 3:
 			case 4:
-				System.out.println("audio change");
 				audio = !audio;
 				setMusic();
 				break;
 			case 5:
-				System.out.println("fps change");
 				if(fpsIndex > 0) fpsIndex--;
 				else fpsIndex = fpsArr.length - 1;
 				fps = fpsArr[fpsIndex];
 				break;
 			case 6:
-				System.out.println("fps change");
 				if(fpsIndex < fpsArr.length - 1) fpsIndex++;
 				else fpsIndex = 0;
 				fps = fpsArr[fpsIndex];
@@ -495,7 +478,6 @@ public class GamePanel extends JPanel implements Runnable {
 		mouseY = y;
 	
 		// In ra tọa độ chuột
-		System.out.println("Mouse clicked at: " + mouseX + ", " + mouseY);
 		switch(stage) {
 			case START_MENU:
 				startMenuAction();
