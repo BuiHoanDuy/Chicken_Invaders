@@ -10,7 +10,8 @@ public class EnemyList {
 	private GamePanel gp;
 	
 	private ArrayList<Enemy> enemyList;
-	private int wave = 11; // màn chơi hiện tại
+
+	private int wave = 5; // màn chơi hiện tại
 	private int waveSize; // số lượng con gà đã bị giết, nếu chưa giết thì sẽ render ra con gà khác để đủ
 					// số lượng gà muốn xuất hiện thì thôi
 	private int count = 0; // dùng để đếm số vòng lặp để render ra con gà sau số vòng lặp nhất định
@@ -39,10 +40,9 @@ public class EnemyList {
 					// trả về tọa độ enemy vừa bị hạ gục
 					Enemy temp = enemyList.get(i);
 					// nếu enemy có type != 0 (tấm khiên) và 11 (quả trứng thiên thạch) thì thả vật phẩm
-					if(temp.getType() != 0 && temp.getType() != 11) {
 						gp.setLastPos(temp.getX(), temp.getY());
 						gp.setIsSpawnItem();
-					}
+						gp.setLastType(temp.getType()); 
 
 					// xóa nó ra khỏi list
 					enemyList.remove(i);
