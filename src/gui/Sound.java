@@ -45,6 +45,8 @@ public class Sound {
 		soundURL[20] = getClass().getResource("/sound/enemy_sound/bang.wav");
 		soundURL[21] = getClass().getResource("/sound/enemy_sound/gameOver.wav");
 		soundURL[22] = getClass().getResource("/sound/background_sound/victory.wav");
+		soundURL[23] = getClass().getResource("/sound/enemy_sound/gatling.wav");
+		soundURL[24] = getClass().getResource("/sound/enemy_sound/laserPiu.wav");
     }
 
     public void setFile(boolean whatSound, int i) {

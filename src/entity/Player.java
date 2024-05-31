@@ -19,6 +19,8 @@ public class Player extends Entity {
 	private boolean isIntersectItem;
 	private boolean isIntersectGift;
 	private BufferedImage bang; // nổ
+	private BufferedImage shield;
+	private Boolean isShielded = false;
 	private int i = 0, j = 0;
 
 	private void initVariable() {
@@ -30,6 +32,7 @@ public class Player extends Entity {
 		isIntersectGift = false;
 		try {
 			bang = ImageIO.read(getClass().getResourceAsStream("/image/player/bang.png"));
+			shield = ImageIO.read(getClass().getResourceAsStream("/image/player/protection.png"));
 			image = ImageIO.read(getClass().getResourceAsStream("/image/player/ship.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -64,8 +67,11 @@ public class Player extends Entity {
 				animation = bang.getSubimage(j * (64), i * (64), 64, 64);				
 			} catch (Exception e) {
 			}
-			g2.drawImage(animation, (int) x - gp.getTileSize()/2, (int) y, (int) (gp.getTileSize()),
-					(int) (gp.getTileSize()), null);
+			g2.drawImage(animation, (int) x - 50, (int) y - 20, 100, 100, null);
+		}
+
+		if(isShielded) {
+			g2.drawImage(shield, (int) x - 50, (int) y - 20, 100, 100, null);
 		}
 	}
 

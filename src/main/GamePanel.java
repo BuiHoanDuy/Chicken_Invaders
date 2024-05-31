@@ -88,8 +88,10 @@ public class GamePanel extends JPanel implements Runnable {
 	private float xPos;				// lưu vị trí của con gà còn sống
 	private float yPos;
 	private Boolean isSpawnCB;
+	private int cType;
+	private int cWidth;
+	private int cHeight;
 
-	private Boolean isNewWave;
 	private Boolean musicChanged;
 	private Boolean victorySound;
 
@@ -98,11 +100,9 @@ public class GamePanel extends JPanel implements Runnable {
 	private int damage = 1;
 	private int bulletType;
 
-	private Boolean isEndGame;
 	private Boolean endGameSound;
 
 	// game entity
-	// private Player player;
 	private Player player;
 	private BulletList bulletList;
 	private EnemyList enemyList;
@@ -114,6 +114,7 @@ public class GamePanel extends JPanel implements Runnable {
 	private void initVar() {
 		mouseX = 0;
 		mouseY = 0;
+		// stage = STAGE.GAME_OVER;
 		stage = STAGE.START_MENU;
 		wave = 0;
 		fpsIndex = 1;
@@ -124,9 +125,7 @@ public class GamePanel extends JPanel implements Runnable {
 		hiddenCursor = false;
 		isSpawnItem = false;
 		isSpawnCB = false;
-		isEndGame = false;
 		endGameSound = false;
-		isNewWave = true;
 		musicChanged = false;
 		victorySound = false;
 	}
@@ -463,12 +462,12 @@ public class GamePanel extends JPanel implements Runnable {
 				initEntity();
 				wave = 0;
 				isChangeWave = true;
-				stage = stage.GAME_PLAY;
+				stage = STAGE.GAME_PLAY;
 				player.ForceTheMouse();
 				break;
 			case 2:
 				initPlayer();
-				stage = stage.START_MENU;
+				stage = STAGE.START_MENU;
 				break;
 			default:
 				break;
@@ -488,6 +487,7 @@ public class GamePanel extends JPanel implements Runnable {
 		mouseY = y;
 	
 		// In ra tọa độ chuột
+		System.out.println(mouseX + " " + mouseY);
 		switch(stage) {
 			case START_MENU:
 				startMenuAction();
@@ -722,6 +722,27 @@ public class GamePanel extends JPanel implements Runnable {
 
 	public Boolean getIsSpawnCB() {
 		return isSpawnCB;
+	}
+
+	public void setCType(int type) {
+		cType = type;
+	}
+
+	public int getCType() {
+		return cType;
+	}
+
+	public void setCWidth(int cWidth, int cHeight) {
+		this.cWidth = cWidth;
+		this.cHeight = cHeight;
+	}
+
+	public int getCWidth() {
+		return cWidth;
+	}
+
+	public int getCHeight() {
+		return cHeight;
 	}
 	
 	public int getTileSize() {

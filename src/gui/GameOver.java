@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class GameOver {
-    private Btn playBtn, scoreLabel, score, exiBtn;
+    private Btn gameOver, playBtn, scoreLabel, score, exiBtn;
     private BufferedImage background;
 
     private void initVar(int m_score) {
@@ -17,11 +17,12 @@ public class GameOver {
             e.printStackTrace();
         }
 
-        scoreLabel = new Btn("HIGH SCORE", 25, 420, 380);
+        gameOver = new Btn("GAME OVER", 35, 400, 380);
+        scoreLabel = new Btn("SCORE", 25, 455, 430);
 
         String scoreText = Integer.toString(m_score);
         int x = (1008 - (36 * scoreText.length())) / 2;
-        score = new Btn(scoreText, 60, x, 450);
+        score = new Btn(scoreText, 60, x, 490);
 
         playBtn = new Btn("REPLAY", 16, 420, 550);
         exiBtn = new Btn("EXIT", 16, 530, 550);
@@ -48,6 +49,7 @@ public class GameOver {
         }
 
         Graphics2D g2 = (Graphics2D) g;
+        gameOver.draw(g2);
         scoreLabel.draw(g2);
         score.draw(g2);
         playBtn.draw(g2);

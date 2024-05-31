@@ -10,6 +10,8 @@ public class ChickenBulletList {
     private GamePanel gp;
 	private ArrayList<ChickenBullet> bullets;
 	private Random rand;
+    private int type;
+    private int soundIndex;
 
 
     public ChickenBulletList() {}
@@ -27,9 +29,38 @@ public class ChickenBulletList {
     
     public void update() {
         if(isSpawnBullet() && gp.getIsSpawnCB()) {
-            // System.out.println("Spawn egg");
-            bullets.add(new ChickenBullet(gp, gp.getXPos(), gp.getYPos(), 4, rand.nextInt(2) + 1));
-            gp.playSE(12);
+            int cType = gp.getCType();
+            switch(cType) {
+                case 1:
+                    type = rand.nextInt(2) + 1;
+                    soundIndex = 12;
+                    break;
+                case 2:
+                case 3:
+                case 4:
+                case 7:
+                case 9:
+                    type = rand.nextInt(3) + 1;
+                    soundIndex = 12;
+                    break;
+                case 5:
+                case 6:
+                    type = 4;
+                    soundIndex = 23;
+                    break;
+                case 8:
+                    type = 5;
+                    soundIndex = 12;
+                    break;
+                case 10 :
+                    type = rand.nextInt(2);
+                    soundIndex = 24;
+                    break;
+                default:
+                    break;
+            }
+            bullets.add(new ChickenBullet(gp, gp.getXPos(), gp.getYPos(), gp.getCWidth(), gp.getCHeight(), 4, type));
+            gp.playSE(soundIndex);
             gp.setIsSpawnCB();
         }
 

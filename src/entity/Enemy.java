@@ -24,6 +24,8 @@ public class Enemy extends Entity {
 	private Random rand;
 	private boolean isIntersectBullet; // kiểm tra xem có bị dính đạn hay chưa
 	private int num = 3; // dùng để đổi hướng di chuyển cho con boss
+	private BufferedImage bossHealthBarImage;
+	private BufferedImage bossHealthBar;
 
 	private void initVariable() {
 		width = (int) (gp.getTileSize() * 1.5);
@@ -37,6 +39,7 @@ public class Enemy extends Entity {
 		String path = "/image/enemy/" + type + ".png";
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(path));
+			bossHealthBarImage = ImageIO.read(getClass().getResourceAsStream("/image/enemy/healthBar.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -86,7 +89,7 @@ public class Enemy extends Entity {
 		case 10:
 			width = (int) (gp.getTileSize() * 4);
 			height = (int) (gp.getTileSize() * 4);
-			hp = 700;
+			hp = 600;
 			numOfFrame = 4;
 			break;
 		case 11:
@@ -227,6 +230,11 @@ public class Enemy extends Entity {
 					null);
 			indexToLoadAnimation++;
 		}
+
+		if(type == 10) {
+			bossHealthBar = bossHealthBarImage.getSubimage((6 - (hp / 100)) * 48, 0, 48, 16);
+			g2.drawImage(bossHealthBar, (int) x, (int) y - 30, 90, 30, null);
+		}
 	}
 
 	private void loadAnimation() {
@@ -273,5 +281,13 @@ public class Enemy extends Entity {
 	// lấy ra biến t
 	public float getT() {
 		return t;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
 	}
 }
