@@ -98,6 +98,26 @@ public class Player extends Entity {
         }
 	}
 	
+	public void ForceTheMouse() { //Di chuyển lại con trỏ khi nhấn nút conitnue hoặc play
+		setPreStartPosition();
+		
+		do {
+			moveToStartPosition();
+		try {
+            // Khởi tạo đối tượng Robot
+            Robot robot = new Robot();
+
+            // Di chuyển con trỏ chuột đến vị trí mong muốn (x, y)
+            int x = (int) this.x + 255; // Tọa độ x
+            int y = (int) this.y + 48; // Tọa độ y
+            robot.mouseMove(x, y);
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+		} while(x != 500 && y != 570);
+		
+	}
+	
 	public void setPreStartPosition() {
 		x = 500; y = 630;
 	}

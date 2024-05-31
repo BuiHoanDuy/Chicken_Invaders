@@ -275,10 +275,6 @@ public class GamePanel extends JPanel implements Runnable {
 			stage = STAGE.GAME_OVER;
 		}
 
-//		if(stage == STAGE.GAME_PLAY && enemyList.getWave() == 12) {
-//			stage = STAGE.GAME_END;
-//		}
-
 		updateBgSound();
 		updateCursor();
 		if(stage == STAGE.GAME_PLAY) {
@@ -377,6 +373,7 @@ public class GamePanel extends JPanel implements Runnable {
 				wave = 0;
 				isChangeWave = true;
 				stage = STAGE.GAME_PLAY;
+				player.ForceTheMouse();
 				break;
 			case 2:
 				stage = STAGE.HIGH_SCORE;
@@ -432,6 +429,7 @@ public class GamePanel extends JPanel implements Runnable {
 			case 1:
 				stage = STAGE.GAME_PLAY;
 				hiddenCursor = true;
+				player.ForceTheMouse();
 				break;
 			case 2:
 				updateScore();
@@ -466,6 +464,7 @@ public class GamePanel extends JPanel implements Runnable {
 				wave = 0;
 				isChangeWave = true;
 				stage = stage.GAME_PLAY;
+				player.ForceTheMouse();
 				break;
 			case 2:
 				initPlayer();
