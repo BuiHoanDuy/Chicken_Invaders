@@ -11,7 +11,7 @@ public class EnemyList {
 	
 	private ArrayList<Enemy> enemyList;
 
-	private int wave = 11; // màn chơi hiện tại
+	private int wave = 7; // màn chơi hiện tại
 	private int waveSize; // số lượng con gà đã bị giết, nếu chưa giết thì sẽ render ra con gà khác để đủ
 					// số lượng gà muốn xuất hiện thì thôi
 	private int count = 0; // dùng để đếm số vòng lặp để render ra con gà sau số vòng lặp nhất định

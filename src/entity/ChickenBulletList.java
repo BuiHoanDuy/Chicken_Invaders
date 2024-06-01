@@ -52,14 +52,19 @@ public class ChickenBulletList {
                     type = 5;
                     soundIndex = 12;
                     break;
-                case 10 :
+                case 10:
                     type = rand.nextInt(2);
-                    soundIndex = 24;
+                    soundIndex = 28;
                     break;
                 default:
                     break;
             }
             bullets.add(new ChickenBullet(gp, gp.getXPos(), gp.getYPos(), gp.getCWidth(), gp.getCHeight(), 4, type));
+            if(type == 0) {
+                for(int i = 0; i < 3; ++i) {
+                    bullets.add(new ChickenBullet(gp, gp.getXPos(), gp.getYPos(), gp.getCWidth(), gp.getCHeight(), 4, type));
+                }
+            }
             gp.playSE(soundIndex);
             gp.setIsSpawnCB();
         }

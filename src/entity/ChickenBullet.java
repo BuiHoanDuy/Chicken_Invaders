@@ -2,9 +2,7 @@ package entity;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import main.GamePanel;
 
@@ -16,8 +14,7 @@ public class ChickenBullet extends Entity{
     private int num;
     private int cWidth;
     private int cHeight;
-    private int xPos;
-    private int yPos;
+    // private int alpha = -1;
 
 
     private double[] angles = {0, Math.PI / 4, Math.PI / 2, 3 * Math.PI / 4, Math.PI, 5 * Math.PI / 4, 3 * Math.PI / 2, 7 * Math.PI / 4};
@@ -95,6 +92,12 @@ public class ChickenBullet extends Entity{
                     if(-100 > xPositions[i] || xPositions[i] > 1008 || -100 > yPositions[i] || yPositions[i] > 730)
                         canRemove = true;
                 }
+                
+                // x += alpha * speed;
+                // y += speed;
+                // if(alpha > 1) {
+                //     alpha = -1;
+                // } else alpha++;
                 break;
             default:
                 if(y < 725) y += speed;
@@ -109,7 +112,7 @@ public class ChickenBullet extends Entity{
         switch(type) {
             case 1:
                 if(!isOnTheGround) 
-                    g2.drawImage(image, (int) x + cWidth / 2, (int) y + cHeight, 25, 35, null);
+                    g2.drawImage(image, (int) x + cWidth / 2, (int) y, 25, 35, null);
                 else 
                     g2.drawImage(image, (int) x + cWidth / 2, (int) y, 50, 20, null);
                 break;
@@ -124,15 +127,16 @@ public class ChickenBullet extends Entity{
                 g2.drawImage(image, (int) x + cWidth / 2, (int) y + cHeight, 80, 85, null);
                 break;
             case 4:
-                g2.drawImage(image, (int) x + cWidth / 2, (int) y + cHeight, 5, 30, null);
+                g2.drawImage(image, (int) x + cWidth / 2, (int) y + cHeight, 10, 30, null);
                 break;
             case 5:
-                g2.drawImage(image, (int) x + cWidth / 2, (int) y + cHeight, 25, 35, null);
+                g2.drawImage(image, (int) x-28, (int) y + cHeight, 25, 35, null);
                 break;
             case 0:
                 for (int i = 0; i < 8; i++) {
                     g2.drawImage(image, xPositions[i] - image.getWidth() / 2, yPositions[i] - image.getHeight() / 2, 100, 100, null);
                 }
+                // g2.drawImage(image, (int) x + cWidth / 2, (int) y + cHeight, 100, 100, null);
                 break;
             default:
                 break;
@@ -145,9 +149,30 @@ public class ChickenBullet extends Entity{
 
     public Rectangle getCBBound() {
 		// return new Rectangle((int) x, (int) y, image.getWidth(), image.getHeight());
-        if(type == 1)
-            return new Rectangle((int) x + gp.getTileSize() / 2, (int) y - 10, 25, 35);
-		else return new Rectangle((int) x + gp.getTileSize() / 2, (int) y - 10, 15, 25);
+        Rectangle temp = null;
+        switch(type) {
+            case 0:
+                temp = new Rectangle((int) x + cWidth / 2, (int) y, 100, 100);
+                break;
+            case 1:
+                    temp = new Rectangle((int) x + cWidth, (int) y, 25, 35);
+                break;
+            case 2:
+                    temp = new Rectangle((int) x + cWidth + 5, (int) y, 15, 25);
+                break;
+            case 3:
+                temp = new Rectangle((int) x + cWidth + 50, (int) y, 30, 85);
+                break;
+            case 4:
+                temp = new Rectangle((int) x + cWidth, (int) y + 10, 10, 30);
+                break;
+            case 5:
+                temp = new Rectangle((int) x +15, (int) y, 20, 35);
+                break;
+            default:
+                break;
+        }
+        return temp;
 	}
 
     public Boolean onTheGround() {
