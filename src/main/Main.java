@@ -1,6 +1,6 @@
 package main;
 
-import java.awt.Cursor;
+import java.awt.Image;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -10,13 +10,12 @@ public class Main {
 public static void main(String[] args) {
 			
 		JFrame window = new JFrame();
-		window.setTitle("Dragon_invaders of YisiniT_HoanDuy");
+		window.setTitle("Chicken Invaders - CDUniverse");
 		window.setResizable(false);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		// ẩn con trỏ
-		Cursor hiddenCursor = Toolkit.getDefaultToolkit().createCustomCursor(Toolkit.getDefaultToolkit().getImage(""), new java.awt.Point(), "hiddenCursor");
-		window.setCursor(hiddenCursor);
+		Image icon = Toolkit.getDefaultToolkit().getImage(Main.class.getResource("/image/gui/gameIcon.png"));
+        window.setIconImage(icon);
 		
 		GamePanel gamePanel = new GamePanel();
 		window.add(gamePanel);

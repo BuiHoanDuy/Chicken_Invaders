@@ -1,5 +1,4 @@
-/entity/
-/image/
 /main/
 /controller/
-/bullet/
+/entity/
+/gui/
