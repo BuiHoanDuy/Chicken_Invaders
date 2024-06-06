@@ -76,7 +76,6 @@ public class GamePanel extends JPanel implements Runnable {
 
 	private int wave;
 	private Boolean isChangeWave;
-	private Boolean fileExist;
 
 	private Random rand;
 
@@ -130,7 +129,6 @@ public class GamePanel extends JPanel implements Runnable {
 		endGameSound = false;
 		musicChanged = false;
 		victorySound = false;
-		fileExist = false;
 	}
 	
 	private void initControllers() {
@@ -776,14 +774,12 @@ public class GamePanel extends JPanel implements Runnable {
 			try {
 				scoreFile.createNewFile();
 				try (BufferedWriter writer = new BufferedWriter(new FileWriter(scoreFile))) {
-					writer.write(0); // Ghi điểm ban đầu là 0
+					writer.write("0"); // Ghi điểm ban đầu là 0
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-
-		fileExist = true;
 	}
 	
 	private void updateScore() {
