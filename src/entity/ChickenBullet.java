@@ -14,15 +14,11 @@ public class ChickenBullet extends Entity{
     private int num;
     private int cWidth;
     private int cHeight;
-    // private int alpha = -1;
-
 
     private double[] angles = {0, Math.PI / 4, Math.PI / 2, 3 * Math.PI / 4, Math.PI, 5 * Math.PI / 4, 3 * Math.PI / 2, 7 * Math.PI / 4};
     private int[] xPositions = new int[8];
     private int[] yPositions = new int[8];
     private int centerX, centerY;
-    private int radius = 100;
-    private int speed = 5;
 
     private void initTexture() {
         String path = "/image/enemy_item/chicken_bullet/" + type +".png";
@@ -54,8 +50,6 @@ public class ChickenBullet extends Entity{
         canRemove = false;
         num = 0;
         initTexture();
-
-
 
         centerX = (int) x;
         centerY = (int) y;
@@ -92,12 +86,6 @@ public class ChickenBullet extends Entity{
                     if(-100 > xPositions[i] || xPositions[i] > 1008 || -100 > yPositions[i] || yPositions[i] > 730)
                         canRemove = true;
                 }
-                
-                // x += alpha * speed;
-                // y += speed;
-                // if(alpha > 1) {
-                //     alpha = -1;
-                // } else alpha++;
                 break;
             default:
                 if(y < 725) y += speed;
@@ -136,7 +124,6 @@ public class ChickenBullet extends Entity{
                 for (int i = 0; i < 8; i++) {
                     g2.drawImage(image, xPositions[i] - image.getWidth() / 2, yPositions[i] - image.getHeight() / 2, 100, 100, null);
                 }
-                // g2.drawImage(image, (int) x + cWidth / 2, (int) y + cHeight, 100, 100, null);
                 break;
             default:
                 break;
@@ -148,7 +135,6 @@ public class ChickenBullet extends Entity{
     }
 
     public Rectangle getCBBound() {
-		// return new Rectangle((int) x, (int) y, image.getWidth(), image.getHeight());
         Rectangle temp = null;
         switch(type) {
             case 0:
