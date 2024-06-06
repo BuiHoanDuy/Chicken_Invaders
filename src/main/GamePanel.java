@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -75,6 +76,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 	private int wave;
 	private Boolean isChangeWave;
+	private Boolean fileExist;
 
 	private Random rand;
 
@@ -128,6 +130,7 @@ public class GamePanel extends JPanel implements Runnable {
 		endGameSound = false;
 		musicChanged = false;
 		victorySound = false;
+		fileExist = false;
 	}
 	
 	private void initControllers() {
@@ -178,6 +181,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public GamePanel() {
 		this.initControllers();
 		this.initVar();
+		this.initFileSave();
 		this.initGui();
 		this.initPlayer();
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -757,6 +761,29 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public int getLastType() {
 		return lastType;
+	}
+
+	private void initFileSave() {
+		// Kiểm tra và tạo thư mục 'save' nếu chưa tồn tại
+		File saveDir = new File("save");
+		if (!saveDir.exists()) {
+			saveDir.mkdirs();
+		}
+
+		// Kiểm tra và tạo tệp 'score.txt' nếu chưa tồn tại
+		File scoreFile = new File(saveDir, "score.txt");
+		if (!scoreFile.exists()) {
+			try {
+				scoreFile.createNewFile();
+				try (BufferedWriter writer = new BufferedWriter(new FileWriter(scoreFile))) {
+					writer.write(0); // Ghi điểm ban đầu là 0
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		fileExist = true;
 	}
 	
 	private void updateScore() {
