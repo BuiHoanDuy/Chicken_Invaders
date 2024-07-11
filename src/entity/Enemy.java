@@ -231,9 +231,11 @@ public class Enemy extends Entity {
 			indexToLoadAnimation++;
 		}
 
-		if(type == 10) {
-			bossHealthBar = bossHealthBarImage.getSubimage((6 - (hp / 100)) * 48, 0, 48, 16);
-			g2.drawImage(bossHealthBar, (int) x, (int) y - 30, 90, 30, null);
+		if (type == 10) {
+			if (hp > 1) {
+				bossHealthBar = bossHealthBarImage.getSubimage((5-(hp/101)) * 48, 0, 48, 16);
+				g2.drawImage(bossHealthBar, (int) x, (int) y - 30, 90, 30, null);
+			}
 		}
 	}
 

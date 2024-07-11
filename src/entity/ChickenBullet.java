@@ -127,7 +127,7 @@ public class ChickenBullet extends Entity{
                 g2.drawImage(image, (int) x + cWidth / 2, (int) y + cHeight, 80, 85, null);
                 break;
             case 4:
-                g2.drawImage(image, (int) x + cWidth / 2, (int) y + cHeight, 10, 30, null);
+                g2.drawImage(image, (int) x - 20, (int) y + 20, 10, 30, null);
                 break;
             case 5:
                 g2.drawImage(image, (int) x-28, (int) y + cHeight, 25, 35, null);
