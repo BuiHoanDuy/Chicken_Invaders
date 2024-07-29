@@ -24,7 +24,8 @@ public static void main(String[] args) {
 		
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
-		
+
 		gamePanel.startGameThread();
+
 	}
 }
